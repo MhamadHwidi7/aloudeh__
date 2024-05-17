@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "995697446433",
+    "project_id": "aloudeh-220e7",
+    "storage_bucket": "aloudeh-220e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995697446433:android:ee8d46c4fb6cd94eaa1d60",
+        "android_client_info": {
+          "package_name": "com.example.aloudeh_company"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLURIBURy9xiWIFKXsO_FQeybdotpzukc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

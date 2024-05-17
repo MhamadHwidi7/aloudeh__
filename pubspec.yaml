@@ -46,6 +46,9 @@ dependencies:
   get: ^4.6.6
   colorful_print: ^0.1.2
   shared_preferences: ^2.2.2
+  firebase_core: ^2.31.0
+  dartz: ^0.10.1
+  firebase_messaging: ^14.9.2
 
 dev_dependencies:
   flutter_test:

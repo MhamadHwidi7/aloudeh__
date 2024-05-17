@@ -19,11 +19,9 @@ mixin _$NetworkExceptions {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -38,17 +36,14 @@ mixin _$NetworkExceptions {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -63,17 +58,14 @@ mixin _$NetworkExceptions {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -88,19 +80,15 @@ mixin _$NetworkExceptions {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -115,18 +103,14 @@ mixin _$NetworkExceptions {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -141,18 +125,14 @@ mixin _$NetworkExceptions {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -167,7 +147,6 @@ mixin _$NetworkExceptions {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -239,11 +218,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -258,7 +235,6 @@ class _$RequestCancelledImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return requestCancelled();
   }
@@ -267,11 +243,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -286,7 +260,6 @@ class _$RequestCancelledImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return requestCancelled?.call();
   }
@@ -295,11 +268,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -314,7 +285,6 @@ class _$RequestCancelledImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (requestCancelled != null) {
@@ -327,12 +297,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -347,7 +314,6 @@ class _$RequestCancelledImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return requestCancelled(this);
   }
@@ -356,12 +322,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -376,7 +339,6 @@ class _$RequestCancelledImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return requestCancelled?.call(this);
   }
@@ -385,12 +347,9 @@ class _$RequestCancelledImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -405,7 +364,6 @@ class _$RequestCancelledImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (requestCancelled != null) {
@@ -417,724 +375,6 @@ class _$RequestCancelledImpl
 
 abstract class RequestCancelled implements NetworkExceptions {
   const factory RequestCancelled() = _$RequestCancelledImpl;
-}
-
-/// @nodoc
-abstract class _$$CanceledByUserImplCopyWith<$Res> {
-  factory _$$CanceledByUserImplCopyWith(_$CanceledByUserImpl value,
-          $Res Function(_$CanceledByUserImpl) then) =
-      __$$CanceledByUserImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CanceledByUserImplCopyWithImpl<$Res>
-    extends _$NetworkExceptionsCopyWithImpl<$Res, _$CanceledByUserImpl>
-    implements _$$CanceledByUserImplCopyWith<$Res> {
-  __$$CanceledByUserImplCopyWithImpl(
-      _$CanceledByUserImpl _value, $Res Function(_$CanceledByUserImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$CanceledByUserImpl
-    with DiagnosticableTreeMixin
-    implements CanceledByUser {
-  const _$CanceledByUserImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworkExceptions.canceledByUser()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'NetworkExceptions.canceledByUser'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CanceledByUserImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
-    required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
-    required TResult Function(String reason) notFound,
-    required TResult Function() methodNotAllowed,
-    required TResult Function() notAcceptable,
-    required TResult Function() requestTimeout,
-    required TResult Function() sendTimeout,
-    required TResult Function(String reason) unprocessableEntity,
-    required TResult Function() conflict,
-    required TResult Function() internalServerError,
-    required TResult Function() notImplemented,
-    required TResult Function() serviceUnavailable,
-    required TResult Function() noInternetConnection,
-    required TResult Function() formatException,
-    required TResult Function() unableToProcess,
-    required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
-  }) {
-    return canceledByUser();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
-    TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
-    TResult? Function(String reason)? notFound,
-    TResult? Function()? methodNotAllowed,
-    TResult? Function()? notAcceptable,
-    TResult? Function()? requestTimeout,
-    TResult? Function()? sendTimeout,
-    TResult? Function(String reason)? unprocessableEntity,
-    TResult? Function()? conflict,
-    TResult? Function()? internalServerError,
-    TResult? Function()? notImplemented,
-    TResult? Function()? serviceUnavailable,
-    TResult? Function()? noInternetConnection,
-    TResult? Function()? formatException,
-    TResult? Function()? unableToProcess,
-    TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
-  }) {
-    return canceledByUser?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
-    TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
-    TResult Function(String reason)? notFound,
-    TResult Function()? methodNotAllowed,
-    TResult Function()? notAcceptable,
-    TResult Function()? requestTimeout,
-    TResult Function()? sendTimeout,
-    TResult Function(String reason)? unprocessableEntity,
-    TResult Function()? conflict,
-    TResult Function()? internalServerError,
-    TResult Function()? notImplemented,
-    TResult Function()? serviceUnavailable,
-    TResult Function()? noInternetConnection,
-    TResult Function()? formatException,
-    TResult Function()? unableToProcess,
-    TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (canceledByUser != null) {
-      return canceledByUser();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
-    required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
-    required TResult Function(NotFound value) notFound,
-    required TResult Function(MethodNotAllowed value) methodNotAllowed,
-    required TResult Function(NotAcceptable value) notAcceptable,
-    required TResult Function(RequestTimeout value) requestTimeout,
-    required TResult Function(SendTimeout value) sendTimeout,
-    required TResult Function(UnprocessableEntity value) unprocessableEntity,
-    required TResult Function(Conflict value) conflict,
-    required TResult Function(InternalServerError value) internalServerError,
-    required TResult Function(NotImplemented value) notImplemented,
-    required TResult Function(ServiceUnavailable value) serviceUnavailable,
-    required TResult Function(NoInternetConnection value) noInternetConnection,
-    required TResult Function(FormatException value) formatException,
-    required TResult Function(UnableToProcess value) unableToProcess,
-    required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
-  }) {
-    return canceledByUser(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
-    TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
-    TResult? Function(NotFound value)? notFound,
-    TResult? Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult? Function(NotAcceptable value)? notAcceptable,
-    TResult? Function(RequestTimeout value)? requestTimeout,
-    TResult? Function(SendTimeout value)? sendTimeout,
-    TResult? Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult? Function(Conflict value)? conflict,
-    TResult? Function(InternalServerError value)? internalServerError,
-    TResult? Function(NotImplemented value)? notImplemented,
-    TResult? Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult? Function(NoInternetConnection value)? noInternetConnection,
-    TResult? Function(FormatException value)? formatException,
-    TResult? Function(UnableToProcess value)? unableToProcess,
-    TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
-  }) {
-    return canceledByUser?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
-    TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
-    TResult Function(NotFound value)? notFound,
-    TResult Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult Function(NotAcceptable value)? notAcceptable,
-    TResult Function(RequestTimeout value)? requestTimeout,
-    TResult Function(SendTimeout value)? sendTimeout,
-    TResult Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult Function(Conflict value)? conflict,
-    TResult Function(InternalServerError value)? internalServerError,
-    TResult Function(NotImplemented value)? notImplemented,
-    TResult Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult Function(NoInternetConnection value)? noInternetConnection,
-    TResult Function(FormatException value)? formatException,
-    TResult Function(UnableToProcess value)? unableToProcess,
-    TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (canceledByUser != null) {
-      return canceledByUser(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class CanceledByUser implements NetworkExceptions {
-  const factory CanceledByUser() = _$CanceledByUserImpl;
-}
-
-/// @nodoc
-abstract class _$$FirebasePlatformExceptionImplCopyWith<$Res> {
-  factory _$$FirebasePlatformExceptionImplCopyWith(
-          _$FirebasePlatformExceptionImpl value,
-          $Res Function(_$FirebasePlatformExceptionImpl) then) =
-      __$$FirebasePlatformExceptionImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FirebasePlatformExceptionImplCopyWithImpl<$Res>
-    extends _$NetworkExceptionsCopyWithImpl<$Res,
-        _$FirebasePlatformExceptionImpl>
-    implements _$$FirebasePlatformExceptionImplCopyWith<$Res> {
-  __$$FirebasePlatformExceptionImplCopyWithImpl(
-      _$FirebasePlatformExceptionImpl _value,
-      $Res Function(_$FirebasePlatformExceptionImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$FirebasePlatformExceptionImpl
-    with DiagnosticableTreeMixin
-    implements FirebasePlatformException {
-  const _$FirebasePlatformExceptionImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworkExceptions.firebasePlatformException()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty(
-        'type', 'NetworkExceptions.firebasePlatformException'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FirebasePlatformExceptionImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
-    required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
-    required TResult Function(String reason) notFound,
-    required TResult Function() methodNotAllowed,
-    required TResult Function() notAcceptable,
-    required TResult Function() requestTimeout,
-    required TResult Function() sendTimeout,
-    required TResult Function(String reason) unprocessableEntity,
-    required TResult Function() conflict,
-    required TResult Function() internalServerError,
-    required TResult Function() notImplemented,
-    required TResult Function() serviceUnavailable,
-    required TResult Function() noInternetConnection,
-    required TResult Function() formatException,
-    required TResult Function() unableToProcess,
-    required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
-  }) {
-    return firebasePlatformException();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
-    TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
-    TResult? Function(String reason)? notFound,
-    TResult? Function()? methodNotAllowed,
-    TResult? Function()? notAcceptable,
-    TResult? Function()? requestTimeout,
-    TResult? Function()? sendTimeout,
-    TResult? Function(String reason)? unprocessableEntity,
-    TResult? Function()? conflict,
-    TResult? Function()? internalServerError,
-    TResult? Function()? notImplemented,
-    TResult? Function()? serviceUnavailable,
-    TResult? Function()? noInternetConnection,
-    TResult? Function()? formatException,
-    TResult? Function()? unableToProcess,
-    TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
-  }) {
-    return firebasePlatformException?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
-    TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
-    TResult Function(String reason)? notFound,
-    TResult Function()? methodNotAllowed,
-    TResult Function()? notAcceptable,
-    TResult Function()? requestTimeout,
-    TResult Function()? sendTimeout,
-    TResult Function(String reason)? unprocessableEntity,
-    TResult Function()? conflict,
-    TResult Function()? internalServerError,
-    TResult Function()? notImplemented,
-    TResult Function()? serviceUnavailable,
-    TResult Function()? noInternetConnection,
-    TResult Function()? formatException,
-    TResult Function()? unableToProcess,
-    TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (firebasePlatformException != null) {
-      return firebasePlatformException();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
-    required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
-    required TResult Function(NotFound value) notFound,
-    required TResult Function(MethodNotAllowed value) methodNotAllowed,
-    required TResult Function(NotAcceptable value) notAcceptable,
-    required TResult Function(RequestTimeout value) requestTimeout,
-    required TResult Function(SendTimeout value) sendTimeout,
-    required TResult Function(UnprocessableEntity value) unprocessableEntity,
-    required TResult Function(Conflict value) conflict,
-    required TResult Function(InternalServerError value) internalServerError,
-    required TResult Function(NotImplemented value) notImplemented,
-    required TResult Function(ServiceUnavailable value) serviceUnavailable,
-    required TResult Function(NoInternetConnection value) noInternetConnection,
-    required TResult Function(FormatException value) formatException,
-    required TResult Function(UnableToProcess value) unableToProcess,
-    required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
-  }) {
-    return firebasePlatformException(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
-    TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
-    TResult? Function(NotFound value)? notFound,
-    TResult? Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult? Function(NotAcceptable value)? notAcceptable,
-    TResult? Function(RequestTimeout value)? requestTimeout,
-    TResult? Function(SendTimeout value)? sendTimeout,
-    TResult? Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult? Function(Conflict value)? conflict,
-    TResult? Function(InternalServerError value)? internalServerError,
-    TResult? Function(NotImplemented value)? notImplemented,
-    TResult? Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult? Function(NoInternetConnection value)? noInternetConnection,
-    TResult? Function(FormatException value)? formatException,
-    TResult? Function(UnableToProcess value)? unableToProcess,
-    TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
-  }) {
-    return firebasePlatformException?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
-    TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
-    TResult Function(NotFound value)? notFound,
-    TResult Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult Function(NotAcceptable value)? notAcceptable,
-    TResult Function(RequestTimeout value)? requestTimeout,
-    TResult Function(SendTimeout value)? sendTimeout,
-    TResult Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult Function(Conflict value)? conflict,
-    TResult Function(InternalServerError value)? internalServerError,
-    TResult Function(NotImplemented value)? notImplemented,
-    TResult Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult Function(NoInternetConnection value)? noInternetConnection,
-    TResult Function(FormatException value)? formatException,
-    TResult Function(UnableToProcess value)? unableToProcess,
-    TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (firebasePlatformException != null) {
-      return firebasePlatformException(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FirebasePlatformException implements NetworkExceptions {
-  const factory FirebasePlatformException() = _$FirebasePlatformExceptionImpl;
-}
-
-/// @nodoc
-abstract class _$$BadRequestImplCopyWith<$Res> {
-  factory _$$BadRequestImplCopyWith(
-          _$BadRequestImpl value, $Res Function(_$BadRequestImpl) then) =
-      __$$BadRequestImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String reason});
-}
-
-/// @nodoc
-class __$$BadRequestImplCopyWithImpl<$Res>
-    extends _$NetworkExceptionsCopyWithImpl<$Res, _$BadRequestImpl>
-    implements _$$BadRequestImplCopyWith<$Res> {
-  __$$BadRequestImplCopyWithImpl(
-      _$BadRequestImpl _value, $Res Function(_$BadRequestImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? reason = null,
-  }) {
-    return _then(_$BadRequestImpl(
-      null == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$BadRequestImpl with DiagnosticableTreeMixin implements BadRequest {
-  const _$BadRequestImpl(this.reason);
-
-  @override
-  final String reason;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworkExceptions.badRequest(reason: $reason)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'NetworkExceptions.badRequest'))
-      ..add(DiagnosticsProperty('reason', reason));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BadRequestImpl &&
-            (identical(other.reason, reason) || other.reason == reason));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, reason);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BadRequestImplCopyWith<_$BadRequestImpl> get copyWith =>
-      __$$BadRequestImplCopyWithImpl<_$BadRequestImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
-    required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
-    required TResult Function(String reason) notFound,
-    required TResult Function() methodNotAllowed,
-    required TResult Function() notAcceptable,
-    required TResult Function() requestTimeout,
-    required TResult Function() sendTimeout,
-    required TResult Function(String reason) unprocessableEntity,
-    required TResult Function() conflict,
-    required TResult Function() internalServerError,
-    required TResult Function() notImplemented,
-    required TResult Function() serviceUnavailable,
-    required TResult Function() noInternetConnection,
-    required TResult Function() formatException,
-    required TResult Function() unableToProcess,
-    required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
-  }) {
-    return badRequest(reason);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
-    TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
-    TResult? Function(String reason)? notFound,
-    TResult? Function()? methodNotAllowed,
-    TResult? Function()? notAcceptable,
-    TResult? Function()? requestTimeout,
-    TResult? Function()? sendTimeout,
-    TResult? Function(String reason)? unprocessableEntity,
-    TResult? Function()? conflict,
-    TResult? Function()? internalServerError,
-    TResult? Function()? notImplemented,
-    TResult? Function()? serviceUnavailable,
-    TResult? Function()? noInternetConnection,
-    TResult? Function()? formatException,
-    TResult? Function()? unableToProcess,
-    TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
-  }) {
-    return badRequest?.call(reason);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
-    TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
-    TResult Function(String reason)? notFound,
-    TResult Function()? methodNotAllowed,
-    TResult Function()? notAcceptable,
-    TResult Function()? requestTimeout,
-    TResult Function()? sendTimeout,
-    TResult Function(String reason)? unprocessableEntity,
-    TResult Function()? conflict,
-    TResult Function()? internalServerError,
-    TResult Function()? notImplemented,
-    TResult Function()? serviceUnavailable,
-    TResult Function()? noInternetConnection,
-    TResult Function()? formatException,
-    TResult Function()? unableToProcess,
-    TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (badRequest != null) {
-      return badRequest(reason);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
-    required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
-    required TResult Function(NotFound value) notFound,
-    required TResult Function(MethodNotAllowed value) methodNotAllowed,
-    required TResult Function(NotAcceptable value) notAcceptable,
-    required TResult Function(RequestTimeout value) requestTimeout,
-    required TResult Function(SendTimeout value) sendTimeout,
-    required TResult Function(UnprocessableEntity value) unprocessableEntity,
-    required TResult Function(Conflict value) conflict,
-    required TResult Function(InternalServerError value) internalServerError,
-    required TResult Function(NotImplemented value) notImplemented,
-    required TResult Function(ServiceUnavailable value) serviceUnavailable,
-    required TResult Function(NoInternetConnection value) noInternetConnection,
-    required TResult Function(FormatException value) formatException,
-    required TResult Function(UnableToProcess value) unableToProcess,
-    required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
-  }) {
-    return badRequest(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
-    TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
-    TResult? Function(NotFound value)? notFound,
-    TResult? Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult? Function(NotAcceptable value)? notAcceptable,
-    TResult? Function(RequestTimeout value)? requestTimeout,
-    TResult? Function(SendTimeout value)? sendTimeout,
-    TResult? Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult? Function(Conflict value)? conflict,
-    TResult? Function(InternalServerError value)? internalServerError,
-    TResult? Function(NotImplemented value)? notImplemented,
-    TResult? Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult? Function(NoInternetConnection value)? noInternetConnection,
-    TResult? Function(FormatException value)? formatException,
-    TResult? Function(UnableToProcess value)? unableToProcess,
-    TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
-  }) {
-    return badRequest?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
-    TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
-    TResult Function(NotFound value)? notFound,
-    TResult Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult Function(NotAcceptable value)? notAcceptable,
-    TResult Function(RequestTimeout value)? requestTimeout,
-    TResult Function(SendTimeout value)? sendTimeout,
-    TResult Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult Function(Conflict value)? conflict,
-    TResult Function(InternalServerError value)? internalServerError,
-    TResult Function(NotImplemented value)? notImplemented,
-    TResult Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult Function(NoInternetConnection value)? noInternetConnection,
-    TResult Function(FormatException value)? formatException,
-    TResult Function(UnableToProcess value)? unableToProcess,
-    TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (badRequest != null) {
-      return badRequest(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class BadRequest implements NetworkExceptions {
-  const factory BadRequest(final String reason) = _$BadRequestImpl;
-
-  String get reason;
-  @JsonKey(ignore: true)
-  _$$BadRequestImplCopyWith<_$BadRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1214,11 +454,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1233,7 +471,6 @@ class _$UnauthorizedRequestImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return unauthorizedRequest(reason);
   }
@@ -1242,11 +479,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1261,7 +496,6 @@ class _$UnauthorizedRequestImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return unauthorizedRequest?.call(reason);
   }
@@ -1270,11 +504,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1289,7 +521,6 @@ class _$UnauthorizedRequestImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (unauthorizedRequest != null) {
@@ -1302,12 +533,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -1322,7 +550,6 @@ class _$UnauthorizedRequestImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return unauthorizedRequest(this);
   }
@@ -1331,12 +558,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -1351,7 +575,6 @@ class _$UnauthorizedRequestImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return unauthorizedRequest?.call(this);
   }
@@ -1360,12 +583,9 @@ class _$UnauthorizedRequestImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -1380,7 +600,6 @@ class _$UnauthorizedRequestImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (unauthorizedRequest != null) {
@@ -1401,41 +620,41 @@ abstract class UnauthorizedRequest implements NetworkExceptions {
 }
 
 /// @nodoc
-abstract class _$$ForbiddenImplCopyWith<$Res> {
-  factory _$$ForbiddenImplCopyWith(
-          _$ForbiddenImpl value, $Res Function(_$ForbiddenImpl) then) =
-      __$$ForbiddenImplCopyWithImpl<$Res>;
+abstract class _$$BadRequestImplCopyWith<$Res> {
+  factory _$$BadRequestImplCopyWith(
+          _$BadRequestImpl value, $Res Function(_$BadRequestImpl) then) =
+      __$$BadRequestImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ForbiddenImplCopyWithImpl<$Res>
-    extends _$NetworkExceptionsCopyWithImpl<$Res, _$ForbiddenImpl>
-    implements _$$ForbiddenImplCopyWith<$Res> {
-  __$$ForbiddenImplCopyWithImpl(
-      _$ForbiddenImpl _value, $Res Function(_$ForbiddenImpl) _then)
+class __$$BadRequestImplCopyWithImpl<$Res>
+    extends _$NetworkExceptionsCopyWithImpl<$Res, _$BadRequestImpl>
+    implements _$$BadRequestImplCopyWith<$Res> {
+  __$$BadRequestImplCopyWithImpl(
+      _$BadRequestImpl _value, $Res Function(_$BadRequestImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
-  const _$ForbiddenImpl();
+class _$BadRequestImpl with DiagnosticableTreeMixin implements BadRequest {
+  const _$BadRequestImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworkExceptions.forbidden()';
+    return 'NetworkExceptions.badRequest()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'NetworkExceptions.forbidden'));
+    properties.add(DiagnosticsProperty('type', 'NetworkExceptions.badRequest'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ForbiddenImpl);
+        (other.runtimeType == runtimeType && other is _$BadRequestImpl);
   }
 
   @override
@@ -1445,11 +664,9 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1464,20 +681,17 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
-    return forbidden();
+    return badRequest();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1492,20 +706,17 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
-    return forbidden?.call();
+    return badRequest?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1520,11 +731,10 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
-    if (forbidden != null) {
-      return forbidden();
+    if (badRequest != null) {
+      return badRequest();
     }
     return orElse();
   }
@@ -1533,12 +743,9 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -1553,21 +760,17 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
-    return forbidden(this);
+    return badRequest(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -1582,21 +785,17 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
-    return forbidden?.call(this);
+    return badRequest?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -1611,18 +810,254 @@ class _$ForbiddenImpl with DiagnosticableTreeMixin implements Forbidden {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
-    if (forbidden != null) {
-      return forbidden(this);
+    if (badRequest != null) {
+      return badRequest(this);
     }
     return orElse();
   }
 }
 
-abstract class Forbidden implements NetworkExceptions {
-  const factory Forbidden() = _$ForbiddenImpl;
+abstract class BadRequest implements NetworkExceptions {
+  const factory BadRequest() = _$BadRequestImpl;
+}
+
+/// @nodoc
+abstract class _$$BadResponseImplCopyWith<$Res> {
+  factory _$$BadResponseImplCopyWith(
+          _$BadResponseImpl value, $Res Function(_$BadResponseImpl) then) =
+      __$$BadResponseImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String reason});
+}
+
+/// @nodoc
+class __$$BadResponseImplCopyWithImpl<$Res>
+    extends _$NetworkExceptionsCopyWithImpl<$Res, _$BadResponseImpl>
+    implements _$$BadResponseImplCopyWith<$Res> {
+  __$$BadResponseImplCopyWithImpl(
+      _$BadResponseImpl _value, $Res Function(_$BadResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reason = null,
+  }) {
+    return _then(_$BadResponseImpl(
+      null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$BadResponseImpl with DiagnosticableTreeMixin implements BadResponse {
+  const _$BadResponseImpl(this.reason);
+
+  @override
+  final String reason;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'NetworkExceptions.badResponse(reason: $reason)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'NetworkExceptions.badResponse'))
+      ..add(DiagnosticsProperty('reason', reason));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BadResponseImpl &&
+            (identical(other.reason, reason) || other.reason == reason));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reason);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BadResponseImplCopyWith<_$BadResponseImpl> get copyWith =>
+      __$$BadResponseImplCopyWithImpl<_$BadResponseImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() requestCancelled,
+    required TResult Function(String reason) unauthorizedRequest,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
+    required TResult Function(String reason) notFound,
+    required TResult Function() methodNotAllowed,
+    required TResult Function() notAcceptable,
+    required TResult Function() requestTimeout,
+    required TResult Function() sendTimeout,
+    required TResult Function(String reason) unprocessableEntity,
+    required TResult Function() conflict,
+    required TResult Function() internalServerError,
+    required TResult Function() notImplemented,
+    required TResult Function() serviceUnavailable,
+    required TResult Function() noInternetConnection,
+    required TResult Function() formatException,
+    required TResult Function() unableToProcess,
+    required TResult Function(String error) defaultError,
+  }) {
+    return badResponse(reason);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? requestCancelled,
+    TResult? Function(String reason)? unauthorizedRequest,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
+    TResult? Function(String reason)? notFound,
+    TResult? Function()? methodNotAllowed,
+    TResult? Function()? notAcceptable,
+    TResult? Function()? requestTimeout,
+    TResult? Function()? sendTimeout,
+    TResult? Function(String reason)? unprocessableEntity,
+    TResult? Function()? conflict,
+    TResult? Function()? internalServerError,
+    TResult? Function()? notImplemented,
+    TResult? Function()? serviceUnavailable,
+    TResult? Function()? noInternetConnection,
+    TResult? Function()? formatException,
+    TResult? Function()? unableToProcess,
+    TResult? Function(String error)? defaultError,
+  }) {
+    return badResponse?.call(reason);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? requestCancelled,
+    TResult Function(String reason)? unauthorizedRequest,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
+    TResult Function(String reason)? notFound,
+    TResult Function()? methodNotAllowed,
+    TResult Function()? notAcceptable,
+    TResult Function()? requestTimeout,
+    TResult Function()? sendTimeout,
+    TResult Function(String reason)? unprocessableEntity,
+    TResult Function()? conflict,
+    TResult Function()? internalServerError,
+    TResult Function()? notImplemented,
+    TResult Function()? serviceUnavailable,
+    TResult Function()? noInternetConnection,
+    TResult Function()? formatException,
+    TResult Function()? unableToProcess,
+    TResult Function(String error)? defaultError,
+    required TResult orElse(),
+  }) {
+    if (badResponse != null) {
+      return badResponse(reason);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestCancelled value) requestCancelled,
+    required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
+    required TResult Function(NotFound value) notFound,
+    required TResult Function(MethodNotAllowed value) methodNotAllowed,
+    required TResult Function(NotAcceptable value) notAcceptable,
+    required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(SendTimeout value) sendTimeout,
+    required TResult Function(UnprocessableEntity value) unprocessableEntity,
+    required TResult Function(Conflict value) conflict,
+    required TResult Function(InternalServerError value) internalServerError,
+    required TResult Function(NotImplemented value) notImplemented,
+    required TResult Function(ServiceUnavailable value) serviceUnavailable,
+    required TResult Function(NoInternetConnection value) noInternetConnection,
+    required TResult Function(FormatException value) formatException,
+    required TResult Function(UnableToProcess value) unableToProcess,
+    required TResult Function(DefaultError value) defaultError,
+  }) {
+    return badResponse(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RequestCancelled value)? requestCancelled,
+    TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
+    TResult? Function(NotFound value)? notFound,
+    TResult? Function(MethodNotAllowed value)? methodNotAllowed,
+    TResult? Function(NotAcceptable value)? notAcceptable,
+    TResult? Function(RequestTimeout value)? requestTimeout,
+    TResult? Function(SendTimeout value)? sendTimeout,
+    TResult? Function(UnprocessableEntity value)? unprocessableEntity,
+    TResult? Function(Conflict value)? conflict,
+    TResult? Function(InternalServerError value)? internalServerError,
+    TResult? Function(NotImplemented value)? notImplemented,
+    TResult? Function(ServiceUnavailable value)? serviceUnavailable,
+    TResult? Function(NoInternetConnection value)? noInternetConnection,
+    TResult? Function(FormatException value)? formatException,
+    TResult? Function(UnableToProcess value)? unableToProcess,
+    TResult? Function(DefaultError value)? defaultError,
+  }) {
+    return badResponse?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestCancelled value)? requestCancelled,
+    TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
+    TResult Function(NotFound value)? notFound,
+    TResult Function(MethodNotAllowed value)? methodNotAllowed,
+    TResult Function(NotAcceptable value)? notAcceptable,
+    TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(SendTimeout value)? sendTimeout,
+    TResult Function(UnprocessableEntity value)? unprocessableEntity,
+    TResult Function(Conflict value)? conflict,
+    TResult Function(InternalServerError value)? internalServerError,
+    TResult Function(NotImplemented value)? notImplemented,
+    TResult Function(ServiceUnavailable value)? serviceUnavailable,
+    TResult Function(NoInternetConnection value)? noInternetConnection,
+    TResult Function(FormatException value)? formatException,
+    TResult Function(UnableToProcess value)? unableToProcess,
+    TResult Function(DefaultError value)? defaultError,
+    required TResult orElse(),
+  }) {
+    if (badResponse != null) {
+      return badResponse(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class BadResponse implements NetworkExceptions {
+  const factory BadResponse(final String reason) = _$BadResponseImpl;
+
+  String get reason;
+  @JsonKey(ignore: true)
+  _$$BadResponseImplCopyWith<_$BadResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1698,11 +1133,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1717,7 +1150,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return notFound(reason);
   }
@@ -1726,11 +1158,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1745,7 +1175,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return notFound?.call(reason);
   }
@@ -1754,11 +1183,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1773,7 +1200,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (notFound != null) {
@@ -1786,12 +1212,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -1806,7 +1229,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return notFound(this);
   }
@@ -1815,12 +1237,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -1835,7 +1254,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return notFound?.call(this);
   }
@@ -1844,12 +1262,9 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -1864,7 +1279,6 @@ class _$NotFoundImpl with DiagnosticableTreeMixin implements NotFound {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (notFound != null) {
@@ -1931,11 +1345,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1950,7 +1362,6 @@ class _$MethodNotAllowedImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return methodNotAllowed();
   }
@@ -1959,11 +1370,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1978,7 +1387,6 @@ class _$MethodNotAllowedImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return methodNotAllowed?.call();
   }
@@ -1987,11 +1395,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2006,7 +1412,6 @@ class _$MethodNotAllowedImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (methodNotAllowed != null) {
@@ -2019,12 +1424,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -2039,7 +1441,6 @@ class _$MethodNotAllowedImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return methodNotAllowed(this);
   }
@@ -2048,12 +1449,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -2068,7 +1466,6 @@ class _$MethodNotAllowedImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return methodNotAllowed?.call(this);
   }
@@ -2077,12 +1474,9 @@ class _$MethodNotAllowedImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -2097,7 +1491,6 @@ class _$MethodNotAllowedImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (methodNotAllowed != null) {
@@ -2159,11 +1552,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2178,7 +1569,6 @@ class _$NotAcceptableImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return notAcceptable();
   }
@@ -2187,11 +1577,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2206,7 +1594,6 @@ class _$NotAcceptableImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return notAcceptable?.call();
   }
@@ -2215,11 +1602,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2234,7 +1619,6 @@ class _$NotAcceptableImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (notAcceptable != null) {
@@ -2247,12 +1631,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -2267,7 +1648,6 @@ class _$NotAcceptableImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return notAcceptable(this);
   }
@@ -2276,12 +1656,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -2296,7 +1673,6 @@ class _$NotAcceptableImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return notAcceptable?.call(this);
   }
@@ -2305,12 +1681,9 @@ class _$NotAcceptableImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -2325,7 +1698,6 @@ class _$NotAcceptableImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (notAcceptable != null) {
@@ -2387,11 +1759,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2406,7 +1776,6 @@ class _$RequestTimeoutImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return requestTimeout();
   }
@@ -2415,11 +1784,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2434,7 +1801,6 @@ class _$RequestTimeoutImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return requestTimeout?.call();
   }
@@ -2443,11 +1809,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2462,7 +1826,6 @@ class _$RequestTimeoutImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (requestTimeout != null) {
@@ -2475,12 +1838,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -2495,7 +1855,6 @@ class _$RequestTimeoutImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return requestTimeout(this);
   }
@@ -2504,12 +1863,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -2524,7 +1880,6 @@ class _$RequestTimeoutImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return requestTimeout?.call(this);
   }
@@ -2533,12 +1888,9 @@ class _$RequestTimeoutImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -2553,7 +1905,6 @@ class _$RequestTimeoutImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (requestTimeout != null) {
@@ -2613,11 +1964,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2632,7 +1981,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return sendTimeout();
   }
@@ -2641,11 +1989,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2660,7 +2006,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return sendTimeout?.call();
   }
@@ -2669,11 +2014,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2688,7 +2031,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (sendTimeout != null) {
@@ -2701,12 +2043,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -2721,7 +2060,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return sendTimeout(this);
   }
@@ -2730,12 +2068,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -2750,7 +2085,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return sendTimeout?.call(this);
   }
@@ -2759,12 +2093,9 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -2779,7 +2110,6 @@ class _$SendTimeoutImpl with DiagnosticableTreeMixin implements SendTimeout {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (sendTimeout != null) {
@@ -2870,11 +2200,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2889,7 +2217,6 @@ class _$UnprocessableEntityImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return unprocessableEntity(reason);
   }
@@ -2898,11 +2225,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2917,7 +2242,6 @@ class _$UnprocessableEntityImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return unprocessableEntity?.call(reason);
   }
@@ -2926,11 +2250,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2945,7 +2267,6 @@ class _$UnprocessableEntityImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (unprocessableEntity != null) {
@@ -2958,12 +2279,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -2978,7 +2296,6 @@ class _$UnprocessableEntityImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return unprocessableEntity(this);
   }
@@ -2987,12 +2304,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -3007,7 +2321,6 @@ class _$UnprocessableEntityImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return unprocessableEntity?.call(this);
   }
@@ -3016,12 +2329,9 @@ class _$UnprocessableEntityImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -3036,7 +2346,6 @@ class _$UnprocessableEntityImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (unprocessableEntity != null) {
@@ -3101,11 +2410,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3120,7 +2427,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return conflict();
   }
@@ -3129,11 +2435,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3148,7 +2452,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return conflict?.call();
   }
@@ -3157,11 +2460,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3176,7 +2477,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (conflict != null) {
@@ -3189,12 +2489,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -3209,7 +2506,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return conflict(this);
   }
@@ -3218,12 +2514,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -3238,7 +2531,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return conflict?.call(this);
   }
@@ -3247,12 +2539,9 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -3267,7 +2556,6 @@ class _$ConflictImpl with DiagnosticableTreeMixin implements Conflict {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (conflict != null) {
@@ -3330,11 +2618,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3349,7 +2635,6 @@ class _$InternalServerErrorImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return internalServerError();
   }
@@ -3358,11 +2643,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3377,7 +2660,6 @@ class _$InternalServerErrorImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return internalServerError?.call();
   }
@@ -3386,11 +2668,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3405,7 +2685,6 @@ class _$InternalServerErrorImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (internalServerError != null) {
@@ -3418,12 +2697,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -3438,7 +2714,6 @@ class _$InternalServerErrorImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return internalServerError(this);
   }
@@ -3447,12 +2722,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -3467,7 +2739,6 @@ class _$InternalServerErrorImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return internalServerError?.call(this);
   }
@@ -3476,12 +2747,9 @@ class _$InternalServerErrorImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -3496,7 +2764,6 @@ class _$InternalServerErrorImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (internalServerError != null) {
@@ -3558,11 +2825,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3577,7 +2842,6 @@ class _$NotImplementedImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return notImplemented();
   }
@@ -3586,11 +2850,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3605,7 +2867,6 @@ class _$NotImplementedImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return notImplemented?.call();
   }
@@ -3614,11 +2875,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3633,7 +2892,6 @@ class _$NotImplementedImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (notImplemented != null) {
@@ -3646,12 +2904,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -3666,7 +2921,6 @@ class _$NotImplementedImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return notImplemented(this);
   }
@@ -3675,12 +2929,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -3695,7 +2946,6 @@ class _$NotImplementedImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return notImplemented?.call(this);
   }
@@ -3704,12 +2954,9 @@ class _$NotImplementedImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -3724,7 +2971,6 @@ class _$NotImplementedImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (notImplemented != null) {
@@ -3786,11 +3032,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3805,7 +3049,6 @@ class _$ServiceUnavailableImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return serviceUnavailable();
   }
@@ -3814,11 +3057,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3833,7 +3074,6 @@ class _$ServiceUnavailableImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return serviceUnavailable?.call();
   }
@@ -3842,11 +3082,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3861,7 +3099,6 @@ class _$ServiceUnavailableImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -3874,12 +3111,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -3894,7 +3128,6 @@ class _$ServiceUnavailableImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return serviceUnavailable(this);
   }
@@ -3903,12 +3136,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -3923,7 +3153,6 @@ class _$ServiceUnavailableImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return serviceUnavailable?.call(this);
   }
@@ -3932,12 +3161,9 @@ class _$ServiceUnavailableImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -3952,7 +3178,6 @@ class _$ServiceUnavailableImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (serviceUnavailable != null) {
@@ -4015,11 +3240,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -4034,7 +3257,6 @@ class _$NoInternetConnectionImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return noInternetConnection();
   }
@@ -4043,11 +3265,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -4062,7 +3282,6 @@ class _$NoInternetConnectionImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return noInternetConnection?.call();
   }
@@ -4071,11 +3290,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -4090,7 +3307,6 @@ class _$NoInternetConnectionImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (noInternetConnection != null) {
@@ -4103,12 +3319,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -4123,7 +3336,6 @@ class _$NoInternetConnectionImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return noInternetConnection(this);
   }
@@ -4132,12 +3344,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -4152,7 +3361,6 @@ class _$NoInternetConnectionImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return noInternetConnection?.call(this);
   }
@@ -4161,12 +3369,9 @@ class _$NoInternetConnectionImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -4181,7 +3386,6 @@ class _$NoInternetConnectionImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (noInternetConnection != null) {
@@ -4243,11 +3447,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -4262,7 +3464,6 @@ class _$FormatExceptionImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return formatException();
   }
@@ -4271,11 +3472,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -4290,7 +3489,6 @@ class _$FormatExceptionImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return formatException?.call();
   }
@@ -4299,11 +3497,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -4318,7 +3514,6 @@ class _$FormatExceptionImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (formatException != null) {
@@ -4331,12 +3526,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -4351,7 +3543,6 @@ class _$FormatExceptionImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return formatException(this);
   }
@@ -4360,12 +3551,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -4380,7 +3568,6 @@ class _$FormatExceptionImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return formatException?.call(this);
   }
@@ -4389,12 +3576,9 @@ class _$FormatExceptionImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -4409,7 +3593,6 @@ class _$FormatExceptionImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (formatException != null) {
@@ -4471,11 +3654,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -4490,7 +3671,6 @@ class _$UnableToProcessImpl
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return unableToProcess();
   }
@@ -4499,11 +3679,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -4518,7 +3696,6 @@ class _$UnableToProcessImpl
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return unableToProcess?.call();
   }
@@ -4527,11 +3704,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -4546,7 +3721,6 @@ class _$UnableToProcessImpl
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (unableToProcess != null) {
@@ -4559,12 +3733,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -4579,7 +3750,6 @@ class _$UnableToProcessImpl
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return unableToProcess(this);
   }
@@ -4588,12 +3758,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -4608,7 +3775,6 @@ class _$UnableToProcessImpl
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return unableToProcess?.call(this);
   }
@@ -4617,12 +3783,9 @@ class _$UnableToProcessImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -4637,7 +3800,6 @@ class _$UnableToProcessImpl
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (unableToProcess != null) {
@@ -4724,11 +3886,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) badResponse,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -4743,7 +3903,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     required TResult Function() formatException,
     required TResult Function() unableToProcess,
     required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
   }) {
     return defaultError(error);
   }
@@ -4752,11 +3911,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
+    TResult? Function()? badRequest,
+    TResult? Function(String reason)? badResponse,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -4771,7 +3928,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     TResult? Function()? formatException,
     TResult? Function()? unableToProcess,
     TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
   }) {
     return defaultError?.call(error);
   }
@@ -4780,11 +3936,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? badResponse,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -4799,7 +3953,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     TResult Function()? formatException,
     TResult Function()? unableToProcess,
     TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
     required TResult orElse(),
   }) {
     if (defaultError != null) {
@@ -4812,12 +3965,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
     required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(BadResponse value) badResponse,
     required TResult Function(NotFound value) notFound,
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
@@ -4832,7 +3982,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     required TResult Function(FormatException value) formatException,
     required TResult Function(UnableToProcess value) unableToProcess,
     required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
   }) {
     return defaultError(this);
   }
@@ -4841,12 +3990,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
     TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
+    TResult? Function(BadRequest value)? badRequest,
+    TResult? Function(BadResponse value)? badResponse,
     TResult? Function(NotFound value)? notFound,
     TResult? Function(MethodNotAllowed value)? methodNotAllowed,
     TResult? Function(NotAcceptable value)? notAcceptable,
@@ -4861,7 +4007,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     TResult? Function(FormatException value)? formatException,
     TResult? Function(UnableToProcess value)? unableToProcess,
     TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
   }) {
     return defaultError?.call(this);
   }
@@ -4870,12 +4015,9 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
     TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(BadResponse value)? badResponse,
     TResult Function(NotFound value)? notFound,
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
@@ -4890,7 +4032,6 @@ class _$DefaultErrorImpl with DiagnosticableTreeMixin implements DefaultError {
     TResult Function(FormatException value)? formatException,
     TResult Function(UnableToProcess value)? unableToProcess,
     TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
     required TResult orElse(),
   }) {
     if (defaultError != null) {
@@ -4907,232 +4048,4 @@ abstract class DefaultError implements NetworkExceptions {
   @JsonKey(ignore: true)
   _$$DefaultErrorImplCopyWith<_$DefaultErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UnexpectedErrorImplCopyWith<$Res> {
-  factory _$$UnexpectedErrorImplCopyWith(_$UnexpectedErrorImpl value,
-          $Res Function(_$UnexpectedErrorImpl) then) =
-      __$$UnexpectedErrorImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UnexpectedErrorImplCopyWithImpl<$Res>
-    extends _$NetworkExceptionsCopyWithImpl<$Res, _$UnexpectedErrorImpl>
-    implements _$$UnexpectedErrorImplCopyWith<$Res> {
-  __$$UnexpectedErrorImplCopyWithImpl(
-      _$UnexpectedErrorImpl _value, $Res Function(_$UnexpectedErrorImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$UnexpectedErrorImpl
-    with DiagnosticableTreeMixin
-    implements UnexpectedError {
-  const _$UnexpectedErrorImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NetworkExceptions.unexpectedError()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'NetworkExceptions.unexpectedError'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UnexpectedErrorImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() requestCancelled,
-    required TResult Function() canceledByUser,
-    required TResult Function() firebasePlatformException,
-    required TResult Function(String reason) badRequest,
-    required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() forbidden,
-    required TResult Function(String reason) notFound,
-    required TResult Function() methodNotAllowed,
-    required TResult Function() notAcceptable,
-    required TResult Function() requestTimeout,
-    required TResult Function() sendTimeout,
-    required TResult Function(String reason) unprocessableEntity,
-    required TResult Function() conflict,
-    required TResult Function() internalServerError,
-    required TResult Function() notImplemented,
-    required TResult Function() serviceUnavailable,
-    required TResult Function() noInternetConnection,
-    required TResult Function() formatException,
-    required TResult Function() unableToProcess,
-    required TResult Function(String error) defaultError,
-    required TResult Function() unexpectedError,
-  }) {
-    return unexpectedError();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? requestCancelled,
-    TResult? Function()? canceledByUser,
-    TResult? Function()? firebasePlatformException,
-    TResult? Function(String reason)? badRequest,
-    TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? forbidden,
-    TResult? Function(String reason)? notFound,
-    TResult? Function()? methodNotAllowed,
-    TResult? Function()? notAcceptable,
-    TResult? Function()? requestTimeout,
-    TResult? Function()? sendTimeout,
-    TResult? Function(String reason)? unprocessableEntity,
-    TResult? Function()? conflict,
-    TResult? Function()? internalServerError,
-    TResult? Function()? notImplemented,
-    TResult? Function()? serviceUnavailable,
-    TResult? Function()? noInternetConnection,
-    TResult? Function()? formatException,
-    TResult? Function()? unableToProcess,
-    TResult? Function(String error)? defaultError,
-    TResult? Function()? unexpectedError,
-  }) {
-    return unexpectedError?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? requestCancelled,
-    TResult Function()? canceledByUser,
-    TResult Function()? firebasePlatformException,
-    TResult Function(String reason)? badRequest,
-    TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? forbidden,
-    TResult Function(String reason)? notFound,
-    TResult Function()? methodNotAllowed,
-    TResult Function()? notAcceptable,
-    TResult Function()? requestTimeout,
-    TResult Function()? sendTimeout,
-    TResult Function(String reason)? unprocessableEntity,
-    TResult Function()? conflict,
-    TResult Function()? internalServerError,
-    TResult Function()? notImplemented,
-    TResult Function()? serviceUnavailable,
-    TResult Function()? noInternetConnection,
-    TResult Function()? formatException,
-    TResult Function()? unableToProcess,
-    TResult Function(String error)? defaultError,
-    TResult Function()? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (unexpectedError != null) {
-      return unexpectedError();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RequestCancelled value) requestCancelled,
-    required TResult Function(CanceledByUser value) canceledByUser,
-    required TResult Function(FirebasePlatformException value)
-        firebasePlatformException,
-    required TResult Function(BadRequest value) badRequest,
-    required TResult Function(UnauthorizedRequest value) unauthorizedRequest,
-    required TResult Function(Forbidden value) forbidden,
-    required TResult Function(NotFound value) notFound,
-    required TResult Function(MethodNotAllowed value) methodNotAllowed,
-    required TResult Function(NotAcceptable value) notAcceptable,
-    required TResult Function(RequestTimeout value) requestTimeout,
-    required TResult Function(SendTimeout value) sendTimeout,
-    required TResult Function(UnprocessableEntity value) unprocessableEntity,
-    required TResult Function(Conflict value) conflict,
-    required TResult Function(InternalServerError value) internalServerError,
-    required TResult Function(NotImplemented value) notImplemented,
-    required TResult Function(ServiceUnavailable value) serviceUnavailable,
-    required TResult Function(NoInternetConnection value) noInternetConnection,
-    required TResult Function(FormatException value) formatException,
-    required TResult Function(UnableToProcess value) unableToProcess,
-    required TResult Function(DefaultError value) defaultError,
-    required TResult Function(UnexpectedError value) unexpectedError,
-  }) {
-    return unexpectedError(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RequestCancelled value)? requestCancelled,
-    TResult? Function(CanceledByUser value)? canceledByUser,
-    TResult? Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult? Function(BadRequest value)? badRequest,
-    TResult? Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult? Function(Forbidden value)? forbidden,
-    TResult? Function(NotFound value)? notFound,
-    TResult? Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult? Function(NotAcceptable value)? notAcceptable,
-    TResult? Function(RequestTimeout value)? requestTimeout,
-    TResult? Function(SendTimeout value)? sendTimeout,
-    TResult? Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult? Function(Conflict value)? conflict,
-    TResult? Function(InternalServerError value)? internalServerError,
-    TResult? Function(NotImplemented value)? notImplemented,
-    TResult? Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult? Function(NoInternetConnection value)? noInternetConnection,
-    TResult? Function(FormatException value)? formatException,
-    TResult? Function(UnableToProcess value)? unableToProcess,
-    TResult? Function(DefaultError value)? defaultError,
-    TResult? Function(UnexpectedError value)? unexpectedError,
-  }) {
-    return unexpectedError?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RequestCancelled value)? requestCancelled,
-    TResult Function(CanceledByUser value)? canceledByUser,
-    TResult Function(FirebasePlatformException value)?
-        firebasePlatformException,
-    TResult Function(BadRequest value)? badRequest,
-    TResult Function(UnauthorizedRequest value)? unauthorizedRequest,
-    TResult Function(Forbidden value)? forbidden,
-    TResult Function(NotFound value)? notFound,
-    TResult Function(MethodNotAllowed value)? methodNotAllowed,
-    TResult Function(NotAcceptable value)? notAcceptable,
-    TResult Function(RequestTimeout value)? requestTimeout,
-    TResult Function(SendTimeout value)? sendTimeout,
-    TResult Function(UnprocessableEntity value)? unprocessableEntity,
-    TResult Function(Conflict value)? conflict,
-    TResult Function(InternalServerError value)? internalServerError,
-    TResult Function(NotImplemented value)? notImplemented,
-    TResult Function(ServiceUnavailable value)? serviceUnavailable,
-    TResult Function(NoInternetConnection value)? noInternetConnection,
-    TResult Function(FormatException value)? formatException,
-    TResult Function(UnableToProcess value)? unableToProcess,
-    TResult Function(DefaultError value)? defaultError,
-    TResult Function(UnexpectedError value)? unexpectedError,
-    required TResult orElse(),
-  }) {
-    if (unexpectedError != null) {
-      return unexpectedError(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class UnexpectedError implements NetworkExceptions {
-  const factory UnexpectedError() = _$UnexpectedErrorImpl;
 }

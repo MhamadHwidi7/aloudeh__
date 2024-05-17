@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:aloudeh_company/core/error/error_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,204 +9,120 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'network_exceptions.freezed.dart';
 
 @freezed
-abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
+abstract class NetworkExceptions with _$NetworkExceptions implements Exception{
   const factory NetworkExceptions.requestCancelled() = RequestCancelled;
-  const factory NetworkExceptions.canceledByUser() = CanceledByUser;
-  const factory NetworkExceptions.firebasePlatformException() =
-      FirebasePlatformException;
-
-  const factory NetworkExceptions.badRequest(String reason) = BadRequest;
   const factory NetworkExceptions.unauthorizedRequest(String reason) =
       UnauthorizedRequest;
-  const factory NetworkExceptions.forbidden() = Forbidden;
-
+  const factory NetworkExceptions.badRequest() = BadRequest;
+  const factory NetworkExceptions.badResponse(String reason) = BadResponse;
   const factory NetworkExceptions.notFound(String reason) = NotFound;
-
   const factory NetworkExceptions.methodNotAllowed() = MethodNotAllowed;
-
   const factory NetworkExceptions.notAcceptable() = NotAcceptable;
-
   const factory NetworkExceptions.requestTimeout() = RequestTimeout;
-
   const factory NetworkExceptions.sendTimeout() = SendTimeout;
-
   const factory NetworkExceptions.unprocessableEntity(String reason) =
       UnprocessableEntity;
-
   const factory NetworkExceptions.conflict() = Conflict;
-
-  const factory NetworkExceptions.internalServerError() = InternalServerError;
-
+  const factory NetworkExceptions.internalServerError() =
+      InternalServerError;
   const factory NetworkExceptions.notImplemented() = NotImplemented;
-
   const factory NetworkExceptions.serviceUnavailable() = ServiceUnavailable;
-
   const factory NetworkExceptions.noInternetConnection() = NoInternetConnection;
-
   const factory NetworkExceptions.formatException() = FormatException;
-
   const factory NetworkExceptions.unableToProcess() = UnableToProcess;
-
   const factory NetworkExceptions.defaultError(String error) = DefaultError;
-
-  const factory NetworkExceptions.unexpectedError() = UnexpectedError;
-
   static NetworkExceptions handleResponse(Response? response) {
-    int statusCode = response?.statusCode ?? 0;
+   ErrorModel errorModel;
+  
+  if (response?.data is String) {
+    Map<String, dynamic> responseData = json.decode(response!.data);
+    errorModel = ErrorModel.fromJson(responseData);
+  } else {
+    errorModel = ErrorModel.fromJson(response?.data);
+  }
 
+ 
+    int statusCode = response?.statusCode ?? 0;
     switch (statusCode) {
       case 400:
-        return const NetworkExceptions.badRequest('bad request');
+        return NetworkExceptions.badResponse(errorModel.message);
       case 401:
-        return const NetworkExceptions.unauthorizedRequest('unauthorized');
       case 403:
-        return const NetworkExceptions.forbidden();
-
+        return NetworkExceptions.unauthorizedRequest(errorModel.message);
       case 404:
-        return const NetworkExceptions.notFound('not found');
-      case 405:
-        return const NetworkExceptions.methodNotAllowed();
+        return NetworkExceptions.notFound(errorModel.message);
       case 409:
         return const NetworkExceptions.conflict();
       case 408:
         return const NetworkExceptions.requestTimeout();
       case 422:
-        return const NetworkExceptions.unprocessableEntity('invalid data');
+        return NetworkExceptions.unprocessableEntity(errorModel.message);
       case 500:
         return const NetworkExceptions.internalServerError();
       case 503:
         return const NetworkExceptions.serviceUnavailable();
       default:
-        int responseCode = statusCode;
         return NetworkExceptions.defaultError(
-          'Received invalid status code: $responseCode',
+          "Received invalid status code: $statusCode",
         );
     }
   }
 
-  static NetworkExceptions getException(error) {
+  static NetworkExceptions getDioException(error) {
     if (error is Exception) {
       try {
-        NetworkExceptions networkExceptions;
-
         if (error is DioException) {
           switch (error.type) {
             case DioExceptionType.cancel:
-              networkExceptions = const NetworkExceptions.requestCancelled();
-              break;
-            case DioExceptionType.connectionTimeout:
-              networkExceptions = const NetworkExceptions.requestTimeout();
-              break;
-            case DioExceptionType.unknown:
-              networkExceptions =
-                  const NetworkExceptions.noInternetConnection();
-              break;
+              return const NetworkExceptions.requestCancelled();
             case DioExceptionType.receiveTimeout:
-              networkExceptions = const NetworkExceptions.sendTimeout();
-              break;
-            case DioExceptionType.badResponse:
-              networkExceptions =
-                  NetworkExceptions.handleResponse(error.response);
-              break;
-
+              return const NetworkExceptions.requestTimeout();
             case DioExceptionType.sendTimeout:
-              networkExceptions = const NetworkExceptions.sendTimeout();
-              break;
-            case DioExceptionType.badCertificate:
-              networkExceptions = const NetworkExceptions.unableToProcess();
-              break;
-            case DioExceptionType.connectionError:
-              networkExceptions =
-                  const NetworkExceptions.noInternetConnection();
-              break;
+              return const NetworkExceptions.sendTimeout();
+            case DioExceptionType.receiveTimeout:
+              return const NetworkExceptions.sendTimeout();
+            case DioExceptionType.badResponse:
+              return handleResponse(error.response);
+            default:
+              return NetworkExceptions.defaultError(error.toString());
           }
         } else if (error is SocketException) {
-          networkExceptions = const NetworkExceptions.noInternetConnection();
+          return const NetworkExceptions.noInternetConnection();
         } else {
-          networkExceptions = const NetworkExceptions.unexpectedError();
+          return NetworkExceptions.defaultError(error.toString());
         }
-        return networkExceptions;
-      } on FormatException {
+      } on FormatException catch (_) {
         return const NetworkExceptions.formatException();
-      } catch (_) {
-        return const NetworkExceptions.unexpectedError();
       }
     } else {
-      if (error.toString().contains('is not a subtype of')) {
+      if (error.toString().contains("is not a subtype of")) {
         return const NetworkExceptions.unableToProcess();
       } else {
-        return const NetworkExceptions.unexpectedError();
+        return NetworkExceptions.defaultError(error.toString());
       }
     }
   }
 
   static String getErrorMessage(NetworkExceptions networkExceptions) {
-    String errorMessage = '';
-    networkExceptions.when(
-      notImplemented: () {
-        errorMessage = 'Not Implemented';
-      },
-      requestCancelled: () {
-        errorMessage = 'Request Cancelled';
-      },
-      internalServerError: () {
-        errorMessage = 'Internal Server Error';
-      },
-      notFound: (String reason) {
-        errorMessage = reason;
-      },
-      serviceUnavailable: () {
-        errorMessage = 'Service unavailable';
-      },
-      methodNotAllowed: () {
-        errorMessage = 'Method Not Allowed';
-      },
-      badRequest: (String message) {
-        errorMessage = message;
-      },
-      unauthorizedRequest: (String error) {
-        errorMessage = error;
-      },
-      unprocessableEntity: (String error) {
-        errorMessage = error;
-      },
-      unexpectedError: () {
-        errorMessage = 'Unexpected error occurred';
-      },
-      requestTimeout: () {
-        errorMessage = 'Connection request timeout';
-      },
-      noInternetConnection: () {
-        errorMessage = 'No internet connection';
-      },
-      conflict: () {
-        errorMessage = 'Error due to a conflict';
-      },
-      sendTimeout: () {
-        errorMessage = 'Send timeout in connection with API server';
-      },
-      unableToProcess: () {
-        errorMessage = 'Unable to process the data';
-      },
-      defaultError: (String error) {
-        errorMessage = error;
-      },
-      formatException: () {
-        errorMessage = 'Unexpected error occurred';
-      },
-      notAcceptable: () {
-        errorMessage = 'Not acceptable';
-      },
-      forbidden: () {
-        errorMessage = 'Forbidden';
-      },
-      firebasePlatformException: () {
-        errorMessage = 'Platform Exception';
-      },
-      canceledByUser: () {
-        errorMessage = 'Canceled By The User';
-      },
+    return networkExceptions.when(
+      notImplemented: () => "Not Implemented",
+      requestCancelled: () => "Request Cancelled",
+      internalServerError: () => "Internal Server Error",
+      notFound: (reason) => reason,
+      serviceUnavailable: () => "Service unavailable",
+      methodNotAllowed: () => "Method Not Allowed",
+      badRequest: () => "Please check your info",
+      unauthorizedRequest: (error) => error,
+      unprocessableEntity: (error) => error,
+      requestTimeout: () => "Connection request timeout",
+      noInternetConnection: () => "No internet connection",
+      conflict: () => "Error due to a conflict",
+      sendTimeout: () => "Send timeout in connection with API server",
+      unableToProcess: () => "Unable to process the data",
+      defaultError: (error) => error,
+      formatException: () => "Unexpected error occurred",
+      notAcceptable: () => "Not acceptable",
+      badResponse: (error) => error,
     );
-    return errorMessage;
   }
 }
