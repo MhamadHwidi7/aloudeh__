@@ -1,3 +1,148 @@
+// import 'dart:convert';
+
+// import 'package:aloudeh_company/core/api/api_consumer.dart';
+// import 'package:aloudeh_company/core/api/end_points.dart';
+// import 'package:aloudeh_company/core/api/logging_interceptor.dart';
+// import 'package:aloudeh_company/core/constants/strings_constants.dart';
+// import 'package:aloudeh_company/injection.dart';
+// import 'package:dio/dio.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:injectable/injectable.dart';
+
+
+// @Singleton(as: ApiConsumer)
+// class DioConsumer implements ApiConsumer {
+//   DioConsumer(
+//     this._client,
+//   ) {
+//     _client.options
+//       ..sendTimeout = const Duration(seconds: 10)
+//       ..connectTimeout = const Duration(seconds: 30)
+//       ..receiveTimeout = const Duration(seconds: 60)
+//       ..baseUrl = EndPoints.baseUrl
+//       ..responseType = ResponseType.plain
+//       ..followRedirects = true;
+//     if (kDebugMode) {
+//       _client.interceptors.add(
+//         getIt<LoggingInterceptor>(),
+//       );
+//     }
+//   }
+//   final Dio _client;
+//   late Map<String, String> _headers;
+
+//   void setHeaders() async {
+//     _headers = {
+//       StringsConstants.accept: StringsConstants.applicationJson,
+//       StringsConstants.contentType: StringsConstants.applicationJson,
+//     StringsConstants.authorization:"Bearer "
+//     };
+//   }
+
+//   @override
+//   Future get(
+//     String path, {
+//     Map<String, dynamic>? queryParameters,
+//     CancelToken? cancelToken,
+//   }) async {
+//     setHeaders();
+
+//     try {
+//       final Response response = await _client.get(
+//         path,
+//         queryParameters: queryParameters,
+//         cancelToken: cancelToken,
+//         options: Options(
+//           headers: _headers,
+//         ),
+//       );
+//       return _handleResponseAsJson(response);
+//     } catch (error) {
+//       rethrow;
+//     }
+//   }
+
+//   @override
+//   Future post(
+//     String path, {
+//     dynamic body,
+//     String? token,
+//     FormData? formData,
+//     ResponseType? responseType,
+//     Map<String, dynamic>? queryParameters,
+//   }) async {
+//     setHeaders();
+
+//     try {
+//       final Response response = await _client.post(
+//         path,
+//         queryParameters: queryParameters,
+//         options: Options(
+//           headers: _headers,
+//           contentType:
+//               formData == null ? StringsConstants.jsonContentType : null,
+//           responseType: responseType,
+//         ),
+//         data: formData ?? body,
+//       );
+//       return _handleResponseAsJson(response);
+//     } catch (error) {
+//       rethrow;
+//     }
+//   }
+
+//   @override
+//   Future put(
+//     String path, {
+//     Map<String, dynamic>? body,
+//     Map<String, dynamic>? queryParameters,
+//   }) async {
+//     setHeaders();
+//     try {
+//       final Response response = await _client.put(
+//         path,
+//         queryParameters: queryParameters,
+//         data: body,
+//         options: Options(
+//           headers: _headers,
+//           contentType: StringsConstants.jsonContentType,
+//         ),
+//       );
+//       return _handleResponseAsJson(response);
+//     } catch (error) {
+//       rethrow;
+//     }
+//   }
+
+//   dynamic _handleResponseAsJson(Response response) {
+//     final responseJson = jsonDecode(response.data.toString());
+//     return responseJson;
+//   }
+
+//   @override
+//   Future delete(String path,
+//       {Map<String, dynamic>? body,
+//       Map<String, dynamic>? queryParameters}) async {
+//     setHeaders();
+
+//     try {
+//       final Response response = await _client.delete(
+//         path,
+//         data: body,
+//         options: Options(
+//           headers: _headers,
+//           contentType: StringsConstants.jsonContentType,
+//         ),
+//       );
+//       return _handleResponseAsJson(response);
+//     } catch (error) {
+//       rethrow;
+//     }
+//   }
+// }
+
+
+//!Mark : check the code in this new optimize 
 import 'dart:convert';
 
 import 'package:aloudeh_company/core/api/api_consumer.dart';
@@ -8,7 +153,6 @@ import 'package:aloudeh_company/injection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-
 
 @Singleton(as: ApiConsumer)
 class DioConsumer implements ApiConsumer {
@@ -22,21 +166,20 @@ class DioConsumer implements ApiConsumer {
       ..baseUrl = EndPoints.baseUrl
       ..responseType = ResponseType.plain
       ..followRedirects = true;
+
     if (kDebugMode) {
-      _client.interceptors.add(
-        getIt<LoggingInterceptor>(),
-      );
+      _client.interceptors.add(getIt<LoggingInterceptor>());
     }
   }
-  final Dio _client;
-  late Map<String, String> _headers;
 
-  void setHeaders() async {
-    _headers = {
-      StringsConstants.accept: StringsConstants.applicationJson,
-      StringsConstants.contentType: StringsConstants.applicationJson,
-    };
-  }
+  final Dio _client;
+  final Map<String, String> _headers = {
+    StringsConstants.accept: StringsConstants.applicationJson,
+    StringsConstants.contentType: StringsConstants.applicationJson,
+    StringsConstants.authorization: "Bearer ",
+  };
+
+  Options get _defaultOptions => Options(headers: _headers);
 
   @override
   Future get(
@@ -44,21 +187,14 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
   }) async {
-    setHeaders();
-
-    try {
-      final Response response = await _client.get(
+    return _request(
+      () => _client.get(
         path,
         queryParameters: queryParameters,
         cancelToken: cancelToken,
-        options: Options(
-          headers: _headers,
-        ),
-      );
-      return _handleResponseAsJson(response);
-    } catch (error) {
-      rethrow;
-    }
+        options: _defaultOptions,
+      ),
+    );
   }
 
   @override
@@ -70,24 +206,19 @@ class DioConsumer implements ApiConsumer {
     ResponseType? responseType,
     Map<String, dynamic>? queryParameters,
   }) async {
-    setHeaders();
+    final options = _defaultOptions.copyWith(
+      contentType: formData == null ? StringsConstants.jsonContentType : null,
+      responseType: responseType,
+    );
 
-    try {
-      final Response response = await _client.post(
+    return _request(
+      () => _client.post(
         path,
         queryParameters: queryParameters,
-        options: Options(
-          headers: _headers,
-          contentType:
-              formData == null ? StringsConstants.jsonContentType : null,
-          responseType: responseType,
-        ),
+        options: options,
         data: formData ?? body,
-      );
-      return _handleResponseAsJson(response);
-    } catch (error) {
-      rethrow;
-    }
+      ),
+    );
   }
 
   @override
@@ -96,17 +227,34 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
   }) async {
-    setHeaders();
-    try {
-      final Response response = await _client.put(
+    return _request(
+      () => _client.put(
         path,
         queryParameters: queryParameters,
         data: body,
-        options: Options(
-          headers: _headers,
-          contentType: StringsConstants.jsonContentType,
-        ),
-      );
+        options: _defaultOptions,
+      ),
+    );
+  }
+
+  @override
+  Future delete(
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return _request(
+      () => _client.delete(
+        path,
+        data: body,
+        options: _defaultOptions,
+      ),
+    );
+  }
+
+  Future _request(Future<Response> Function() request) async {
+    try {
+      final response = await request();
       return _handleResponseAsJson(response);
     } catch (error) {
       rethrow;
@@ -114,28 +262,6 @@ class DioConsumer implements ApiConsumer {
   }
 
   dynamic _handleResponseAsJson(Response response) {
-    final responseJson = jsonDecode(response.data.toString());
-    return responseJson;
-  }
-
-  @override
-  Future delete(String path,
-      {Map<String, dynamic>? body,
-      Map<String, dynamic>? queryParameters}) async {
-    setHeaders();
-
-    try {
-      final Response response = await _client.delete(
-        path,
-        data: body,
-        options: Options(
-          headers: _headers,
-          contentType: StringsConstants.jsonContentType,
-        ),
-      );
-      return _handleResponseAsJson(response);
-    } catch (error) {
-      rethrow;
-    }
+    return jsonDecode(response.data.toString());
   }
 }

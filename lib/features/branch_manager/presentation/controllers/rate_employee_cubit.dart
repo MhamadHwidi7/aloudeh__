@@ -1,0 +1,22 @@
+import 'package:aloudeh_company/core/global/base_entity.dart';
+import 'package:aloudeh_company/core/global_states/post_state.dart';
+import 'package:aloudeh_company/features/branch_manager/data/params/rate_employee_params.dart';
+import 'package:aloudeh_company/features/branch_manager/data/repository/branch_manager_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+
+@injectable
+class RateEmployeeCubit extends Cubit<PostState<BaseEntity>> {
+ final BranchManagerBaseRepository _branchManagerBaseRepository;
+  RateEmployeeCubit(
+    this._branchManagerBaseRepository,
+  ) : super(const PostState.idle());
+
+  Future<void> emitRateEmployee({required RateEmployeeParams rateEmployeeParams}) async {
+    emit(const PostState.loading());
+    final response = await _branchManagerBaseRepository.rateEmployee(rateEmployeeParams:rateEmployeeParams);
+    response.fold((l) => emit(PostState.error(l)), (r) async {
+      emit(PostState.success(r));
+    
+    });
+  }}
