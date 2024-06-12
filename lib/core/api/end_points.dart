@@ -1,5 +1,5 @@
 class EndPoints {
-  static const String baseUrl = 'http://127.0.0.1:8000/api';
+  static const String baseUrl = 'http://10.0.2.2:8000/api';
   static const String adminRegister = '$baseUrl/register';
   static const String adminLogIn = '$baseUrl/login';
 
@@ -94,4 +94,10 @@ class EndPoints {
       '$baseUrl/employee/alltrucksreports';
   static const String tripsReportsEmployee =
       '$baseUrl/employee/alltripsreports';
+
+        static const String driverLogIn = '$baseUrl/login';
+  static const String getMyTripsDriver =
+      '$baseUrl/driver/getmytrips';
+        static const String getBranchlatlngDriver =
+      '$baseUrl/driver/getbranchlatlng';
 }

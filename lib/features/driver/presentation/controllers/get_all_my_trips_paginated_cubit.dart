@@ -1,6 +1,6 @@
 import 'package:aloudeh_company/core/global_states/pagination_state.dart';
-import 'package:aloudeh_company/features/admin/data/entity/archive_trips_paginated_entity.dart';
-import 'package:aloudeh_company/features/admin/data/repository/admin_repository.dart';
+import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/driver/data/repository/driver_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
@@ -8,23 +8,23 @@ import 'package:flutter/foundation.dart';
 const initialPage = 1;
 
 @injectable
-class GetAllArchiveTripsPaginatedCubit extends Cubit<PaginationState<ArchiveTripsPaginatedAdminEntity>> {
-  final AdminBaseRepository _adminBaseRepository;
+class GetAllMyTripsPaginatedCubit extends Cubit<PaginationState<MyTripsPaginatedEntity>> {
+  final DriverBaseRepository _driverBaseRepository;
   int currentPage = initialPage;
   bool canLoadMoreData = true;
 
-  GetAllArchiveTripsPaginatedCubit(
-    this._adminBaseRepository,
+  GetAllMyTripsPaginatedCubit(
+    this._driverBaseRepository,
   ) : super(const PaginationState.loading());
 
-  Future<void> emitGetAllArchiveTrips({
+  Future<void> emitGetAllMyTrips({
     bool loadMore = false,
   }) async {
     if (!canLoadMoreData) {
       return;
     }
 
-    var response = await _adminBaseRepository.getAllActiveTrips();
+    var response = await _driverBaseRepository.getAllMyTrips(currentPage);
     response.fold(
       (l) {
             if (kDebugMode) {
@@ -37,11 +37,12 @@ class GetAllArchiveTripsPaginatedCubit extends Cubit<PaginationState<ArchiveTrip
       },
        (r) {
         if (r.data != null) {
-          var dataList = r.data!.data.where((element) => element != null).cast<ArchiveTripsPaginatedAdminEntity>().toList();
+          var dataList = r.data!.data.where((element) => element != null).cast<MyTripsPaginatedEntity>().toList();
           canLoadMoreData = r.data!.lastPage != null &&
               r.data!.currentPage! < r.data!.lastPage!;
 
           currentPage++;
+          print(currentPage);
           emit(
             PaginationState.success(
               canLoadMore: canLoadMoreData,

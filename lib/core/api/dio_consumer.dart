@@ -176,7 +176,7 @@ class DioConsumer implements ApiConsumer {
   final Map<String, String> _headers = {
     StringsConstants.accept: StringsConstants.applicationJson,
     StringsConstants.contentType: StringsConstants.applicationJson,
-    StringsConstants.authorization: "Bearer ",
+    StringsConstants.authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTAuMC4yLjI6ODAwMC9hcGkvbG9naW4iLCJpYXQiOjE3MTgxNzk2NzAsImV4cCI6MTcxODE4MzI3MCwibmJmIjoxNzE4MTc5NjcwLCJqdGkiOiJlZFBOTDkxUkJPZTgzYXVHIiwic3ViIjoiMiIsInBydiI6IjkxOWMzMjZkNDNhYjE1MTlhOGJhM2I4NTg2YjY4NzUyZThjODM4MDcifQ.SO9RWrxitLwaS6c5Lkfh27N2RKVDxdRQOHKzH9RRtVM",
   };
 
   Options get _defaultOptions => Options(headers: _headers);

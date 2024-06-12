@@ -1,5 +1,4 @@
 import 'package:aloudeh_company/core/global_states/pagination_state.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_customers_paginated_entity.dart';
 import 'package:aloudeh_company/features/admin/data/repository/admin_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

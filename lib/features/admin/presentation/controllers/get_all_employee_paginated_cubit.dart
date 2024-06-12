@@ -1,6 +1,5 @@
 import 'package:aloudeh_company/core/global_states/pagination_state.dart';
 import 'package:aloudeh_company/features/admin/data/entity/employee_paginated_entity.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_trips_admin_paginated_entity.dart';
 import 'package:aloudeh_company/features/admin/data/repository/admin_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
