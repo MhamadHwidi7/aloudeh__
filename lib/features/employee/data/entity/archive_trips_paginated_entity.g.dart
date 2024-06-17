@@ -20,7 +20,6 @@ ArchiveTripsPaginatedEntity _$ArchiveTripsPaginatedEntityFromJson(
       arrivalDate: json['arrival_date'] as String?,
       createdBy: json['created_by'] as String,
       editedBy: json['edited_by'] as String?,
-      archived: json['archived'] as int,
       destinationId: json['destination_id'] as int,
       driver: Driver.fromJson(json['driver'] as Map<String, dynamic>),
       branch: Branch.fromJson(json['branch'] as Map<String, dynamic>),
@@ -41,7 +40,6 @@ Map<String, dynamic> _$ArchiveTripsPaginatedEntityToJson(
       'arrival_date': instance.arrivalDate,
       'created_by': instance.createdBy,
       'edited_by': instance.editedBy,
-      'archived': instance.archived,
       'destination_id': instance.destinationId,
       'driver': instance.driver,
       'branch': instance.branch,
@@ -61,13 +59,11 @@ Map<String, dynamic> _$DriverToJson(Driver instance) => <String, dynamic>{
 Branch _$BranchFromJson(Map<String, dynamic> json) => Branch(
       id: json['id'] as int,
       address: json['address'] as String,
-      desk: json['desk'] as String,
     );
 
 Map<String, dynamic> _$BranchToJson(Branch instance) => <String, dynamic>{
       'id': instance.id,
       'address': instance.address,
-      'desk': instance.desk,
     };
 
 Truck _$TruckFromJson(Map<String, dynamic> json) => Truck(

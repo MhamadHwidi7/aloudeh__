@@ -1,21 +1,22 @@
-import 'package:aloudeh_company/core/global_states/pagination_state.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_trips_admin_paginated_entity.dart';
-import 'package:aloudeh_company/features/admin/data/repository/admin_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
-
-const initialPage = 1;
+import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
+import 'package:aloudeh_company/core/global/pagination_entity.dart';
+import 'package:aloudeh_company/features/admin/data/entity/get_all_trips_admin_paginated_entity.dart';
+import 'package:aloudeh_company/features/admin/data/repository/admin_repository.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
 
 @injectable
-class GetAllTripsRecordPaginatedCubit extends Cubit<PaginationState<GetAllTripsAdminPaginatedEntity>> {
+class GetAllTripsRecordPaginatedCubit extends Cubit<PaginationStateTest<GetAllTripsAdminPaginatedEntity>> {
   final AdminBaseRepository _adminBaseRepository;
-  int currentPage = initialPage;
+  int currentPage = 1;
+  int? lastPage;
+  List<GetAllTripsAdminPaginatedEntity?> _trips = [];
   bool canLoadMoreData = true;
 
-  GetAllTripsRecordPaginatedCubit(
-    this._adminBaseRepository,
-  ) : super(const PaginationState.loading());
+  GetAllTripsRecordPaginatedCubit(this._adminBaseRepository)
+      : super(const PaginationStateTest.loading());
 
   Future<void> emitGetAllTrips({
     bool loadMore = false,
@@ -24,34 +25,41 @@ class GetAllTripsRecordPaginatedCubit extends Cubit<PaginationState<GetAllTripsA
       return;
     }
 
-    var response = await _adminBaseRepository.getAllTrips();
+    if (loadMore) {
+      if (lastPage != null && currentPage >= lastPage!) return;
+      currentPage++;
+    } else {
+      currentPage = 1;
+      emit(const PaginationStateTest.loading());
+    }
+
+    var response = await _adminBaseRepository.getAllTrips(currentPage);
     response.fold(
       (l) {
-            if (kDebugMode) {
+        if (kDebugMode) {
           print(l);
         }
-        emit(PaginationState.error(l));
-
-
-
+        emit(PaginationStateTest.error(l));
       },
-       (r) {
+      (r) {
         if (r.data != null) {
-          var dataList = r.data!.data.where((element) => element != null).cast<GetAllTripsAdminPaginatedEntity>().toList();
-          canLoadMoreData = r.data!.lastPage != null &&
-              r.data!.currentPage! < r.data!.lastPage!;
-
-          currentPage++;
-          emit(
-            PaginationState.success(
-              canLoadMore: canLoadMoreData,
-              data: state.maybeWhen(
-                orElse: () => [...dataList],
-                success: (sys, canLoadMore) => [...sys, ...dataList],
-              ),
-            ),
-          );
-        }},
+          lastPage = r.data!.lastPage;
+          _addIncomingDataToClassMemberData(loadMore, r);
+          emit(PaginationStateTest.success(
+            data: _trips.where((element) => element != null).cast<GetAllTripsAdminPaginatedEntity>().toList(),
+            canLoadMore: currentPage,
+          ));
+        }
+      },
     );
+  }
+
+  void _addIncomingDataToClassMemberData(
+      bool loadMore, BasePaginationEntity<PaginationEntity<GetAllTripsAdminPaginatedEntity?>> model) {
+    if (loadMore) {
+      _trips.addAll(model.data!.data);
+    } else {
+      _trips = model.data!.data;
+    }
   }
 }

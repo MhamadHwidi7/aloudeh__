@@ -3,7 +3,8 @@ import 'package:location/location.dart';
 
 class LocationController extends GetxController {
   final Location _locationService = Location();
-  LocationData? _currentLocation;
+  LocationData? currentLocation;
+  bool isFetchingLocation = false;
 
   @override
   void onInit() {
@@ -11,30 +12,54 @@ class LocationController extends GetxController {
     _fetchCurrentLocation();
   }
 
-  void _fetchCurrentLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+  Future<void> _fetchCurrentLocation() async {
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await _locationService.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _locationService.requestService();
-      if (!_serviceEnabled) {
+    isFetchingLocation = true;
+    update();
+
+    // Check if the location service is enabled
+    serviceEnabled = await _locationService.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await _locationService.requestService();
+      if (!serviceEnabled) {
+        print('Location service is not enabled');
+        isFetchingLocation = false;
+        update();
         return;
       }
     }
 
-    _permissionGranted = await _locationService.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _locationService.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    // Check if the location permission is granted
+    permissionGranted = await _locationService.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await _locationService.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        print('Location permission is not granted');
+        isFetchingLocation = false;
+        update();
         return;
       }
     }
 
-    _currentLocation = await _locationService.getLocation();
-    _locationService.onLocationChanged.listen((LocationData loc) {
-      _currentLocation = loc;
+    try {
+      // Get the current location
+      currentLocation = await _locationService.getLocation();
+      print('Current Location: $currentLocation');
+      update();  // Notify listeners to update
+
+      // Listen to location changes
+      _locationService.onLocationChanged.listen((LocationData loc) {
+        currentLocation = loc;
+        print('Updated Current Location: $currentLocation');
+        update();  // Notify listeners to update
+      });
+    } catch (e) {
+      print('Error fetching location: $e');
+    } finally {
+      isFetchingLocation = false;
       update();
-    });
+    }
   }
 }

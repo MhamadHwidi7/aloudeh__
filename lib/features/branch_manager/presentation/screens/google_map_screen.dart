@@ -66,7 +66,8 @@ class _MapScreenState extends State<MapScreen> {
     });
     print('Marker placed at: ${position.latitude}, ${position.longitude}');
   }
- Widget _buildMap() {
+
+  Widget _buildMap() {
     return GoogleMap(
       initialCameraPosition: CameraPosition(
         target: _currentPosition,
@@ -82,18 +83,28 @@ class _MapScreenState extends State<MapScreen> {
       onTap: _onMapTapped,
     );
   }
+
   Widget _buildPermissionDeniedMessage() {
     return Center(
-      child: Text('Location permissions are denied. Please enable permissions in settings.'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Location permissions are denied. Please enable permissions in settings.'),
+          SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: () async {
+              await openAppSettings();
+            },
+            child: Text('Open Settings'),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Map Marker Example'),
-      ),
       body: _permissionDenied ? _buildPermissionDeniedMessage() : _buildMap(),
       floatingActionButton: _permissionDenied
           ? null

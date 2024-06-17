@@ -1,5 +1,5 @@
 class CancelTripParams {
-  final String tripId;
+  final int tripId;
 
   CancelTripParams({
     required this.tripId,

@@ -1,14 +1,14 @@
 class UpdateCustomerParams {
   final String customerId;
 
-  final String? nationalId;
-  final String? name;
-  final String? phoneNumber;
-  final String? gender;
-  final String? mobile;
-  final String? address;
-  final String? addressDetail;
-  final String? notes;
+   String? nationalId;
+   String? name;
+   String? phoneNumber;
+   String? gender;
+   String? mobile;
+   String? address;
+   String? addressDetail;
+   String? notes;
 
   UpdateCustomerParams({
     required this.customerId,
@@ -23,7 +23,7 @@ class UpdateCustomerParams {
   });
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {
+     Map<String, dynamic> data = {
       "customer_id": customerId,
     };
     if (nationalId != null) data['national_id'] = nationalId;

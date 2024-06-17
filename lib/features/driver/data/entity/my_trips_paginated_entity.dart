@@ -9,9 +9,12 @@ class MyTripsPaginatedEntity {
 
   @JsonKey(name: 'number')
   final String number;
+    @JsonKey(name: 'branch_id')
+  final int branchId;
   MyTripsPaginatedEntity({
     required this.date,
     required this.number,
+    required this.branchId
   });
 
   factory MyTripsPaginatedEntity.fromJson(Map<String, dynamic> json) => _$MyTripsPaginatedEntityFromJson(json);

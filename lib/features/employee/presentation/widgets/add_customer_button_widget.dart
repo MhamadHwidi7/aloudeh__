@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddCustomerButtonWidget extends StatelessWidget {
-  const AddCustomerButtonWidget({super.key});
+  final VoidCallback onPressed;
+  const AddCustomerButtonWidget({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class AddCustomerButtonWidget extends StatelessWidget {
       width: double.infinity,
       decoration: _buttonDecoration(),
       child: FloatingActionButton(
-        onPressed: () {},
+        onPressed:onPressed,
         backgroundColor: AppColors.darkBlue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

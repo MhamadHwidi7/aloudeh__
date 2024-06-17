@@ -71,7 +71,7 @@ abstract class AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<GetAllBranchesPaginatedEntity>>>>
-      getAllBranches();
+      getAllBranches(int page);
   Future<Either<NetworkExceptions, BaseTruckRecordEntity>> truckRecord(
       {required TruckRecordParams truckRecordParams});
   Future<Either<NetworkExceptions, BaseEmployeeAdminEntity>> getEmployeeById(
@@ -88,7 +88,7 @@ abstract class AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<WarehousesPaginatedEntity>>>>
-      getWarehousesPaginated();
+      getWarehousesPaginated(int page);
   Future<Either<NetworkExceptions, BaseEntity>> promoteEmployee(
       {required PromoteEmployeeParams promoteEmployeeParams});
   Future<Either<NetworkExceptions, TruckInformationEntity>> getTruckInformation(
@@ -105,25 +105,25 @@ abstract class AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<GetAllTripsAdminPaginatedEntity>>>>
-      getAllTrips();
+      getAllTrips(int page);
       Future<
           Either<
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<EmployeePaginatedAdminEntity>>>>
-      getAllEmployees();
+      getAllEmployees(int page);
             Future<
           Either<
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<ActiveTripsPaginatedAdminEntity>>>>
-      getAllActiveTrips();
+      getAllActiveTrips(int page);
                   Future<
           Either<
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<ArchiveTripsPaginatedAdminEntity>>>>
-      getAllArchiveTrips();
+      getAllArchiveTrips(int page);
         Future<Either<NetworkExceptions, GetTripInformationAdminEntity>> getTripInformation(
       {required GetTripInformationParams getTripInformationParams});
               Future<Either<NetworkExceptions, GetCustomerAdminEntity>> getCustomerById(
@@ -133,7 +133,7 @@ abstract class AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<GetCustomerAdminPaginatedEntity>>>>
-      getAllCustomers();
+      getAllCustomers(int page);
 }
 
 @Singleton(as: AdminBaseRepository)
@@ -297,9 +297,9 @@ class AdminRepositoryImpl implements AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<GetAllBranchesPaginatedEntity>>>>
-      getAllBranches() async {
+      getAllBranches(int page) async {
     return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllBranches(),
+      () => _adminBaseWebService.getAllBranches(page),
     );
   }
 
@@ -397,9 +397,9 @@ class AdminRepositoryImpl implements AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<WarehousesPaginatedEntity>>>>
-      getWarehousesPaginated() async {
+      getWarehousesPaginated(int page) async {
     return await _getResultWithPagination(
-      () => _adminBaseWebService.getWarehousesPaginated(),
+      () => _adminBaseWebService.getWarehousesPaginated(page),
     );
   }
 
@@ -485,30 +485,30 @@ class AdminRepositoryImpl implements AdminBaseRepository {
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<GetAllTripsAdminPaginatedEntity>>>>
-      getAllTrips() async {
+      getAllTrips(int page) async {
     return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllTrips(),
+      () => _adminBaseWebService.getAllTrips(page),
     );
   }
   
   @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<EmployeePaginatedAdminEntity>>>> getAllEmployees()async{
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<EmployeePaginatedAdminEntity>>>> getAllEmployees(int page)async{
  return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllEmployees(),
+      () => _adminBaseWebService.getAllEmployees(page),
     );
   }
   
   @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ActiveTripsPaginatedAdminEntity>>>> getAllActiveTrips() async{
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ActiveTripsPaginatedAdminEntity>>>> getAllActiveTrips(int page) async{
  return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllActiveTrips(),
+      () => _adminBaseWebService.getAllActiveTrips(page),
     );
   }
   
   @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ArchiveTripsPaginatedAdminEntity>>>> getAllArchiveTrips()async {
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ArchiveTripsPaginatedAdminEntity>>>> getAllArchiveTrips(int page)async {
  return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllArchiveTrips(),
+      () => _adminBaseWebService.getAllArchiveTrips(page),
     );
   }
   
@@ -522,9 +522,9 @@ class AdminRepositoryImpl implements AdminBaseRepository {
   }
   
   @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<GetCustomerAdminPaginatedEntity>>>> getAllCustomers() async{
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<GetCustomerAdminPaginatedEntity>>>> getAllCustomers(int page) async{
  return await _getResultWithPagination(
-      () => _adminBaseWebService.getAllCustomers(),
+      () => _adminBaseWebService.getAllCustomers(page),
     );
   }
   

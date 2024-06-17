@@ -1,5 +1,5 @@
 class DeleteCustomerParams {
-  final String customerId;
+  final int customerId;
 
 
   DeleteCustomerParams({

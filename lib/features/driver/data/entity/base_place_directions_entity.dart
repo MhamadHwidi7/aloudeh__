@@ -26,7 +26,38 @@ class BasePlaceDirectionsEntity {
     required this.totalDuration,
   });
 
-  factory BasePlaceDirectionsEntity.fromJson(Map<String, dynamic> json) => _$BasePlaceDirectionsEntityFromJson(json);
+  factory BasePlaceDirectionsEntity.fromJson(Map<String, dynamic> json) {
+    final routes = json['routes'] as List<dynamic>? ?? [];
+    if (routes.isEmpty) {
+      throw Exception("No routes available");
+    }
+    
+    final data = routes[0] as Map<String, dynamic>;
+    final northeast = data['bounds']['northeast'];
+    final southwest = data['bounds']['southwest'];
+    final bounds = LatLngBounds(
+      northeast: LatLng(northeast['lat'], northeast['lng']),
+      southwest: LatLng(southwest['lat'], southwest['lng']),
+    );
+
+    late String distance;
+    late String duration;
+
+    if ((data['legs'] as List).isNotEmpty) {
+      final leg = data['legs'][0];
+      distance = leg['distance']['text'];
+      duration = leg['duration']['text'];
+    } else {
+      throw Exception("No legs data available");
+    }
+
+    return BasePlaceDirectionsEntity(
+      bounds: bounds,
+      polylinePoints: PolylinePoints().decodePolyline(data['overview_polyline']['points']),
+      totalDistance: distance,
+      totalDuration: duration,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$BasePlaceDirectionsEntityToJson(this);
 }

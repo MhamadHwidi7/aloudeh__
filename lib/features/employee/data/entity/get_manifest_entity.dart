@@ -27,66 +27,10 @@ class GetManifestEntity {
 
 @JsonSerializable()
 class ManifestData {
-  @JsonKey(name: 'id')
-  final int id;
-
-  @JsonKey(name: 'number')
-  final String number;
-
-  @JsonKey(name: 'status')
-  final String status;
-
-  @JsonKey(name: 'general_total')
-  final String generalTotal;
-
-  @JsonKey(name: 'discount')
-  final String? discount;
-
-  @JsonKey(name: 'net_total')
-  final String? netTotal;
-
-  @JsonKey(name: 'misc_paid')
-  final String? miscPaid;
-
-  @JsonKey(name: 'against_shipping')
-  final String? againstShipping;
-
-  @JsonKey(name: 'adapter')
-  final String? adapter;
-
-  @JsonKey(name: 'advance')
-  final String? advance;
-
-  @JsonKey(name: 'collection')
-  final String? collection;
-
-  @JsonKey(name: 'created_at')
-  final String createdAt;
-
-  @JsonKey(name: 'updated_at')
-  final String updatedAt;
-
-  @JsonKey(name: 'trip_id')
-  final int tripId;
-
   @JsonKey(name: 'shippings')
   final List<ShippingData> shippings;
 
   ManifestData({
-    required this.id,
-    required this.number,
-    required this.status,
-    required this.generalTotal,
-    this.discount,
-    this.netTotal,
-    this.miscPaid,
-    this.againstShipping,
-    this.adapter,
-    this.advance,
-    this.collection,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.tripId,
     required this.shippings,
   });
 
@@ -104,8 +48,14 @@ class ShippingData {
   @JsonKey(name: 'source_id')
   final int sourceId;
 
+  @JsonKey(name: 'source_name')
+  final String sourceName;
+
   @JsonKey(name: 'destination_id')
   final int destinationId;
+
+  @JsonKey(name: 'destination_name')
+  final String destinationName;
 
   @JsonKey(name: 'manifest_id')
   final int? manifestId;
@@ -122,11 +72,8 @@ class ShippingData {
   @JsonKey(name: 'receiver_number')
   final String receiverNumber;
 
-  @JsonKey(name: 'number')
-  final int number;
-
-  @JsonKey(name: 'price_id')
-  final int priceId;
+  @JsonKey(name: 'num_of_packages')
+  final int? numOfPackages;
 
   @JsonKey(name: 'weight')
   final int weight;
@@ -170,35 +117,13 @@ class ShippingData {
   @JsonKey(name: 'manifest_number')
   final String manifestNumber;
 
-  ShippingData({
-    required this.id,
-    required this.sourceId,
-    required this.destinationId,
-    this.manifestId,
-    required this.sender,
-    required this.receiver,
-    required this.senderNumber,
-    required this.receiverNumber,
-    required this.number,
-    required this.priceId,
-    required this.weight,
-    required this.size,
-    required this.content,
-    required this.marks,
-    this.notes,
-    required this.shippingCost,
-    this.againstShipping,
-    this.adapter,
-    this.advance,
-    this.miscellaneous,
-    this.prepaid,
-    this.discount,
-    this.collection,
-    required this.manifestNumber,
-  });
+
+
 
   factory ShippingData.fromJson(Map<String, dynamic> json) =>
       _$ShippingDataFromJson(json);
+
+  ShippingData({required this.id, required this.sourceId, required this.sourceName, required this.destinationId, required this.destinationName, required this.manifestId, required this.sender, required this.receiver, required this.senderNumber, required this.receiverNumber, required this.numOfPackages, required this.weight, required this.size, required this.content, required this.marks, required this.notes, required this.shippingCost, required this.againstShipping, required this.adapter, required this.advance, required this.miscellaneous, required this.prepaid, required this.discount, required this.collection, required this.manifestNumber});
 
   Map<String, dynamic> toJson() => _$ShippingDataToJson(this);
 }

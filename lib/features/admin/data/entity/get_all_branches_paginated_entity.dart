@@ -5,7 +5,7 @@ part 'get_all_branches_paginated_entity.g.dart';
 @JsonSerializable()
 class GetAllBranchesPaginatedEntity{
   @JsonKey(name: "id")
-  final String branchId;
+  final int branchId;
     @JsonKey(name: "address")
 
   final String branchAddress;

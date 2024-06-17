@@ -1,0 +1,226 @@
+import 'package:aloudeh_company/core/constants/colors_constants.dart';
+import 'package:aloudeh_company/core/error/network_exceptions.dart';
+import 'package:aloudeh_company/core/global_states/get_state.dart';
+import 'package:aloudeh_company/features/employee/data/entity/get_manifest_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
+import 'package:aloudeh_company/features/employee/data/params/get_manifest_params.dart';
+import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_manifest_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/archive_manifest_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/archive_trip_invoice_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/logo_widget.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/archive_table_mainfest_list_view_widget.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/custom_appbar_widget.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/show_archive_trip_details_widget.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
+import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_info_header_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+class ViewTruckScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Truck Information',
+        onBackPress: () => Navigator.pop(context),
+      ),
+      body: const TruckDetails(),
+    );
+  }
+}
+
+class TruckDetails extends StatelessWidget {
+  const TruckDetails({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: const [
+          TruckDetailRow(label: 'Truck ID', value: 'TRK-00123'),
+          DividerBetweenListElements(),
+          TruckDetailRow(label: 'Truck Model', value: 'Model XYZ'),
+          DividerBetweenListElements(),
+          TruckDetailRow(label: 'License Plate', value: 'ALE-825737'),
+          DividerBetweenListElements(),
+          TruckDetailRow(label: 'Driver', value: 'Mohammed Hwaidi'),
+          DividerBetweenListElements(),
+          TruckDetailRow(label: 'Status', value: 'Active'),
+        ],
+      ),
+    );
+  }
+}
+
+class TruckDetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const TruckDetailRow({super.key, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width / 4),
+        Expanded(
+          child: Container(
+            height: 40.h,
+            color: AppColors.mediumBlue,
+            child: Center(
+              child: Text(
+                value,
+                style: TextStyle(fontFamily: 'bahnschrift', fontSize: 16.sp),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// class ViewBranchInformationScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: CustomAppBar(
+//         title: 'Branch Information',
+//         onBackPress: () => Navigator.pop(context),
+//       ),
+//       body: const BranchDetails(),
+//     );
+//   }
+// }
+
+// class BranchDetails extends StatelessWidget {
+//   const BranchDetails({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//       child: Column(
+//         children: const [
+//           BranchDetailRow(label: 'Branch ID', value: 'BR-001'),
+//           DividerBetweenListElements(),
+//           BranchDetailRow(label: 'Branch Name', value: 'Al-Senaa'),
+//           DividerBetweenListElements(),
+//           BranchDetailRow(label: 'Location', value: 'Aleppo'),
+//           DividerBetweenListElements(),
+//           BranchDetailRow(label: 'Manager', value: 'Seba Taleaa'),
+//           DividerBetweenListElements(),
+//           BranchDetailRow(label: 'Status', value: 'Operational'),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class BranchDetailRow extends StatelessWidget {
+//   final String label;
+//   final String value;
+
+//   const BranchDetailRow({super.key, required this.label, required this.value});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Text(
+//           label,
+//           style: TextStyle(
+//               fontFamily: 'bahnschrift',
+//               color: AppColors.darkBlue,
+//               fontSize: 16.sp),
+//         ),
+//         SizedBox(width: MediaQuery.of(context).size.width / 4),
+//         Expanded(
+//           child: Container(
+//             height: 40.h,
+//             color: AppColors.mediumBlue,
+//             child: Center(
+//               child: Text(
+//                 value,
+//                 style: TextStyle(fontFamily: 'bahnschrift', fontSize: 16.sp),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+
+
+
+class FinancialDetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const FinancialDetailRow(
+      {super.key, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Material(
+            elevation: 1.0,
+            child: Column(
+              children: [
+                Text(label,
+                    style: TextStyle(
+                        fontFamily: 'bahnschrift',
+                        color: AppColors.pureBlack,
+                        fontSize: 16.sp)),
+                SizedBox(height: 5.h),
+                Text(value,
+                    style: TextStyle(
+                        fontFamily: 'bahnschrift',
+                        color: AppColors.yellow,
+                        fontSize: 16.sp)),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(width: 10.w),
+      ],
+    );
+  }
+}
+
+
+
+// class EditTripInvoiceScreen extends StatelessWidget {
+//   const EditTripInvoiceScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: CustomAppBar(
+//         title: 'Edit Trip Invoice',
+//         onBackPress: () => Navigator.pop(context),
+//       ),
+//       body: const Center(
+//         child: Text('Edit Trip Invoice Screen'),
+//       ),
+//     );
+//   }
+// }

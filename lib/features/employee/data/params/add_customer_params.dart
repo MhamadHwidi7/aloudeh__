@@ -6,18 +6,23 @@ class AddCustomerParams {
   final String mobile;
   final String address;
   final String addressDetail;
-  final String notes;
+  final String? notes;
 
-  AddCustomerParams({required this.nationalId, required this.name, required this.phoneNumber, required this.gender, required this.mobile, required this.address, required this.addressDetail, required this.notes});
+  AddCustomerParams({required this.nationalId, required this.name, required this.phoneNumber, required this.gender, required this.mobile, required this.address, required this.addressDetail,  this.notes});
 
-  Map<String, dynamic> toJson() => {
-        "national_id": nationalId,
-        "name": name,
-        "phone_number": phoneNumber,
-        "gender": gender,
-        "mobile": mobile,
-        "address": address,
-        "address_detail": addressDetail,
-        "notes": notes,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      "national_id": nationalId,
+      "name": name,
+      "phone_number": phoneNumber,
+      "gender": gender,
+      "mobile": mobile,
+      "address": address,
+      "address_detail": addressDetail,
+    };
+    if (notes != null && notes!.isNotEmpty) {
+      data['notes'] = notes;
+    }
+    return data;
+  }
 }

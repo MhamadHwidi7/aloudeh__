@@ -1,12 +1,17 @@
 import 'package:aloudeh_company/core/api/api_consumer.dart';
 import 'package:aloudeh_company/core/api/end_points.dart';
+import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
+import 'package:aloudeh_company/features/driver/data/entity/base_place_directions_entity.dart';
+import 'package:aloudeh_company/features/driver/data/entity/driver_profile_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/get_branch_location_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/log_in_driver_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/driver/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/log_in_driver_params.dart';
+import 'package:aloudeh_company/features/driver/data/params/shortest_path_params.dart';
+import 'package:aloudeh_company/features/driver/data/params/update_location_driver_params.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class DriverBaseWebServices{
@@ -14,6 +19,9 @@ abstract class DriverBaseWebServices{
                Future<BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>>
       getAllMyTrips(int page);
           Future<GetBranchLocationEntity> getBranchLocation({required GetBranchLocationParams getBranchLocationParams});
+          Future<BaseDriverProfileEntity> getDriverProfile();
+          Future<BasePlaceDirectionsEntity> getShortestPath(ShortestPathParams shortestPathParams);
+          Future<BaseEntity> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams);
 
 }
 @Singleton(as:DriverBaseWebServices )
@@ -54,5 +62,24 @@ class DriverWebServicesImpl implements DriverBaseWebServices{
   Future<GetBranchLocationEntity> getBranchLocation({required GetBranchLocationParams getBranchLocationParams}) async{
 final response = await _apiConsumer.get("${EndPoints.getBranchlatlngDriver}/${getBranchLocationParams.branchId}");
 return GetBranchLocationEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BaseDriverProfileEntity> getDriverProfile() async{
+final response = await _apiConsumer.get(EndPoints.getProfileDriver);
+return BaseDriverProfileEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BasePlaceDirectionsEntity> getShortestPath(ShortestPathParams shortestPathParams) async{
+final response = await _apiConsumer.get(EndPoints.googleMapShortestPathApi,queryParameters: shortestPathParams.toJson());
+return BasePlaceDirectionsEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BaseEntity> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams) async{
+    final response = await _apiConsumer.post(EndPoints.updateLocationDriver,
+        body: updateLocationDriverParams.toJson());
+    return BaseEntity.fromJson(response);
   }
 }

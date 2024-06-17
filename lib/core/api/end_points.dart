@@ -77,9 +77,15 @@ class EndPoints {
       '$baseUrl/employee/GetArchiveData';
   static const String getTrucksPaginatedEmployee =
       '$baseUrl/employee/gettrucks';
+        static const String getAllCustomersPaginatedEmployee =
+      '$baseUrl/employee/getcustomers';
   static const String getAllReceiptsEmployee = '$baseUrl/employee/allreceipts';
   static const String truckInformationEmployee =
       '$baseUrl/employee/truckinformation';
+        static const String getAllDriversEmployee =
+      '$baseUrl/employee/drivers';
+          static const String getAllDestinationsEmployee =
+      '$baseUrl/employee/destinations';
   static const String getManifestEmployee = '$baseUrl/employee/getManifest';
   static const String truckRecordEmployee = '$baseUrl/employee/truckrecord';
   static const String addCustomerEmployee = '$baseUrl/employee/addcustomer';
@@ -94,10 +100,34 @@ class EndPoints {
       '$baseUrl/employee/alltrucksreports';
   static const String tripsReportsEmployee =
       '$baseUrl/employee/alltripsreports';
+  static const String getBranchLatLngEmployee =
+      '$baseUrl/employee/getbranchlatlng';
+  static const String getDriverTrackingEmployee =
+      '$baseUrl/employee/get-location';
+  static const String getCustomerByIdEmployee =
+      '$baseUrl/employee/getcustomer';
+        static const String archiveTripEmployee =
+      '$baseUrl/employee/archiveData';
+  static const String getBranchByIdEmployee = '$baseUrl/employee/branches';
 
+
+
+
+
+
+
+     //! ///////////////////////////////////!!!!!!!!Driver
         static const String driverLogIn = '$baseUrl/login';
   static const String getMyTripsDriver =
       '$baseUrl/driver/getmytrips';
         static const String getBranchlatlngDriver =
       '$baseUrl/driver/getbranchlatlng';
+              static const String getProfileDriver =
+      '$baseUrl/driver/getprofile';
+      static const String googleMapShortestPathApi =
+      'https://maps.googleapis.com/maps/api/directions/json';
+      static const String googleMapsApiKey =
+      'AIzaSyAT9wA45sR_sIsLAdWUhw-wLGH_othLH7M';
+                  static const String updateLocationDriver =
+      '$baseUrl/driver/update-location';
 }

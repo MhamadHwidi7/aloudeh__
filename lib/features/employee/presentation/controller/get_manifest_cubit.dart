@@ -12,7 +12,7 @@ class GetManifestCubit extends Cubit<GetState<GetManifestEntity>> {
     this._employeeBaseRepository,
   ) : super(const GetState.loading());
 
-  Future<void> emitGetTripsInfo({required GetManifestParams getManifestParams}) async {
+  Future<void> emitGetManifest({required GetManifestParams getManifestParams}) async {
     emit(const GetState.loading());
     final response = await _employeeBaseRepository.getManifest(getManifestParams:  getManifestParams);
     response.fold((l) => emit(GetState.error(l)), (r) async {

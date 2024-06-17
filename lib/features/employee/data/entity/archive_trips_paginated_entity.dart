@@ -37,8 +37,8 @@ class ArchiveTripsPaginatedEntity {
   @JsonKey(name: 'edited_by')
   final String? editedBy;
 
-  @JsonKey(name: 'archived')
-  final int archived;
+  // @JsonKey(name: 'archived')
+  // final bool archived;
 
   @JsonKey(name: 'destination_id')
   final int destinationId;
@@ -64,7 +64,7 @@ class ArchiveTripsPaginatedEntity {
     this.arrivalDate,
     required this.createdBy,
     this.editedBy,
-    required this.archived,
+    // required this.archived,
     required this.destinationId,
     required this.driver,
     required this.branch,
@@ -103,13 +103,9 @@ class Branch {
   @JsonKey(name: 'address')
   final String address;
 
-  @JsonKey(name: 'desk')
-  final String desk;
-
   Branch({
     required this.id,
     required this.address,
-    required this.desk,
   });
 
   factory Branch.fromJson(Map<String, dynamic> json) => _$BranchFromJson(json);
@@ -124,6 +120,7 @@ class Truck {
 
   @JsonKey(name: 'number')
   final int number;
+
   Truck({
     required this.id,
     required this.number,

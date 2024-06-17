@@ -11,6 +11,7 @@ MyTripsPaginatedEntity _$MyTripsPaginatedEntityFromJson(
     MyTripsPaginatedEntity(
       date: json['date'] as String,
       number: json['number'] as String,
+      branchId: json['branch_id'] as int,
     );
 
 Map<String, dynamic> _$MyTripsPaginatedEntityToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$MyTripsPaginatedEntityToJson(
     <String, dynamic>{
       'date': instance.date,
       'number': instance.number,
+      'branch_id': instance.branchId,
     };

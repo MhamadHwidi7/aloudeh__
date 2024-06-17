@@ -63,13 +63,13 @@ abstract class AdminBaseWebService {
   Future<BaseEntity> deleteWarehouse(
       {required DeleteWarehouseParams deleteWarehouseParams});
   Future<BasePaginationEntity<PaginationEntity<GetAllBranchesPaginatedEntity>>>
-      getAllBranches();
+      getAllBranches(int page);
         Future<BaseTruckRecordEntity> truckRecord({required TruckRecordParams truckRecordParams});
         Future<BaseEmployeeAdminEntity> getEmployeeById({required GetEmployeeByIdParams getEmployeeByIdParams});
         Future<BaseEmployeeEntity> getBranchEmployees({required GetBranchEmployeeByIdParams getBranchesEmployeeByIdParams});
         Future<BaseWarehouseManagerAdminEntity> getWarehouseManagerById({required GetWareHouseManagerByIdParams getWareHouseManagerByIdParams});
   Future<BasePaginationEntity<PaginationEntity<WarehousesPaginatedEntity>>>
-      getWarehousesPaginated();
+      getWarehousesPaginated(int page);
         Future<BaseEntity> promoteEmployee({required PromoteEmployeeParams promoteEmployeeParams});
   Future<TruckInformationEntity> getTruckInformation(
       {required TruckInformationParams truckInformationParams});
@@ -78,20 +78,20 @@ abstract class AdminBaseWebService {
               Future<BaseAdminVacationEntity> getWarehouseVacations(
       {required GetVacationParams getVacationWarehouseParams});
         Future<BasePaginationEntity<PaginationEntity<GetAllTripsAdminPaginatedEntity>>>
-      getAllTrips();
+      getAllTrips(int page);
               Future<BasePaginationEntity<PaginationEntity<EmployeePaginatedAdminEntity>>>
-      getAllEmployees();
+      getAllEmployees(int page);
                   Future<BasePaginationEntity<PaginationEntity<ActiveTripsPaginatedAdminEntity>>>
-      getAllActiveTrips();
+      getAllActiveTrips(int page);
            Future<BasePaginationEntity<PaginationEntity<ArchiveTripsPaginatedAdminEntity>>>
-      getAllArchiveTrips();
+      getAllArchiveTrips(int page);
         Future<GetTripInformationAdminEntity> getTripInformation(
       {required GetTripInformationParams getTripInformationParams});
         Future<GetCustomerAdminEntity> getCustomerById(
       {required GetCustomerByIdParams getCustomerByIdParams});
 
                  Future<BasePaginationEntity<PaginationEntity<GetCustomerAdminPaginatedEntity>>>
-      getAllCustomers();
+      getAllCustomers(int page);
 }
 
 @Singleton(as: AdminBaseWebService)
@@ -175,9 +175,9 @@ class AdminWebService implements AdminBaseWebService {
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<GetAllBranchesPaginatedEntity>>> getAllBranches() async{
+  Future<BasePaginationEntity<PaginationEntity<GetAllBranchesPaginatedEntity>>> getAllBranches(int page) async{
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllBranchesAdmin,
+        () => _apiConsumer.get(EndPoints.getAllBranchesAdmin,queryParameters: {"page":page}
            ),
         (json) => GetAllBranchesPaginatedEntity.fromJson(json));
   }
@@ -220,9 +220,9 @@ return BaseWarehouseManagerAdminEntity.fromJson(response);
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<WarehousesPaginatedEntity>>> getWarehousesPaginated() async{
+  Future<BasePaginationEntity<PaginationEntity<WarehousesPaginatedEntity>>> getWarehousesPaginated(int page) async{
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllBranchesAdmin,
+        () => _apiConsumer.get(EndPoints.getAllBranchesAdmin,queryParameters: {"page":page}
            ),
         (json) => WarehousesPaginatedEntity.fromJson(json));
   }
@@ -260,33 +260,33 @@ return BaseAdminVacationEntity.fromJson(response);
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<GetAllTripsAdminPaginatedEntity>>> getAllTrips() async{
+  Future<BasePaginationEntity<PaginationEntity<GetAllTripsAdminPaginatedEntity>>> getAllTrips(int page) async{
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllTripsAdmin,
+        () => _apiConsumer.get(EndPoints.getAllTripsAdmin,queryParameters: {"page":page},
            ),
         (json) => GetAllTripsAdminPaginatedEntity.fromJson(json));
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<EmployeePaginatedAdminEntity>>> getAllEmployees() async{
+  Future<BasePaginationEntity<PaginationEntity<EmployeePaginatedAdminEntity>>> getAllEmployees(int page) async{
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllEmployeesAdmin,
+        () => _apiConsumer.get(EndPoints.getAllEmployeesAdmin,queryParameters: {"page":page}
            ),
         (json) => EmployeePaginatedAdminEntity.fromJson(json));
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<ActiveTripsPaginatedAdminEntity>>> getAllActiveTrips() async{
+  Future<BasePaginationEntity<PaginationEntity<ActiveTripsPaginatedAdminEntity>>> getAllActiveTrips(int page) async{
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllActiveTripsAdmin,
+        () => _apiConsumer.get(EndPoints.getAllActiveTripsAdmin,queryParameters: {"page":page}
            ),
         (json) => ActiveTripsPaginatedAdminEntity.fromJson(json));
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<ArchiveTripsPaginatedAdminEntity>>> getAllArchiveTrips()async {
+  Future<BasePaginationEntity<PaginationEntity<ArchiveTripsPaginatedAdminEntity>>> getAllArchiveTrips(int page)async {
     return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getAllArchiveTripsAdmin,
+        () => _apiConsumer.get(EndPoints.getAllArchiveTripsAdmin,queryParameters: {"page":page}
            ),
         (json) => ArchiveTripsPaginatedAdminEntity.fromJson(json));
   }
@@ -304,9 +304,9 @@ return GetCustomerAdminEntity.fromJson(response);
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<GetCustomerAdminPaginatedEntity>>> getAllCustomers()async {
+  Future<BasePaginationEntity<PaginationEntity<GetCustomerAdminPaginatedEntity>>> getAllCustomers(int page)async {
        return await _getResultWithPagination(
-        () => _apiConsumer.get(EndPoints.getCustomersPaginatedAdmin,
+        () => _apiConsumer.get(EndPoints.getCustomersPaginatedAdmin,queryParameters: {"page":page}
            ),
         (json) => GetCustomerAdminPaginatedEntity.fromJson(json));
   }

@@ -1,14 +1,19 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
+import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
 import 'package:aloudeh_company/core/handler/network_request_handler.dart';
 import 'package:aloudeh_company/core/network/network_info.dart';
 import 'package:aloudeh_company/features/driver/data/data_source/driver_web_services.dart';
+import 'package:aloudeh_company/features/driver/data/entity/base_place_directions_entity.dart';
+import 'package:aloudeh_company/features/driver/data/entity/driver_profile_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/get_branch_location_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/log_in_driver_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/driver/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/log_in_driver_params.dart';
+import 'package:aloudeh_company/features/driver/data/params/shortest_path_params.dart';
+import 'package:aloudeh_company/features/driver/data/params/update_location_driver_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -23,6 +28,12 @@ abstract class DriverBaseRepository{
       getAllMyTrips(int page);
           Future<Either<NetworkExceptions, GetBranchLocationEntity>> getBranchLocation(
       {required GetBranchLocationParams getBranchLocationParams});
+ Future<Either<NetworkExceptions, BaseDriverProfileEntity>> getDriverProfile(
+      );
+ Future<Either<NetworkExceptions, BasePlaceDirectionsEntity>> getShortestPath(ShortestPathParams shortestPathParams);
+ Future<Either<NetworkExceptions, BaseEntity>> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams);
+
+
 }
 @Singleton(as: DriverBaseRepository)
 class DriverRepositoryImpl implements DriverBaseRepository{
@@ -69,6 +80,30 @@ final DriverBaseWebServices _driverBaseWebServices;
       isConnected: () => _networkInfo.isConnected,
       apiCall: () => _driverBaseWebServices.getBranchLocation(
           getBranchLocationParams: getBranchLocationParams),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BaseDriverProfileEntity>> getDriverProfile() async{
+    return await handleNetworkRequest<BaseDriverProfileEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _driverBaseWebServices.getDriverProfile(),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BasePlaceDirectionsEntity>> getShortestPath(ShortestPathParams shortestPathParams) async{
+    return await handleNetworkRequest<BasePlaceDirectionsEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _driverBaseWebServices.getShortestPath(shortestPathParams),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BaseEntity>> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams) async{
+    return await handleNetworkRequest<BaseEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _driverBaseWebServices.updateeLocationDriver(updateLocationDriverParams),
     );
   }
 
