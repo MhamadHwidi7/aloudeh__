@@ -1,7 +1,7 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/add_customer_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,8 @@ import 'package:aloudeh_company/features/employee/data/entity/get_truck_informat
 import 'package:aloudeh_company/features/employee/presentation/controller/get_truck_information_cubit.dart';
 
 class TruckListScreen extends StatelessWidget {
+  const TruckListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -43,7 +45,7 @@ class TruckListScreen extends StatelessWidget {
         ),
       ),
       bottom:  PreferredSize(
-        preferredSize: Size.fromHeight(1.0),
+        preferredSize: const Size.fromHeight(1.0),
         child: DividerItem(),
       ),
     );
@@ -66,7 +68,7 @@ class TruckListScreen extends StatelessWidget {
 }
 
 class TruckListTitle extends StatelessWidget {
-  const TruckListTitle();
+  const TruckListTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +106,7 @@ class TruckListTitle extends StatelessWidget {
 }
 
 class TruckListIntroText extends StatelessWidget {
-  const TruckListIntroText();
+  const TruckListIntroText({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,7 @@ class TruckListIntroText extends StatelessWidget {
 }
 
 class TruckListSearchBar extends StatelessWidget {
-  const TruckListSearchBar();
+  const TruckListSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +195,7 @@ class TruckListSearchBar extends StatelessWidget {
 }
 
 class TruckListView extends StatefulWidget {
-  const TruckListView();
+  const TruckListView({super.key});
 
   @override
   State<TruckListView> createState() => _TruckListViewState();
@@ -393,12 +395,12 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
   Widget buildTruckDetails(GetTruckInformationEntity data) {
     return Column(
       children: [
-        const SpaceItem(),
+         SpaceItem(),
         TruckDetailsInfo(truckInformation: data),
          DividerItem(),
-        const SpaceItem(),
-        const TripDetailsHeader(),
-        const SpaceItem(),
+         SpaceItem(),
+         const TripDetailsHeader(),
+         SpaceItem(),
         Expanded(child: buildTripsList(data)),
       ],
     );
@@ -419,7 +421,7 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
         final driver = data.data.drivers[index];
         return buildTripItem(trip, driver);
       },
-      separatorBuilder: (context, index) => const SpaceItem(),
+      separatorBuilder: (context, index) =>  SpaceItem(),
       itemCount: itemCount,
     );
   }
@@ -478,7 +480,7 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
 }
 
 class TruckDetailsTitle extends StatelessWidget {
-  const TruckDetailsTitle();
+  const TruckDetailsTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -529,15 +531,15 @@ class TruckDetailsInfo extends StatelessWidget {
       child: Column(
         children: [
           buildInfoRow('ID', truckInformation.data.number.toString(), screenWidth / 5.5),
-          const SpaceItem(),
+           SpaceItem(),
           buildInfoRow('Line', truckInformation.data.line, screenWidth / 7),
-          const SpaceItem(),
+           SpaceItem(),
           buildInfoRow('Created By', truckInformation.data.createdBy, screenWidth / 10),
-          const SpaceItem(),
+           SpaceItem(),
           buildInfoRow('Last Edited By', truckInformation.data.editingBy ?? " - ", screenWidth / 16),
-          const SpaceItem(),
+           SpaceItem(),
           buildInfoRow('Last Edited Date', truckInformation.data.editingDate ?? " - ", screenWidth / 10),
-          const SpaceItem(),
+           SpaceItem(),
         ],
       ),
     );
@@ -576,7 +578,7 @@ class TruckDetailsInfo extends StatelessWidget {
 }
 
 class TripDetailsHeader extends StatelessWidget {
-  const TripDetailsHeader();
+  const TripDetailsHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

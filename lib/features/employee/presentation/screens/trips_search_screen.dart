@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +18,7 @@ class _TripsSearchScreenState extends State<TripsSearchScreen> {
   var tripIdController = TextEditingController();
   var deskController = TextEditingController();
   var destinationController = TextEditingController();
-  var tripStatus = ["Temporary", "Locked", ""];
+  var tripStatus = ["temporary", "locked", ""];
   var selectedStatus = "";
   DateTime selectedDateFrom = DateTime.now();
   DateTime selectedDateTo = DateTime.now();

@@ -14,10 +14,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class LogInScreen extends StatelessWidget {
+class LogInDriverScreen extends StatelessWidget {
   final LogInController controller = Get.put(LogInController());
 
-  LogInScreen({super.key});
+  LogInDriverScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ class LogInScreen extends StatelessWidget {
                               PostState<LogInDriverEntity>>(
                             listener: (context, state) {
                               state.whenOrNull(
-                                success: (data) =>Navigator.pushReplacement(context,MaterialPageRoute(builder: (_)=> TripsScreen())) ,
+                                success: (data) =>Navigator.pushReplacement(context,MaterialPageRoute(builder: (_)=> DriverTripsScreen())) ,
                                 error: (networkExceptions) =>
                                     Fluttertoast.showToast(
                                         msg: NetworkExceptions.getErrorMessage(

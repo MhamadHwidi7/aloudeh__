@@ -8,9 +8,11 @@ import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_en
 import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_trip_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_trip_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_destination_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_drivers_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_all_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_truck_record_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
 import 'package:flutter/cupertino.dart';
@@ -593,21 +595,17 @@ class _AddTripScreenState extends State<AddTripScreen> {
   Widget buildAddTripButton() {
     return BlocConsumer<AddTripCubit, PostState<BaseEntity>>(
       listener: (context, state) {
-        state.whenOrNull(
-          success: (_) {
-            Fluttertoast.showToast(
-              msg: "Trip added successfully!",
-              toastLength: Toast.LENGTH_SHORT,
-            );
-          },
-          error: (exception) {
-            Fluttertoast.showToast(
-              msg: NetworkExceptions.getErrorMessage(exception),
-              toastLength: Toast.LENGTH_SHORT,
-            );
-          },
-        );
-      },
+state.whenOrNull(success: (data) {
+    context.read<GetAllActiveTripsPaginatedCubit>().emitGetAllActiveTrips();
+
+  Navigator.pop(context);
+},
+error: (networkExceptions) =>  Fluttertoast.showToast(
+      msg: NetworkExceptions.getErrorMessage(networkExceptions),
+      toastLength: Toast.LENGTH_SHORT,
+    ),
+);
+        },
       builder: (context, state) {
         return state.maybeWhen(
           orElse: () => Container(

@@ -445,7 +445,7 @@ class ActiveTripItem extends StatelessWidget {
             text: 'Edit',
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditTripScreen()));
+                  MaterialPageRoute(builder: (context) => EditTripScreen(manifestNumber: trip.number,status: trip.status,destination: trip.destinationName,dateTrip: trip.date,tripId: trip.id.toString(),)));
             },
           ),
           ActionButton(
@@ -539,8 +539,8 @@ class TripItem extends StatelessWidget {
             ActionButton(
               text: 'Edit',
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EditTripScreen()));
+                // Navigator.push(context,
+                //   MaterialPageRoute(builder: (context) => EditTripScreen(manifestNumber: trip.number,status: trip.status,destination: trip.destinationName,)));
               },
             ),
             ActionButton(

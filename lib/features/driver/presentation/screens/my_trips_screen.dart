@@ -15,14 +15,14 @@ import 'package:aloudeh_company/core/global_states/pagination_state.dart';
 import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_all_my_trips_paginated_cubit.dart';
 
-class TripsScreen extends StatefulWidget {
-  const TripsScreen({super.key});
+class DriverTripsScreen extends StatefulWidget {
+  const DriverTripsScreen({super.key});
 
   @override
-  _TripsScreenState createState() => _TripsScreenState();
+  _DriverTripsScreenState createState() => _DriverTripsScreenState();
 }
 
-class _TripsScreenState extends State<TripsScreen> {
+class _DriverTripsScreenState extends State<DriverTripsScreen> {
   late GetAllMyTripsPaginatedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   final LocationController locationController = Get.put(LocationController());

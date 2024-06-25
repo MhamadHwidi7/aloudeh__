@@ -316,9 +316,9 @@ class AddCustomerScreen extends StatelessWidget {
   }
 }
 
-class DividerItem extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Divider();
-  }
-}
+// class DividerItem extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Divider();
+//   }
+// }

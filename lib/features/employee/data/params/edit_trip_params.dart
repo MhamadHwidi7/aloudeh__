@@ -1,5 +1,5 @@
 class EditTripParams {
-  final int tripId;
+  final String tripId;
   final int? branchId;
   final int? truckId;
   final int? driverId;

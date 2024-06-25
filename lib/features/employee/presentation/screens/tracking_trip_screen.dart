@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/getx/location_controller.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_location_entity.dart';
@@ -48,6 +49,7 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
   @override
   void dispose() {
     _timer?.cancel();
+    locationController.dispose();
     super.dispose();
   }
 
@@ -75,8 +77,8 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Employee Tracking Screen'),
-        backgroundColor: Colors.blue,
+        title: Text('Employee Tracking Screen',style: TextStyle(color: AppColors.yellow),),
+        backgroundColor: AppColors.darkBlue,
       ),
       body: Stack(
         children: [
@@ -91,7 +93,8 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
       listener: (context, branchState) {
         branchState.whenOrNull(
           success: (branchData) {
-            final branchLatLng = LatLng(branchData.data.branchLat, branchData.data.branchLng);
+            //!Note:Changed here make the double . parse 
+            final branchLatLng = LatLng(double.parse(branchData.data.branchLat), double.parse(branchData.data.branchLng));
             setState(() {
               _branchLatLng = branchLatLng;
               _branchMarker = Marker(
@@ -110,6 +113,12 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
         listener: (context, trackingState) {
           trackingState.whenOrNull(
             success: (trackingData) {
+              if(trackingData.data.driverCurrentLat ==0 && trackingData.data.driverCurrentLng ==0){
+                  Fluttertoast.showToast(
+                        msg: "This Trip has not started yet",
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+              }
               final driverLatLng = LatLng(trackingData.data.driverCurrentLat, trackingData.data.driverCurrentLng);
               setState(() {
                 _driverMarker = Marker(

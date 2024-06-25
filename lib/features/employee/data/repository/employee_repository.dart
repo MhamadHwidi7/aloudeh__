@@ -3,10 +3,14 @@ import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
 import 'package:aloudeh_company/core/network/network_info.dart';
+import 'package:aloudeh_company/features/admin/data/entity/employee_entity.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/destination_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_by_id_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/get_customer_filter_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/archive_trip_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_branch_by_id_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_by_id_params.dart';
@@ -33,10 +37,12 @@ import 'package:aloudeh_company/features/employee/data/params/delete_customer_pa
 import 'package:aloudeh_company/features/employee/data/params/edit_trip_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_all_receipt_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_branch_location_params.dart';
+import 'package:aloudeh_company/features/employee/data/params/get_customer_filter_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_manifest_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_record_params.dart';
+import 'package:aloudeh_company/features/employee/data/params/log_in_employee_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/tracking_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/trip_archive_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/update_customer_params.dart';
@@ -127,6 +133,12 @@ abstract class EmployeeBaseRepository {
       ArchiveTripParams archiveTripParams);
   Future<Either<NetworkExceptions, GetBranchByIdEntity>> getBranchById(
       GetBranchByIdParams getBranchByIdParams);
+        Future<Either<NetworkExceptions, GetCustomersFilterEntity>> getCustomerFilter(
+      GetCustomerFilterParams getCustomerFilterParams);
+          Future<Either<NetworkExceptions, EmployeeProfile>> profile(
+      );
+            Future<Either<NetworkExceptions, LogInEmployeeEntity>> login(
+    LogInEmployeeParams logInEmployeeParams  );
 }
 
 @Singleton(as: EmployeeBaseRepository)
@@ -596,6 +608,51 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
       try {
         final response = await _employeeBaseWebServices
             .getBranchById(getBranchByIdParams);
+        return Right(response);
+      } on Exception catch (ex) {
+        return Left(NetworkExceptions.getDioException(ex));
+      }
+    } else {
+      return const Left(NetworkExceptions.noInternetConnection());
+    }
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, GetCustomersFilterEntity>> getCustomerFilter(GetCustomerFilterParams getCustomerFilterParams) async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _employeeBaseWebServices
+            .getCustomerFilter(getCustomerFilterParams);
+        return Right(response);
+      } on Exception catch (ex) {
+        return Left(NetworkExceptions.getDioException(ex));
+      }
+    } else {
+      return const Left(NetworkExceptions.noInternetConnection());
+    }
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, EmployeeProfile>> profile() async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _employeeBaseWebServices
+            .profile();
+        return Right(response);
+      } on Exception catch (ex) {
+        return Left(NetworkExceptions.getDioException(ex));
+      }
+    } else {
+      return const Left(NetworkExceptions.noInternetConnection());
+    }
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, LogInEmployeeEntity>> login(LogInEmployeeParams logInEmployeeParams)async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _employeeBaseWebServices
+            .login(logInEmployeeParams);
         return Right(response);
       } on Exception catch (ex) {
         return Left(NetworkExceptions.getDioException(ex));

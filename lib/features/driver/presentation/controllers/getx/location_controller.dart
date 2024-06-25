@@ -12,6 +12,7 @@ class LocationController extends GetxController {
     _fetchCurrentLocation();
   }
 
+
   Future<void> _fetchCurrentLocation() async {
     bool serviceEnabled;
     PermissionStatus permissionGranted;

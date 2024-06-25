@@ -3,21 +3,25 @@ import 'package:aloudeh_company/core/api/end_points.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
+import 'package:aloudeh_company/features/admin/data/entity/employee_entity.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/active_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/archive_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/customer_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/destination_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_customers_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_receipts_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_by_id_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_location_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/get_customer_filter_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_manifest_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_truck_information_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_truck_record_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/report_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/tracking_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
@@ -33,10 +37,12 @@ import 'package:aloudeh_company/features/employee/data/params/get_all_receipt_pa
 import 'package:aloudeh_company/features/employee/data/params/get_branch_by_id_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_by_id_params.dart';
+import 'package:aloudeh_company/features/employee/data/params/get_customer_filter_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_manifest_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_record_params.dart';
+import 'package:aloudeh_company/features/employee/data/params/log_in_employee_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/tracking_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/trip_archive_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/update_customer_params.dart';
@@ -90,6 +96,12 @@ abstract class EmployeeBaseWebServices {
   Future<BaseEntity> archiveTrip(ArchiveTripParams archiveTripParams);
   Future<GetBranchByIdEntity> getBranchById(
       GetBranchByIdParams getBranchByIdParams);
+        Future<GetCustomersFilterEntity> getCustomerFilter(
+      GetCustomerFilterParams getCustomerFilterParams);
+              Future<EmployeeProfile> profile(
+      );
+          Future<LogInEmployeeEntity> login(LogInEmployeeParams logInEmployeeParams
+      );
 }
 
 @Singleton(as: EmployeeBaseWebServices)
@@ -345,5 +357,26 @@ class EmployeeWebServicesImpl implements EmployeeBaseWebServices {
     final response = await _apiConsumer.get(
         "${EndPoints.getBranchByIdEmployee}/${getBranchByIdParams.branchId}");
     return GetBranchByIdEntity.fromJson(response);
+  }
+  
+  @override
+  Future<GetCustomersFilterEntity> getCustomerFilter(GetCustomerFilterParams getCustomerFilterParams) async{
+    final response = await _apiConsumer.post(EndPoints.customerByNameFilterEmployee,
+        queryParameters: getCustomerFilterParams.toJson());
+    return GetCustomersFilterEntity.fromJson(response);
+  }
+  
+  @override
+  Future<EmployeeProfile> profile()async {
+   final response = await _apiConsumer.get(
+        EndPoints.getProfileEmployee);
+    return EmployeeProfile.fromJson(response);
+  }
+  
+  @override
+  Future<LogInEmployeeEntity> login(LogInEmployeeParams logInEmployeeParams) async{
+    final response = await _apiConsumer.post(EndPoints.employeeLogIn,
+        queryParameters: logInEmployeeParams.toJson());
+    return LogInEmployeeEntity.fromJson(response);
   }
 }

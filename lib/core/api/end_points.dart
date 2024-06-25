@@ -1,5 +1,5 @@
 class EndPoints {
-  static const String baseUrl = 'http://10.0.2.2:8000/api';
+  static const String baseUrl = 'http://192.168.43.253:8000/api';
   static const String adminRegister = '$baseUrl/register';
   static const String adminLogIn = '$baseUrl/login';
 
@@ -108,7 +108,11 @@ class EndPoints {
       '$baseUrl/employee/getcustomer';
         static const String archiveTripEmployee =
       '$baseUrl/employee/archiveData';
+              static const String customerByNameFilterEmployee =
+      '$baseUrl/employee/customerByName';
   static const String getBranchByIdEmployee = '$baseUrl/employee/branches';
+  static const String getProfileEmployee = '$baseUrl/employee/myprofile';
+  static const String employeeLogIn = '$baseUrl/login';
 
 
 
@@ -130,4 +134,25 @@ class EndPoints {
       'AIzaSyAT9wA45sR_sIsLAdWUhw-wLGH_othLH7M';
                   static const String updateLocationDriver =
       '$baseUrl/driver/update-location';
+
+
+
+      //! / /////////////warehouse
+        static const String warehouseLogIn = '$baseUrl/login';
+  static const String addGoodWarehouse =
+      '$baseUrl/warehousemanager/addgood';
+        static const String deleteGoodWarehouse =
+      '$baseUrl/warehousemanager/deletegood';
+      static const String receivingGoodWarehouse =
+      '$baseUrl/warehousemanager/receivingood';
+            static const String getGoodWarehouse =
+      '$baseUrl/warehousemanager/getgood';
+              static const String getAllGoodsPaginatedWarehouse =
+      '$baseUrl/warehousemanager/getallgoods';
+              static const String getArchiveGoodsPaginatedWarehouse =
+      '$baseUrl/warehousemanager/archivedgoods';
+            static const String inventoryWarehouse =
+      '$baseUrl/warehousemanager/inventory';
+              static const String getRoleP =
+      '$baseUrl/get-role';
 }

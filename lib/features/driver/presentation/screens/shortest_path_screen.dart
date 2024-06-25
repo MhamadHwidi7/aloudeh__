@@ -157,7 +157,7 @@ class _ShortestPathScreenState extends State<ShortestPathScreen> {
   }
 
   void _handleBranchLocationSuccess(GetBranchLocationEntity branchData) {
-    final branchLatLng = LatLng(branchData.data.branchLat, branchData.data.branchLng);
+    final branchLatLng = LatLng(double.parse(branchData.data.branchLat), double.parse(branchData.data.branchLng));
     setState(() {
       _branchLatLng = branchLatLng;
       _branchMarker = Marker(

@@ -43,6 +43,9 @@ class ActiveTripsPaginatedEntity {
   @JsonKey(name: 'destination_id')
   final int destinationId;
 
+  @JsonKey(name: 'destination_name')
+  final String destinationName;
+
   @JsonKey(name: 'driver')
   final Driver driver;
 
@@ -61,6 +64,7 @@ class ActiveTripsPaginatedEntity {
     required this.number,
     required this.date,
     required this.status,
+    required this.destinationName,
     this.arrivalDate,
     required this.createdBy,
     this.editedBy,

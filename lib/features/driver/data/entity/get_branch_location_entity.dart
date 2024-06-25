@@ -24,10 +24,10 @@ class GetBranchLocationEntity {
 @JsonSerializable()
 class BranchLocationEntity {
   @JsonKey(name: 'branch_lat')
-  final double branchLat;
+  final String branchLat;
 
   @JsonKey(name: 'branch_lng')
-  final double branchLng;
+  final String branchLng;
 
 
   factory BranchLocationEntity.fromJson(Map<String, dynamic> json) =>

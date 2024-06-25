@@ -1,3 +1,4 @@
+import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +36,7 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: _buildAppBar(),
       body: BlocConsumer<GetBranchByIdEmployeeCubit, GetState<GetBranchByIdEntity>>(
@@ -69,7 +71,10 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
       ),
       bottom:  PreferredSize(
         preferredSize: Size.fromHeight(1.0),
-        child: DividerItem(),
+        child: Divider(
+      color: AppColors.darkBlue,
+      height: 1.0,
+    ),
       ),
     );
   }
@@ -82,15 +87,20 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
   }
 
   Widget _buildBranchInformationContent(GetBranchByIdEntity data) {
+        double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
-         SpaceItem(),
-        BranchInformationForEmployee(data: data),
-         SpaceItem(),
-        if(data.data.trips.isNotEmpty)
+SizedBox(
+      height: screenHeight / 50,
+    ),        BranchInformationForEmployee(data: data),
+SizedBox(
+      height: screenHeight / 50,
+    ),        if(data.data.trips.isNotEmpty)
         _buildHeaderRow(),
-         SpaceItem(),
-         if(data.data.trips.isNotEmpty)
+SizedBox(
+      height: screenHeight / 50,
+    ),         if(data.data.trips.isNotEmpty)
         Expanded(child: _buildTripsTable(data)),
       ],
     );
@@ -124,6 +134,8 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
   }
 
  Widget _buildTripsTable(GetBranchByIdEntity getBranchByIdEntity) {
+      double screenHeight = MediaQuery.of(context).size.height;
+
   if (getBranchByIdEntity.data.trips.isEmpty) {
     return const SizedBox();
   }
@@ -133,7 +145,9 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
       final trip = getBranchByIdEntity.data.trips[index];
       return _buildRowTableItem(trip);
     },
-    separatorBuilder: (context, index) =>  SpaceItem(),
+    separatorBuilder: (context, index) =>  SizedBox(
+      height: screenHeight / 50,
+    ),
     itemCount: getBranchByIdEntity.data.trips.length,
   );
 }
@@ -222,18 +236,23 @@ class BranchInformationForEmployee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        double screenHeight = MediaQuery.of(context).size.height;
+
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
           _buildInfoRow('Desk', data.data.desk, screenWidth / 9),
-           SpaceItem(),
-          _buildInfoRow('Address', data.data.address, screenWidth / 25),
-           SpaceItem(),
-          _buildInfoRow('Mobile', data.data.phone.toString(), screenWidth / 13),
-           SpaceItem(),
-          _buildDoubleTextRow('Opening', 'Date', data.data.openingDate, screenWidth / 20),
+SizedBox(
+      height: screenHeight / 50,
+    ),          _buildInfoRow('Address', data.data.address, screenWidth / 25),
+SizedBox(
+      height: screenHeight / 50,
+    ),          _buildInfoRow('Mobile', data.data.phone.toString(), screenWidth / 13),
+SizedBox(
+      height: screenHeight / 50,
+    ),          _buildDoubleTextRow('Opening', 'Date', data.data.openingDate, screenWidth / 20),
         ],
       ),
     );

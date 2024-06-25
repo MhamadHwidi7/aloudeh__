@@ -12,8 +12,11 @@ import 'package:aloudeh_company/features/employee/data/params/get_trip_informati
 import 'package:aloudeh_company/features/employee/presentation/controller/archive_trip_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/add_invoice_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_manifest_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/tracking_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_details_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/custom_appbar_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
@@ -205,23 +208,21 @@ context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: Get
             context,
             icon: Icons.print,
             onPressed: () {
-              // Implement your print action here
-            },
+Navigator.push(context, MaterialPageRoute(builder: (_)=>AddInvoiceScreen(manifestNumber: data.data.number)));            },
             heroTag: "print",
           ),
           _buildActionButton(
             context,
             icon: Icons.location_on,
             onPressed: () {
-              // Implement your location action here
-            },
+Navigator.push(context, MaterialPageRoute(builder: (_)=>EmployeeTrackingScreen(branchId: data.data.branchId, tripNumber: data.data.number)))           ; },
             heroTag: "location",
           ),
           _buildActionButton(
             context,
             icon: Icons.edit,
             onPressed: () {
-              // Implement your edit action here
+Navigator.push(context, MaterialPageRoute(builder: (_)=>EditTripScreen( manifestNumber: data.data.number,tripId: data.data.id.toString(),dateTrip: data.data.date,destination: data.data.destinationName,status: data.data.status,)))           ; 
             },
             heroTag: "edit",
           ),
@@ -322,51 +323,51 @@ class ActiveTripFinancialDetails extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
             label: 'General Total',
             value: getTripInformationEntity.data.manifestData?.generalTotal
                     ?.toString() ??
                 " - ",
           ),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Against Shipping',
               value: getTripInformationEntity.data.manifestData?.againstShipping
                       ?.toString() ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Discount',
               value: getTripInformationEntity.data.manifestData?.discount ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Adapter',
               value:
                   getTripInformationEntity.data.manifestData?.adapter ?? " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Net Total',
               value: getTripInformationEntity.data.manifestData?.netTotal
                       .toString() ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Advance',
               value:
                   getTripInformationEntity.data.manifestData?.adapter ?? " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Misc. Paid',
               value: getTripInformationEntity.data.manifestData?.miscPaid ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Collection',
               value: getTripInformationEntity.data.manifestData?.collection ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
         ],
       ),
     );

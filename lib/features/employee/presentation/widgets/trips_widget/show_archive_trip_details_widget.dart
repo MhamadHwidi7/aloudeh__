@@ -1,6 +1,7 @@
 import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_brfore_invoice_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_details_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_detail_row_widget.dart';
 import 'package:flutter/material.dart';
@@ -79,51 +80,51 @@ class ArchivedTripFinancialDetails extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
             label: 'General Total',
             value: getTripInformationEntity.data.manifestData?.generalTotal
                     ?.toString() ??
                 " - ",
           ),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Against Shipping',
               value: getTripInformationEntity.data.manifestData?.againstShipping
                       ?.toString() ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Discount',
               value: getTripInformationEntity.data.manifestData?.discount ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Adapter',
               value:
                   getTripInformationEntity.data.manifestData?.adapter ?? " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Net Total',
               value: getTripInformationEntity.data.manifestData?.netTotal
                       .toString() ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Advance',
               value:
                   getTripInformationEntity.data.manifestData?.adapter ?? " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Misc. Paid',
               value: getTripInformationEntity.data.manifestData?.miscPaid ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
           FinancialDetailRow(
               label: 'Collection',
               value: getTripInformationEntity.data.manifestData?.collection ??
                   " - "),
-          const SpaceItem(),
+           SpaceItem(),
         ],
       ),
     );

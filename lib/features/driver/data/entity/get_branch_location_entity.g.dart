@@ -23,8 +23,8 @@ Map<String, dynamic> _$GetBranchLocationEntityToJson(
 BranchLocationEntity _$BranchLocationEntityFromJson(
         Map<String, dynamic> json) =>
     BranchLocationEntity(
-      branchLat: (json['branch_lat'] as num).toDouble(),
-      branchLng: (json['branch_lng'] as num).toDouble(),
+      branchLat: json['branch_lat'] as String,
+      branchLng: json['branch_lng'] as String,
     );
 
 Map<String, dynamic> _$BranchLocationEntityToJson(
