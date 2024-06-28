@@ -17,6 +17,7 @@ import 'package:aloudeh_company/features/employee/presentation/screens/archive_e
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_manifest_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/tracking_trip_screen.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_details_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/custom_appbar_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
@@ -109,10 +110,10 @@ class _ActiveTripRecordScreenState extends State<ActiveTripRecordScreen> {
 }
 
 
+
 class TripActionButtons extends StatelessWidget {
   final GetTripInformationEntity data;
   const TripActionButtons({super.key, required this.data});
-
 
   void _archiveTrip(BuildContext context) {
     showCupertinoDialog(
@@ -122,15 +123,15 @@ class TripActionButtons extends StatelessWidget {
           listener: (ctx, state) {
             state.whenOrNull(
               success: (dataApi) {
-context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: GetTripInformationParams(tripNumber: data.data.number));
-                                context.read<GetAllTripsPaginatedCubit>().emitGetAllTrips();
-                                                Navigator.pop(context);
-
-
+                context.read<GetTripsInfoCubit>().emitGetTripsInfo(
+                    getTripInformationParams: GetTripInformationParams(
+                        tripNumber: data.data.number));
+                context.read<GetAllTripsPaginatedCubit>().emitGetAllTrips();
+                Navigator.pop(context);
               },
               error: (error) {
                 Fluttertoast.showToast(
-                  msg:NetworkExceptions.getErrorMessage(error),
+                  msg: NetworkExceptions.getErrorMessage(error),
                   toastLength: Toast.LENGTH_SHORT,
                 );
               },
@@ -147,7 +148,7 @@ context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: Get
                 ),
               ),
               content: Text(
-            "Do you want to archive this trip ${data.data.number}?",
+                "Do you want to archive this trip ${data.data.number}?",
                 style: TextStyle(
                   fontFamily: 'Bahnschrift',
                   color: AppColors.darkBlue,
@@ -166,8 +167,9 @@ context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: Get
                   ),
                   onPressed: () {
                     context.read<ArchiveTripCubit>().emitArchiveTrip(
-                      archiveTripParams: ArchiveTripParams(tripId: data.data.id),
-                    );
+                          archiveTripParams:
+                              ArchiveTripParams(tripId: data.data.id),
+                        );
                   },
                 ),
                 CupertinoDialogAction(
@@ -191,6 +193,47 @@ context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: Get
     );
   }
 
+  void _showDialog(BuildContext context, String title, String message) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) {
+        return CupertinoAlertDialog(
+          title: Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
+          ),
+          content: Text(
+            message,
+            style: TextStyle(
+              fontFamily: 'Bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 14.sp,
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: AppColors.yellow,
+                  fontFamily: 'Bahnschrift',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -201,35 +244,60 @@ context.read<GetTripsInfoCubit>().emitGetTripsInfo(getTripInformationParams: Get
           _buildActionButton(
             context,
             icon: Icons.archive,
-            onPressed: () => _archiveTrip(context),
+            onPressed: () {
+              if (data.data.status == 'closed') {
+                _showDialog(
+                    context, 'Archive Trip', 'This trip is closed and cannot be archived.');
+              } else {
+                _archiveTrip(context);
+              }
+            },
             heroTag: "archive",
           ),
           _buildActionButton(
             context,
             icon: Icons.print,
             onPressed: () {
-Navigator.push(context, MaterialPageRoute(builder: (_)=>AddInvoiceScreen(manifestNumber: data.data.number)));            },
+              if (data.data.status == 'closed') {
+                _showDialog(
+                    context, 'Add Invoice Trip', 'This trip is closed and cannot be added invoice.');
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AddInvoiceScreen(manifestNumber: data.data.number),
+                  ),
+                );
+              }
+            },
             heroTag: "print",
           ),
           _buildActionButton(
             context,
             icon: Icons.location_on,
             onPressed: () {
-Navigator.push(context, MaterialPageRoute(builder: (_)=>EmployeeTrackingScreen(branchId: data.data.branchId, tripNumber: data.data.number)))           ; },
-            heroTag: "location",
-          ),
-          _buildActionButton(
-            context,
-            icon: Icons.edit,
-            onPressed: () {
-Navigator.push(context, MaterialPageRoute(builder: (_)=>EditTripScreen( manifestNumber: data.data.number,tripId: data.data.id.toString(),dateTrip: data.data.date,destination: data.data.destinationName,status: data.data.status,)))           ; 
+              if (data.data.status == 'active') {
+                _showDialog(
+                    context, 'Location Tracking', 'This trip is active and tracking is not allowed.');
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EmployeeTrackingScreen(
+                        branchId: data.data.branchId,
+                        tripNumber: data.data.number),
+                  ),
+                );
+              }
             },
-            heroTag: "edit",
+            heroTag: "location",
           ),
         ],
       ),
     );
   }
+
 
   Widget _buildActionButton(BuildContext context, {required IconData icon, required VoidCallback onPressed, required String heroTag}) {
     return Container(
@@ -272,8 +340,8 @@ class ActiveTripDetails extends StatelessWidget {
             label: 'Truck',
             value: getTripInformationEntity.data.truckName,
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ViewTruckScreen()));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => ViewTruckScreen()));
             }),
         const Divider(),
         TripDetailRow(

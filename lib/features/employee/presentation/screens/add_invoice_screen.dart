@@ -1,15 +1,12 @@
-import 'dart:math';
-
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
-import 'package:aloudeh_company/core/global_states/get_state.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/destination_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/type_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_invoice_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_invoice_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_destination_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_customer_filter_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_type_pricelist_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/add_customer_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,8 +58,10 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  Destination? selectedDestination;
+  GetAllBranchesPaginatedEntity? selectedDestination;
   GetAllBranchesPaginatedEntity? selectedSource;
+    TypePaginatedEntity? selectedType;
+
   bool showList = false;
   List<CustomerData> searchResults = [];
   @override
@@ -209,7 +208,7 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
                 DestinationDropdown(
                   onChanged: (destination) {
                     setState(() {
-                      destinationController.text = destination.name;
+                      destinationController.text = destination.branchDesk;
                       selectedDestination = destination;
                     });
                   },
@@ -368,8 +367,17 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
           _buildPackageInfoRow('Num Of Packages', numOfPackagesController,
               AppColors.darkBlue, AppColors.pureWhite),
           const SizedBox(height: 10),
-          _buildPackageInfoRow('Package Type', packageTypeController,
-              AppColors.yellow, AppColors.pureBlack),
+           TypePriceListDropdown(
+                  onChanged: (ss) {
+                    setState(() {
+                    packageTypeController  .text = ss.type;
+                      selectedType = ss;
+                    });
+                  },
+                  selectedValue: selectedType,
+                ),
+          // _buildPackageInfoRow('Package Type', packageTypeController,
+          //     AppColors.yellow, AppColors.pureBlack),
           const SizedBox(height: 10),
           _buildPackageInfoRow('Content', contentController, AppColors.darkBlue,
               AppColors.pureWhite),
@@ -380,14 +388,52 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
           _buildPackageInfoRow('Marks', marksController, AppColors.darkBlue,
               AppColors.pureWhite),
           const SizedBox(height: 10),
-          _buildPackageInfoRow(
-              'Size', sizeController, AppColors.yellow, AppColors.pureBlack),
+                    _buildSizeDropdown(),
+
+          // _buildPackageInfoRow(
+          //     'Size', sizeController, AppColors.yellow, AppColors.pureBlack),
           SizedBox(height: 20.h),
         ],
       ),
     );
   }
-
+  Widget _buildSizeDropdown() {
+    return Row(
+      children: [
+        Text(
+          'Size',
+          style: TextStyle(
+            fontFamily: 'bahnschrift',
+            color: AppColors.pureBlack,
+            fontSize: 16.sp,
+          ),
+        ),
+        SizedBox(width: 20.w),
+        Expanded(
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              isDense: true,
+              filled: true,
+              fillColor: AppColors.yellow,
+              border: InputBorder.none,
+            ),
+            value: sizeController.text.isEmpty ? null : sizeController.text,
+            items: ['Ultra Small', 'Small', 'Medium', 'Large', 'Ultra Large']
+                .map((size) => DropdownMenuItem(
+                      value: size,
+                      child: Text(size),
+                    ))
+                .toList(),
+            onChanged: (newValue) {
+              setState(() {
+                sizeController.text = newValue!;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
   Widget _buildCostsSection() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -443,7 +489,7 @@ Widget _buildAddButton(BuildContext context) {
             context.read<AddInvoiceCubit>().emitAddInvoice(
               addInvoiceParams: AddInvoiceParams(
                 sourceId: selectedSource!.branchId,
-                destinationId: selectedDestination!.id,
+                destinationId: selectedDestination!.branchId,
                 manifestNumber: widget.manifestNumber,
                 sender: senderController.text,
                 receiver: recipientController.text,
@@ -810,10 +856,9 @@ class _BranchDropdownState extends State<BranchDropdown> {
     );
   }
 }
-
 class DestinationDropdown extends StatefulWidget {
-  final ValueChanged<Destination> onChanged;
-  final Destination? selectedValue;
+  final ValueChanged<GetAllBranchesPaginatedEntity> onChanged;
+  final GetAllBranchesPaginatedEntity? selectedValue;
 
   DestinationDropdown({
     required this.onChanged,
@@ -825,47 +870,194 @@ class DestinationDropdown extends StatefulWidget {
 }
 
 class _DestinationDropdownState extends State<DestinationDropdown> {
+  late GetAllBranchesPaginatedCubit cubit;
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
   @override
   void initState() {
     super.initState();
-    context.read<GetAllDestinationCubit>().emitGetAllDestination();
+    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit.emitGetAllBranches();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
   void _showDropdown(BuildContext context) {
+    cubit.emitGetAllBranches();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllDestinationCubit,
-              GetState<BaseDestinationEntity>>(
+          child: BlocConsumer<GetAllBranchesPaginatedCubit, PaginationStateTest<GetAllBranchesPaginatedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
-                error: (networkExceptions) => Fluttertoast.showToast(
-                  msg: NetworkExceptions.getErrorMessage(networkExceptions),
-                  toastLength: Toast.LENGTH_SHORT,
-                ),
+                error: (exception) {
+                  Fluttertoast.showToast(
+                    msg: NetworkExceptions.getErrorMessage(exception),
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                },
+                success: (data, canLoadMore) {
+                  if (canLoadMore == cubit.lastPage) {
+                    _refreshController.loadNoData();
+                  } else {
+                    _refreshController.loadComplete();
+                  }
+                },
+              );
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => const Center(child: Text("No data available")),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                success: (data, canLoadMore) {
+                  return SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: canLoadMore != 0,
+                    controller: _refreshController,
+                    onRefresh: () => cubit.emitGetAllBranches(),
+                    onLoading: () => cubit.emitGetAllBranches(loadMore: true),
+                    child: ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        GetAllBranchesPaginatedEntity branch = data[index];
+                        return ListTile(
+                          title: Text(branch.branchDesk.toString()),
+                          onTap: () {
+                            widget.onChanged(branch);
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showDropdown(context),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.mediumBlue),
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.white,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.selectedValue?.branchDesk.toString() ?? 'Select Destination',
+              style: const TextStyle(
+                color: AppColors.darkBlue,
+                fontSize: 16,
+              ),
+            ),
+            const Icon(Icons.arrow_drop_down, color: AppColors.darkBlue),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+ class TypePriceListDropdown extends StatefulWidget {
+  final ValueChanged<TypePaginatedEntity> onChanged;
+  final TypePaginatedEntity? selectedValue;
+
+  TypePriceListDropdown({
+    required this.onChanged,
+    required this.selectedValue,
+  });
+
+  @override
+  _TypePriceListDropdownState createState() => _TypePriceListDropdownState();
+}
+
+class _TypePriceListDropdownState extends State<TypePriceListDropdown> {
+  late GetTypePriceListPaginatedCubit cubit;
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<GetTypePriceListPaginatedCubit>();
+    cubit.emitGetTypesPriceList();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
+  void _showDropdown(BuildContext context) {
+    cubit.emitGetTypesPriceList();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: BlocConsumer<GetTypePriceListPaginatedCubit,
+              PaginationStateTest<TypePaginatedEntity>>(
+            listener: (context, state) {
+              state.whenOrNull(
+                error: (exception) {
+                  Fluttertoast.showToast(
+                    msg: NetworkExceptions.getErrorMessage(exception),
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                },
+                success: (data, canLoadMore) {
+                  if (canLoadMore == cubit.lastPage) {
+                    _refreshController.loadNoData();
+                  } else {
+                    _refreshController.loadComplete();
+                  }
+                },
               );
             },
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () => Center(child: Text("No data available")),
                 loading: () => Center(child: CircularProgressIndicator()),
-                success: (data) {
-                  return ListView.builder(
-                    itemCount: data.data.length,
-                    itemBuilder: (context, index) {
-                      Destination destination = data.data[index];
-                      return ListTile(
-                        title: Text(destination.name),
-                        onTap: () {
-                          widget.onChanged(destination);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
+                success: (data, canLoadMore) {
+                  return SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: canLoadMore != 0,
+                    controller: _refreshController,
+                    onRefresh: () => cubit.emitGetTypesPriceList(),
+                    onLoading: () => cubit.emitGetTypesPriceList(loadMore: true),
+                    child: ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        TypePaginatedEntity type = data[index];
+                        return ListTile(
+                          title: Text(type.type),
+                          onTap: () {
+                            widget.onChanged(type);
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      },
+                    ),
                   );
                 },
-              );
+              );  
             },
           ),
         );
@@ -888,7 +1080,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.selectedValue?.name ?? 'Select Destination',
+              widget.selectedValue?.type ?? 'Select Type',
               style: TextStyle(
                 color: AppColors.darkBlue,
                 fontSize: 16,

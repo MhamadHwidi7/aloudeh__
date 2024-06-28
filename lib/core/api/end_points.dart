@@ -1,5 +1,5 @@
 class EndPoints {
-  static const String baseUrl = 'http://192.168.43.253:8000/api';
+  static const String baseUrl = 'http://127.0.0.1:8000/api';
   static const String adminRegister = '$baseUrl/register';
   static const String adminLogIn = '$baseUrl/login';
 
@@ -77,6 +77,8 @@ class EndPoints {
       '$baseUrl/employee/GetArchiveData';
   static const String getTrucksPaginatedEmployee =
       '$baseUrl/employee/gettrucks';
+        static const String getTypePriceListPaginatedEmployee =
+      '$baseUrl/employee/priceslist';
         static const String getAllCustomersPaginatedEmployee =
       '$baseUrl/employee/getcustomers';
   static const String getAllReceiptsEmployee = '$baseUrl/employee/allreceipts';
@@ -113,7 +115,8 @@ class EndPoints {
   static const String getBranchByIdEmployee = '$baseUrl/employee/branches';
   static const String getProfileEmployee = '$baseUrl/employee/myprofile';
   static const String employeeLogIn = '$baseUrl/login';
-
+ static const String getClosedTripsPaginatedEmployee =
+      '$baseUrl/employee/getallclosedtrips';
 
 
 
@@ -155,4 +158,8 @@ class EndPoints {
       '$baseUrl/warehousemanager/inventory';
               static const String getRoleP =
       '$baseUrl/get-role';
+             static const String getWHNotification =
+      '$baseUrl/warehousemanager/notifications';
+           static const String getWHProfile =
+      '$baseUrl/warehousemanager/myprofile';
 }

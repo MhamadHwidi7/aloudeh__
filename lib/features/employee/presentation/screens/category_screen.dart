@@ -344,7 +344,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         state.whenOrNull(
           error: (error) {
             Fluttertoast.showToast(
-              msg: 'Error: $error',
+              msg: NetworkExceptions.getErrorMessage(error),
               toastLength: Toast.LENGTH_SHORT,
             );
           },
@@ -504,8 +504,7 @@ const SizedBox(height: 16),
   }
 
   String _calculateDuration(String start, String end) {
-    // Implement your logic to calculate the duration between start and end dates
-    return '6 days'; // Placeholder
+    return '6 days'; 
   }
 }
 

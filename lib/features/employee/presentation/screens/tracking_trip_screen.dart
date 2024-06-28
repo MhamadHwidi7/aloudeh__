@@ -49,7 +49,7 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
   @override
   void dispose() {
     _timer?.cancel();
-    locationController.dispose();
+    Get.delete<LocationController>(); // Properly dispose of the GetX controller
     super.dispose();
   }
 
@@ -77,7 +77,7 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Employee Tracking Screen',style: TextStyle(color: AppColors.yellow),),
+        title: Text('Employee Tracking Screen', style: TextStyle(color: AppColors.yellow)),
         backgroundColor: AppColors.darkBlue,
       ),
       body: Stack(
@@ -93,7 +93,6 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
       listener: (context, branchState) {
         branchState.whenOrNull(
           success: (branchData) {
-            //!Note:Changed here make the double . parse 
             final branchLatLng = LatLng(double.parse(branchData.data.branchLat), double.parse(branchData.data.branchLng));
             setState(() {
               _branchLatLng = branchLatLng;
@@ -113,11 +112,11 @@ class _EmployeeTrackingScreenState extends State<EmployeeTrackingScreen> {
         listener: (context, trackingState) {
           trackingState.whenOrNull(
             success: (trackingData) {
-              if(trackingData.data.driverCurrentLat ==0 && trackingData.data.driverCurrentLng ==0){
-                  Fluttertoast.showToast(
-                        msg: "This Trip has not started yet",
-                        toastLength: Toast.LENGTH_SHORT,
-                      );
+              if (trackingData.data.driverCurrentLat == 0 && trackingData.data.driverCurrentLng == 0) {
+                Fluttertoast.showToast(
+                  msg: "This Trip has not started yet",
+                  toastLength: Toast.LENGTH_SHORT,
+                );
               }
               final driverLatLng = LatLng(trackingData.data.driverCurrentLat, trackingData.data.driverCurrentLng);
               setState(() {

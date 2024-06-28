@@ -3,6 +3,7 @@ import 'package:aloudeh_company/core/global_states/get_state.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

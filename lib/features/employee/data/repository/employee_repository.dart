@@ -3,14 +3,14 @@ import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
 import 'package:aloudeh_company/core/network/network_info.dart';
-import 'package:aloudeh_company/features/admin/data/entity/employee_entity.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/destination_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/closed_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_by_id_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_customer_filter_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/type_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/archive_trip_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_branch_by_id_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_by_id_params.dart';
@@ -128,7 +128,7 @@ abstract class EmployeeBaseRepository {
   Future<Either<NetworkExceptions, CustomerEmployeeEntity>> getCustomerById(
       GetCustomerByIdParams getCustomerByIdParams);
   Future<Either<NetworkExceptions, BaseDriverEntity>> getAllDrivers();
-  Future<Either<NetworkExceptions, BaseDestinationEntity>> getAllDestination();
+  // Future<Either<NetworkExceptions, BaseDestinationEntity>> getAllDestination();
   Future<Either<NetworkExceptions, BaseEntity>> archiveTrip(
       ArchiveTripParams archiveTripParams);
   Future<Either<NetworkExceptions, GetBranchByIdEntity>> getBranchById(
@@ -139,6 +139,19 @@ abstract class EmployeeBaseRepository {
       );
             Future<Either<NetworkExceptions, LogInEmployeeEntity>> login(
     LogInEmployeeParams logInEmployeeParams  );
+
+     Future<
+      Either<
+          NetworkExceptions,
+          BasePaginationEntity<
+              PaginationEntity<TypePaginatedEntity>>>> typePriceList(
+      int page);
+        Future<
+          Either<
+              NetworkExceptions,
+              BasePaginationEntity<
+                  PaginationEntity<ClosedTripsPaginatedEntity>>>>
+      getAllClosedTrips(int page);
 }
 
 @Singleton(as: EmployeeBaseRepository)
@@ -557,20 +570,20 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
     }
   }
   
-  @override
-  Future<Either<NetworkExceptions, BaseDestinationEntity>> getAllDestination() async{
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _employeeBaseWebServices
-            .getAllDestination();
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
+  // @override
+  // Future<Either<NetworkExceptions, BaseDestinationEntity>> getAllDestination() async{
+  //   if (await _networkInfo.isConnected) {
+  //     try {
+  //       final response = await _employeeBaseWebServices
+  //           .getAllDestination();
+  //       return Right(response);
+  //     } on Exception catch (ex) {
+  //       return Left(NetworkExceptions.getDioException(ex));
+  //     }
+  //   } else {
+  //     return const Left(NetworkExceptions.noInternetConnection());
+  //   }
+  // }
   
   @override
   Future<Either<NetworkExceptions, BaseDriverEntity>> getAllDrivers() async{
@@ -660,5 +673,19 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
     } else {
       return const Left(NetworkExceptions.noInternetConnection());
     }
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<TypePaginatedEntity>>>> typePriceList(int page) async{
+    return await _getResultWithPagination(
+      () => _employeeBaseWebServices.typePriceList(page),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ClosedTripsPaginatedEntity>>>> getAllClosedTrips(int page) async{
+    return await _getResultWithPagination(
+      () => _employeeBaseWebServices.getAllClosedTrips(page),
+    );
   }
 }

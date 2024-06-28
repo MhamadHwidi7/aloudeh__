@@ -7,7 +7,9 @@ import 'package:aloudeh_company/features/warehouse/data/entity/get_all_good_pagi
 import 'package:aloudeh_company/features/warehouse/data/entity/get_archive_goods_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_good_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/log_in_warehouse_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/notification_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/warehouse_profile_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/add_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/delete_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/get_good_params.dart';
@@ -29,6 +31,8 @@ Future<BaseEntity>inventoryGood(InventoryGoodsParams inventoryGoodsParams);
       getArchiveGoodPaginated(int page);
       //!Note:make it more base abstract 
       Future<RoleEntity>getRole();
+      Future<BaseNotificationEntity>getNotifications();
+      Future<WarehouseProfileEntity>profile();
 
 }
 @Singleton(as: BaseWarehouseRemoteDataSource)
@@ -112,5 +116,17 @@ class WarehouseRemoteDataSourceImpl implements BaseWarehouseRemoteDataSource{
   Future<RoleEntity> getRole() async{
     final response = await _apiConsumer.get(EndPoints.getRoleP);
     return RoleEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BaseNotificationEntity> getNotifications()async {
+    final response = await _apiConsumer.get(EndPoints.getWHNotification);
+    return BaseNotificationEntity.fromJson(response);
+  }
+  
+  @override
+  Future<WarehouseProfileEntity> profile() async{
+    final response = await _apiConsumer.get(EndPoints.getWHProfile);
+    return WarehouseProfileEntity.fromJson(response);
   }
 }

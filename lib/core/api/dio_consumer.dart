@@ -176,7 +176,7 @@ class DioConsumer implements ApiConsumer {
   final Map<String, String> _headers = {
     StringsConstants.accept: StringsConstants.applicationJson,
     StringsConstants.contentType: StringsConstants.applicationJson,
-    StringsConstants.authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4xMzcuMTMyOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzE5MzAwODg3LCJleHAiOjE3MTkzMDQ0ODcsIm5iZiI6MTcxOTMwMDg4NywianRpIjoiVEJsSlFUbGZJWEFMTVhVQSIsInN1YiI6IjIiLCJwcnYiOiIzMjk2M2E2MDZjMmYxNzFmMWMxNDMzMWU3Njk3NjZjZDU5MTJlZDE1In0.8BRNYkD7fyiEOfS8y32bptMsO861qlJ7kPl0OGYAa7g",
+    StringsConstants.authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzE5NTc0MjYxLCJleHAiOjE3MTk1Nzc4NjEsIm5iZiI6MTcxOTU3NDI2MSwianRpIjoiOEIyNHNHbGRBRDY4MEx3USIsInN1YiI6IjEiLCJwcnYiOiI5MTljMzI2ZDQzYWIxNTE5YThiYTNiODU4NmI2ODc1MmU4YzgzODA3In0.Y9YEr7_HTxKlNo3MBfjWP6MjinHkuf6foJNafXoknD4",
   };
 
   Options get _defaultOptions => Options(headers: _headers);

@@ -3,12 +3,11 @@ import 'package:aloudeh_company/core/api/end_points.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
-import 'package:aloudeh_company/features/admin/data/entity/employee_entity.dart';
 import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/active_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/archive_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/closed_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/customer_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/destination_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_customers_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
@@ -25,6 +24,7 @@ import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_en
 import 'package:aloudeh_company/features/employee/data/entity/report_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/tracking_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/type_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_compliant_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_customer_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_invoice_params.dart';
@@ -92,7 +92,7 @@ abstract class EmployeeBaseWebServices {
   Future<CustomerEmployeeEntity> getCustomerById(
       GetCustomerByIdParams getCustomerByIdParams);
   Future<BaseDriverEntity> getAllDrivers();
-  Future<BaseDestinationEntity> getAllDestination();
+  // Future<BaseDestinationEntity> getAllDestination();
   Future<BaseEntity> archiveTrip(ArchiveTripParams archiveTripParams);
   Future<GetBranchByIdEntity> getBranchById(
       GetBranchByIdParams getBranchByIdParams);
@@ -102,6 +102,15 @@ abstract class EmployeeBaseWebServices {
       );
           Future<LogInEmployeeEntity> login(LogInEmployeeParams logInEmployeeParams
       );
+
+        Future<
+          BasePaginationEntity<
+              PaginationEntity<TypePaginatedEntity>>>
+      typePriceList(int page);
+             Future<
+          BasePaginationEntity<
+              PaginationEntity<ClosedTripsPaginatedEntity>>>
+      getAllClosedTrips(int page);
 }
 
 @Singleton(as: EmployeeBaseWebServices)
@@ -331,12 +340,12 @@ class EmployeeWebServicesImpl implements EmployeeBaseWebServices {
     return CustomerEmployeeEntity.fromJson(response);
   }
 
-  @override
-  Future<BaseDestinationEntity> getAllDestination() async {
-    final response =
-        await _apiConsumer.get(EndPoints.getAllDestinationsEmployee);
-    return BaseDestinationEntity.fromJson(response);
-  }
+  // @override
+  // Future<BaseDestinationEntity> getAllDestination() async {
+  //   final response =
+  //       await _apiConsumer.get(EndPoints.getAllDestinationsEmployee);
+  //   return BaseDestinationEntity.fromJson(response);
+  // }
 
   @override
   Future<BaseDriverEntity> getAllDrivers() async {
@@ -378,5 +387,21 @@ class EmployeeWebServicesImpl implements EmployeeBaseWebServices {
     final response = await _apiConsumer.post(EndPoints.employeeLogIn,
         queryParameters: logInEmployeeParams.toJson());
     return LogInEmployeeEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BasePaginationEntity<PaginationEntity<TypePaginatedEntity>>> typePriceList(int page) async{
+    return await _getResultWithPagination(
+        () => _apiConsumer.get(EndPoints.getTypePriceListPaginatedEmployee,
+            queryParameters: {"page": page}),
+        (json) => TypePaginatedEntity.fromJson(json));
+  }
+  
+  @override
+  Future<BasePaginationEntity<PaginationEntity<ClosedTripsPaginatedEntity>>> getAllClosedTrips(int page) async{
+    return await _getResultWithPagination(
+        () => _apiConsumer.get(EndPoints.getClosedTripsPaginatedEmployee,
+            queryParameters: {"page": page}),
+        (json) => ClosedTripsPaginatedEntity.fromJson(json));
   }
 }

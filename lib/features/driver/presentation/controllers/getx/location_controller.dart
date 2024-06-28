@@ -1,17 +1,18 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'dart:async';
 
 class LocationController extends GetxController {
   final Location _locationService = Location();
   LocationData? currentLocation;
   bool isFetchingLocation = false;
+  final Completer<void> _initialLocationFetchCompleter = Completer<void>();
 
   @override
   void onInit() {
     super.onInit();
     _fetchCurrentLocation();
   }
-
 
   Future<void> _fetchCurrentLocation() async {
     bool serviceEnabled;
@@ -28,6 +29,7 @@ class LocationController extends GetxController {
         print('Location service is not enabled');
         isFetchingLocation = false;
         update();
+        _initialLocationFetchCompleter.complete();
         return;
       }
     }
@@ -40,6 +42,7 @@ class LocationController extends GetxController {
         print('Location permission is not granted');
         isFetchingLocation = false;
         update();
+        _initialLocationFetchCompleter.complete();
         return;
       }
     }
@@ -50,6 +53,9 @@ class LocationController extends GetxController {
       print('Current Location: $currentLocation');
       update();  // Notify listeners to update
 
+      // Complete the completer to signal that the initial fetch is done
+      _initialLocationFetchCompleter.complete();
+
       // Listen to location changes
       _locationService.onLocationChanged.listen((LocationData loc) {
         currentLocation = loc;
@@ -58,9 +64,12 @@ class LocationController extends GetxController {
       });
     } catch (e) {
       print('Error fetching location: $e');
+      _initialLocationFetchCompleter.complete();
     } finally {
       isFetchingLocation = false;
       update();
     }
   }
+
+  Future<void> get initialLocationFetchCompleted => _initialLocationFetchCompleter.future;
 }

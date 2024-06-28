@@ -23,13 +23,14 @@ class ShortestPathScreen extends StatefulWidget {
   final int branchId;
   final Color polylineColor;
   final int polylineWidth;
-final String tripNumber;
+  final String tripNumber;
+
   const ShortestPathScreen({
     Key? key,
     required this.branchId,
     this.polylineColor = Colors.blue,
     this.polylineWidth = 5,
-    required this.tripNumber
+    required this.tripNumber,
   }) : super(key: key);
 
   @override
@@ -51,14 +52,20 @@ class _ShortestPathScreenState extends State<ShortestPathScreen> {
   void initState() {
     super.initState();
     _initializeBranchLocation();
-    locationController.onInit(); // Ensure the location is fetched when the screen is initialized
-    _startLocationUpdateTimer();
+    _waitForInitialLocationFetch();
   }
 
   @override
   void dispose() {
     _locationUpdateTimer?.cancel();
+    Get.delete<LocationController>(); // Properly dispose of the GetX controller
     super.dispose();
+  }
+
+  void _waitForInitialLocationFetch() async {
+    await locationController.initialLocationFetchCompleted;
+    _startLocationUpdateTimer();
+    _fetchInitialRoute();
   }
 
   void _startLocationUpdateTimer() {
@@ -76,7 +83,7 @@ class _ShortestPathScreenState extends State<ShortestPathScreen> {
       updateLocationDriverParams: UpdateLocationDriverParams(
         driverCurrentLat: location.latitude,
         driverCurrentLng: location.longitude,
-        tripNumber: widget.tripNumber
+        tripNumber: widget.tripNumber,
       ),
     );
   }
@@ -115,6 +122,23 @@ class _ShortestPathScreenState extends State<ShortestPathScreen> {
     // Adjust the camera to fit the polyline bounds
     final bounds = directions.bounds;
     _mapController?.animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
+  }
+
+  void _fetchInitialRoute() {
+    final currentLocation = locationController.currentLocation;
+    if (currentLocation != null && _branchLatLng != null) {
+      _fetchShortestPath(LatLng(currentLocation.latitude!, currentLocation.longitude!), _branchLatLng!);
+    }
+  }
+
+  void _fetchShortestPath(LatLng origin, LatLng destination) {
+    final shortestPathCubit = context.read<GetShortestPathCubit>();
+    shortestPathCubit.emitGetShortestPath(
+      shortestPathParams: ShortestPathParams(
+        origin: origin,
+        destination: destination,
+      ),
+    );
   }
 
   void _showErrorToast(NetworkExceptions error) {
@@ -168,22 +192,7 @@ class _ShortestPathScreenState extends State<ShortestPathScreen> {
       _animateToLocation(branchLatLng);
     });
 
-    final currentLocation = locationController.currentLocation;
-    if (currentLocation != null) {
-      _fetchShortestPath(LatLng(currentLocation.latitude!, currentLocation.longitude!), branchLatLng);
-    } else {
-      _showErrorToast(NetworkExceptions.defaultError("Current location is null"));
-    }
-  }
-
-  void _fetchShortestPath(LatLng origin, LatLng destination) {
-    final shortestPathCubit = context.read<GetShortestPathCubit>();
-    shortestPathCubit.emitGetShortestPath(
-      shortestPathParams: ShortestPathParams(
-        origin: origin,
-        destination: destination,
-      ),
-    );
+    _fetchInitialRoute();
   }
 
   Widget _buildShortestPathConsumer() {

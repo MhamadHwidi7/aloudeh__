@@ -2,18 +2,13 @@ import 'dart:io';
 
 import 'package:aloudeh_company/core/utils/cubit/notification_cubit.dart';
 import 'package:aloudeh_company/core/utils/notification_viewer.dart';
-import 'package:aloudeh_company/features/branch_manager/presentation/controllers/add_employee_cubit.dart';
-import 'package:aloudeh_company/features/branch_manager/presentation/screens/google_map_screen.dart';
+import 'package:aloudeh_company/core/utils/shared_preference_utils.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/driver_log_in_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/driver_profile_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_all_my_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_branch_location_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_shortest_path_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/update_location_driver_cubit.dart';
-import 'package:aloudeh_company/features/driver/presentation/screens/driver_login_screen.dart';
-import 'package:aloudeh_company/features/driver/presentation/screens/driver_profile_screen.dart';
-import 'package:aloudeh_company/features/driver/presentation/screens/my_trips_screen.dart';
-import 'package:aloudeh_company/features/driver/presentation/screens/shortest_path_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_customer_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_invoice_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_trip_cubit.dart';
@@ -24,8 +19,8 @@ import 'package:aloudeh_company/features/employee/presentation/controller/edit_t
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_archive_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_all_closed_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_customers_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_destination_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_drivers_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_truck_record_paginated_cubit.dart';
@@ -37,33 +32,23 @@ import 'package:aloudeh_company/features/employee/presentation/controller/get_ma
 import 'package:aloudeh_company/features/employee/presentation/controller/get_profile_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_truck_information_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_type_pricelist_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/log_in_employee_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/tracking_driver_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/update_customer_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/add_invoice_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/add_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_customer_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/show_all_branches_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/show_customers_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/tracking_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/truck_screen.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/add_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/delete_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_all_good_paginated_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_archive_goods_paginated_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_good_cubit.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_notification_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_role_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/getx/cubit/barcode_scanner_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/getx/cubit/cubit/barcode_scanner_list_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/inventory_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/login_warehouse_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/receiving_good_cubit.dart';
-import 'package:aloudeh_company/features/warehouse/presentation/screens/good_details.dart';
-import 'package:aloudeh_company/features/warehouse/presentation/screens/good_list.dart';
-import 'package:aloudeh_company/features/warehouse/presentation/screens/qr.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/controllers/warehouse_profile_cubit.dart';
 import 'package:aloudeh_company/injection.dart';
 import 'package:aloudeh_company/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -111,7 +96,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await requestPermission();
-
+await SharedPreferencesUtils().init();
   await configureDependencies();
   await NotificationViewer.initialize();
   HttpOverrides.global = MyHttpOverrides();
@@ -181,9 +166,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<CancelTripCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<GetAllDestinationCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<GetAllDriversCubit>(),
@@ -260,6 +242,18 @@ class MyApp extends StatelessWidget {
          BlocProvider(
           create: (context) => getIt<LogInEmployeeCubit>(),
         ),
+           BlocProvider(
+          create: (context) => getIt<GetTypePriceListPaginatedCubit>(),
+        ),
+           BlocProvider(
+          create: (context) => getIt<GetAllClosedTripsPaginatedCubit>(),
+        ),
+              BlocProvider(
+          create: (context) => getIt<GetNotificationCubit>(),
+        ),
+               BlocProvider(
+          create: (context) => getIt<GetProfileWarehouseCubit>(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -270,7 +264,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
               ),
-              home:  SplashScreen()
+              home:  const SplashScreen()
 
               //  EmployeeTrackingScreen(tripNumber: "HO_1_2",branchId: 3,),
 

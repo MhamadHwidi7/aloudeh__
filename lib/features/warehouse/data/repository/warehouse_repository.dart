@@ -9,7 +9,9 @@ import 'package:aloudeh_company/features/warehouse/data/entity/get_all_good_pagi
 import 'package:aloudeh_company/features/warehouse/data/entity/get_archive_goods_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_good_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/log_in_warehouse_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/notification_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/warehouse_profile_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/add_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/delete_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/get_good_params.dart';
@@ -31,6 +33,8 @@ Future<Either<NetworkExceptions,BaseEntity>>inventoryGood({required InventoryGoo
         Future<Either<NetworkExceptions,BasePaginationEntity<PaginationEntity<GetArchiveGoodsPaginatedEntity>>>>
       getArchiveGoodPaginated(int page);
       Future<Either<NetworkExceptions,RoleEntity>>getRole();
+Future<Either<NetworkExceptions,BaseNotificationEntity>>getNotifications();
+Future<Either<NetworkExceptions,WarehouseProfileEntity>>profile();
 
 }
 
@@ -133,6 +137,22 @@ class WarehouseRepositoryImpl implements BaseWarehouseRepository{
       isConnected: () => _networkInfo.isConnected,
       apiCall: () => _baseWarehouseRemoteDataSource.getRole(
           ),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BaseNotificationEntity>> getNotifications() async{
+  return await handleNetworkRequest<BaseNotificationEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _baseWarehouseRemoteDataSource.getNotifications(),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, WarehouseProfileEntity>> profile() async{
+  return await handleNetworkRequest<WarehouseProfileEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _baseWarehouseRemoteDataSource.profile(),
     );
   }
 }

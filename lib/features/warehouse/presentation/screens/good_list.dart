@@ -9,6 +9,8 @@ import 'package:aloudeh_company/features/warehouse/data/params/delete_good_param
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/delete_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_all_good_paginated_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_archive_goods_paginated_cubit.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/screens/notification_screen.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/screens/profile_screen.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/screens/qr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class GoodsApp extends StatelessWidget {
+  const GoodsApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,12 +44,24 @@ class GoodsApp extends StatelessWidget {
           ),
           backgroundColor: AppColors.darkBlue,
           actions: [
-            CircleAvatar(
-              radius: 18.r,
-              backgroundColor: AppColors.lightBlue,
-              child: const Icon(Icons.person, color: AppColors.darkBlue),
+                        IconButton(onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=>NotificationScreen()));
+                        }, icon: Icon(Icons.notifications,color: Colors.white,))
+          ,  SizedBox(width: 12.w),
+
+            GestureDetector(
+              onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (_)=>const WarehouseProfileScreen()));
+
+              },
+              child: CircleAvatar(
+                radius: 14.r,
+                backgroundColor: AppColors.lightBlue,
+                child: const Icon(Icons.person, color: AppColors.darkBlue),
+              ),
             ),
-            SizedBox(width: 12.w),
+                        SizedBox(width: 8.w),
+
           ],
           bottom: const TabBar(
             indicatorColor: AppColors.yellow,
@@ -244,7 +260,6 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
             
             },
               );
-              // TODO: implement listener
             },
             builder: (context, state) {
               return state.maybeWhen(orElse: () => CupertinoDialogAction(
@@ -304,11 +319,23 @@ late GetArchiveGoodsPaginatedCubit cubit;
           shape: const CircleBorder(),
         ),
         children: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.adf_scanner_outlined)),
+           IconButton(onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>const QRScannerScreen()));
+
+            
+          }, icon: const Icon(Icons.adf_scanner_outlined)),
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.qr_code_scanner_rounded)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.read_more)),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>const ReceivingGoodScreen()));
+              }, icon: const Icon(Icons.qr_code_scanner_rounded)),
+          IconButton(onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>const AddGoodBarcodeScannerScreen()));
+
+          }, icon: const Icon(Icons.add)),
+          IconButton(onPressed: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (_)=>const GetGoodBarcodeScannerScreen()));
+
+          }, icon: const Icon(Icons.read_more)),
         ],
       ),
       body: BlocConsumer<GetArchiveGoodsPaginatedCubit,

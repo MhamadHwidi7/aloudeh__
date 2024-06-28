@@ -4,10 +4,12 @@ import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
 import 'package:aloudeh_company/features/employee/data/entity/archive_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/active_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/employee/data/entity/closed_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/cancel_trip_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/cancel_trip_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_archive_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
+import 'package:aloudeh_company/features/employee/presentation/controller/get_all_closed_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/active_trip_record_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/add_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
@@ -28,7 +30,7 @@ class TripsListForEmployee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.darkBlue,
@@ -48,6 +50,8 @@ class TripsListForEmployee extends StatelessWidget {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.unarchive), text: "Effective"),
+                            Tab(icon: Icon(Icons.close), text: "Closed"),
+
               Tab(icon: Icon(Icons.archive), text: "Archived"),
             ],
             unselectedLabelColor: AppColors.mediumBlue,
@@ -56,6 +60,8 @@ class TripsListForEmployee extends StatelessWidget {
         body: TabBarView(
           children: [
             EffectiveTripsScreen(),
+                        ClosedTripsScreen(),
+
             ArchivedTripsScreen(),
           ],
         ),
@@ -113,6 +119,24 @@ class EffectiveTripsScreen extends StatelessWidget {
         DividerItem(),
         Expanded(
           child: EffectiveTripsList(),
+        ),
+        AddTripButton(),
+      ],
+    );
+  }
+}
+
+class ClosedTripsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SpaceItem(),
+        TripSearchButton(),
+        SpaceItem(),
+        DividerItem(),
+        Expanded(
+          child: ClosedTripsList(),
         ),
         AddTripButton(),
       ],
@@ -186,6 +210,79 @@ class TripSearchButton extends StatelessWidget {
     );
   }
 }
+
+class ClosedTripsList extends StatefulWidget {
+  @override
+  _ClosedTripsListState createState() => _ClosedTripsListState();
+}
+
+class _ClosedTripsListState extends State<ClosedTripsList> {
+  late GetAllClosedTripsPaginatedCubit cubit;
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<GetAllClosedTripsPaginatedCubit>();
+    cubit.emitGetAllClosedTrips();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    // cubit.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<GetAllClosedTripsPaginatedCubit,
+        PaginationStateTest<ClosedTripsPaginatedEntity>>(
+      listener: (context, state) {
+        state.whenOrNull(
+          error: (NetworkExceptions exception) {
+            Fluttertoast.showToast(
+              msg: NetworkExceptions.getErrorMessage(exception),
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+          success: (data, canLoadMore) {
+            if (canLoadMore == cubit.lastPage) {
+              _refreshController.loadNoData();
+            } else {
+              _refreshController.loadComplete();
+            }
+          },
+        );
+      },
+      builder: (context, state) {
+        return state.maybeWhen(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          success: (trips, canLoadMore) {
+            return SmartRefresher(
+              enablePullDown: true,
+              controller: _refreshController,
+              onRefresh: () => cubit.emitGetAllClosedTrips(),
+              onLoading: () => cubit.emitGetAllClosedTrips(loadMore: true),
+              enablePullUp: canLoadMore != 0,
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  ClosedTripsPaginatedEntity trip = trips[index];
+                  return ClosedTripItem(trip: trip, tripType: 'Closed');
+                },
+                separatorBuilder: (context, index) => DividerItem(),
+                itemCount: trips.length,
+              ),
+            );
+          },
+          orElse: () => const Center(child: Text('No trips available')),
+        );
+      },
+    );
+  }
+}
+
 
 // Effective trips list with pagination
 class EffectiveTripsList extends StatefulWidget {
@@ -332,6 +429,131 @@ class _ArchivedTripsListState extends State<ArchivedTripsList> {
     );
   }
 }
+class ClosedTripItem extends StatelessWidget {
+  final ClosedTripsPaginatedEntity trip;
+  final String tripType;
+
+  const ClosedTripItem({required this.trip, required this.tripType});
+
+  void _deleteTrip(BuildContext context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) {
+        return BlocConsumer<CancelTripCubit, PostState<BaseEntity>>(
+          listener: (ctx, state) {
+            state.whenOrNull(
+              success: (data) {
+                Navigator.pop(context);
+
+                context
+                    .read<GetAllActiveTripsPaginatedCubit>()
+                    .emitGetAllActiveTrips();
+              },
+              error: (NetworkExceptions error) {
+                Fluttertoast.showToast(
+                  msg:NetworkExceptions.getErrorMessage(error),
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+              },
+            );
+          },
+          builder: (context, state) {
+            return CupertinoAlertDialog(
+              title: Text(
+                "Cancel Trip",
+                style: TextStyle(
+                  fontFamily: 'Bahnschrift',
+                  color: AppColors.darkBlue,
+                  fontSize: 16.sp,
+                ),
+              ),
+              content: Text(
+                "Do you want to delete?",
+                style: TextStyle(
+                  fontFamily: 'Bahnschrift',
+                  color: AppColors.darkBlue,
+                  fontSize: 14.sp,
+                ),
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(
+                      color: AppColors.yellow,
+                      fontFamily: 'Bahnschrift',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    print("Delete customer button pressed");
+                    context.read<CancelTripCubit>().emitCancelTrip(
+                          cancelTripParams: CancelTripParams(tripId: trip.id),
+                        );
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: const Text(
+                    'No',
+                    style: TextStyle(
+                      color: AppColors.yellow,
+                      fontFamily: 'Bahnschrift',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20.0, 10, 10, 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              trip.number,
+              style: TextStyle(
+                fontFamily: 'bahnschrift',
+                fontWeight: FontWeight.bold,
+                color: AppColors.darkBlue,
+                fontSize: 16.sp,
+              ),
+            ),
+          ),
+          ActionButton(
+            text: 'View',
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ActiveTripRecordScreen(tripNumber: trip.number,)));
+            },
+          ),
+          // ActionButton(
+          //   text: 'Edit',
+          //   onPressed: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => EditTripScreen(manifestNumber: trip.number,status: trip.status,destination: trip.destinationName,dateTrip: trip.date,tripId: trip.id.toString(),)));
+          //   },
+          // ),
+          // ActionButton(
+          //   text: 'Cancel',
+          //   onPressed: () {
+          //     _deleteTrip(context);
+          //   },
+          // ),
+        ],
+      ),
+    );
+  }
+}
 
 // Trip item widget with conditional buttons
 class ActiveTripItem extends StatelessWidget {
@@ -441,13 +663,13 @@ class ActiveTripItem extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ActiveTripRecordScreen(tripNumber: trip.number,)));
             },
           ),
-          ActionButton(
-            text: 'Edit',
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditTripScreen(manifestNumber: trip.number,status: trip.status,destination: trip.destinationName,dateTrip: trip.date,tripId: trip.id.toString(),)));
-            },
-          ),
+          // ActionButton(
+          //   text: 'Edit',
+          //   onPressed: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => EditTripScreen(manifestNumber: trip.number,status: trip.status,destination: trip.destinationName,dateTrip: trip.date,tripId: trip.id.toString(),)));
+          //   },
+          // ),
           ActionButton(
             text: 'Cancel',
             onPressed: () {
