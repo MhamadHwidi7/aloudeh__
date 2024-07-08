@@ -21,22 +21,22 @@ Map<String, dynamic> _$GetTripInformationEntityToJson(
     };
 
 TripData _$TripDataFromJson(Map<String, dynamic> json) => TripData(
-      id: json['id'] as int,
-      truckId: json['truck_id'] as int,
+      id: (json['id'] as num).toInt(),
+      truckId: (json['truck_id'] as num).toInt(),
       truckName: json['truck_name'] as String,
-      driverId: json['driver_id'] as int,
+      driverId: (json['driver_id'] as num).toInt(),
       driverName: json['driver_name'] as String,
-      branchId: json['branch_id'] as int,
+      branchId: (json['branch_id'] as num).toInt(),
       branchName: json['branch_name'] as String,
-      manifestId: json['manifest_id'] as int,
+      manifestId: (json['manifest_id'] as num).toInt(),
       number: json['number'] as String,
       date: json['date'] as String,
       status: json['status'] as String,
       arrivalDate: json['arrival_date'] as String?,
       createdBy: json['created_by'] as String,
       editedBy: json['edited_by'] as String?,
-      archived: json['archived'] as int,
-      destinationId: json['destination_id'] as int,
+      archived: (json['archived'] as num).toInt(),
+      destinationId: (json['destination_id'] as num).toInt(),
       destinationName: json['destination_name'] as String,
       manifestData: json['manifest'] == null
           ? null
@@ -65,7 +65,7 @@ Map<String, dynamic> _$TripDataToJson(TripData instance) => <String, dynamic>{
     };
 
 ManifestData _$ManifestDataFromJson(Map<String, dynamic> json) => ManifestData(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       number: json['number'] as String,
       status: json['status'] as String,
       generalTotal: json['general_total'] as String?,
@@ -76,7 +76,7 @@ ManifestData _$ManifestDataFromJson(Map<String, dynamic> json) => ManifestData(
       adapter: json['adapter'] as String?,
       advance: json['advance'] as String?,
       collection: json['collection'] as String?,
-      tripId: json['trip_id'] as int,
+      tripId: (json['trip_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$ManifestDataToJson(ManifestData instance) =>

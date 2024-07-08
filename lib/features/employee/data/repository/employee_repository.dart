@@ -3,31 +3,19 @@ import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
 import 'package:aloudeh_company/core/global/pagination_entity.dart';
 import 'package:aloudeh_company/core/network/network_info.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/closed_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_branch_by_id_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_customer_filter_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/type_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/archive_trip_params.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_branch_by_id_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_by_id_params.dart';
-import 'package:aloudeh_company/features/employee/data/entity/active_trips_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/archive_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/customer_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_customers_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_receipts_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_all_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_branch_location_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_manifest_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_truck_information_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_truck_record_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/report_entity.dart';
 import 'package:aloudeh_company/features/employee/data/entity/tracking_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_compliant_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_customer_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_invoice_params.dart';
@@ -38,9 +26,6 @@ import 'package:aloudeh_company/features/employee/data/params/edit_trip_params.d
 import 'package:aloudeh_company/features/employee/data/params/get_all_receipt_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_filter_params.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_manifest_params.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_truck_record_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/log_in_employee_params.dart';
 import 'package:aloudeh_company/features/employee/data/params/tracking_params.dart';
@@ -68,40 +53,9 @@ abstract class EmployeeBaseRepository {
               BasePaginationEntity<
                   PaginationEntity<GetAllTripsPaginatedEntity>>>>
       getAllTripsPaginated();
-  Future<
-      Either<
-          NetworkExceptions,
-          BasePaginationEntity<
-              PaginationEntity<GetAllBranchesPaginatedEntity>>>> getAllBranches(
-      int page);
-  Future<
-      Either<
-          NetworkExceptions,
-          BasePaginationEntity<
-              PaginationEntity<ActiveTripsPaginatedEntity>>>> getAllActiveTrips(
-      int page);
-  Future<Either<NetworkExceptions, GetTripInformationEntity>> getTripInfo(
-      {required GetTripInformationParams getTripInformationParams});
-  Future<
-          Either<
-              NetworkExceptions,
-              BasePaginationEntity<
-                  PaginationEntity<ArchiveTripsPaginatedEntity>>>>
-      getAllArchiveTrips(int page);
-  Future<
-          Either<
-              NetworkExceptions,
-              BasePaginationEntity<
-                  PaginationEntity<TruckRecordPaginatedEntity>>>>
-      getAllTruckRecordPaginated(int page);
   Future<Either<NetworkExceptions, GetAllReceiptsEntity>> getAllReceipt(
       {required GetAllReceiptParams getAllReceiptParams});
-  Future<Either<NetworkExceptions, GetManifestEntity>> getManifest(
-      {required GetManifestParams getManifestParams});
-  Future<Either<NetworkExceptions, GetTruckInformationEntity>>
-      getTruckInformation(
-          {required GetTruckInformationParams getTruckInformationParams});
-  Future<Either<NetworkExceptions, GetTruckRecordEntity>> getTruckRecord(
+ Future<Either<NetworkExceptions, GetTruckRecordEntity>> getTruckRecord(
       {required GetTruckRecordParams getTruckRecordParams});
   Future<Either<NetworkExceptions, BaseEntity>> addCustomer(
       {required AddCustomerParams addCustomerParams});
@@ -127,12 +81,8 @@ abstract class EmployeeBaseRepository {
       getAllCustomers(int page);
   Future<Either<NetworkExceptions, CustomerEmployeeEntity>> getCustomerById(
       GetCustomerByIdParams getCustomerByIdParams);
-  Future<Either<NetworkExceptions, BaseDriverEntity>> getAllDrivers();
-  // Future<Either<NetworkExceptions, BaseDestinationEntity>> getAllDestination();
   Future<Either<NetworkExceptions, BaseEntity>> archiveTrip(
       ArchiveTripParams archiveTripParams);
-  Future<Either<NetworkExceptions, GetBranchByIdEntity>> getBranchById(
-      GetBranchByIdParams getBranchByIdParams);
         Future<Either<NetworkExceptions, GetCustomersFilterEntity>> getCustomerFilter(
       GetCustomerFilterParams getCustomerFilterParams);
           Future<Either<NetworkExceptions, EmployeeProfile>> profile(
@@ -140,18 +90,7 @@ abstract class EmployeeBaseRepository {
             Future<Either<NetworkExceptions, LogInEmployeeEntity>> login(
     LogInEmployeeParams logInEmployeeParams  );
 
-     Future<
-      Either<
-          NetworkExceptions,
-          BasePaginationEntity<
-              PaginationEntity<TypePaginatedEntity>>>> typePriceList(
-      int page);
-        Future<
-          Either<
-              NetworkExceptions,
-              BasePaginationEntity<
-                  PaginationEntity<ClosedTripsPaginatedEntity>>>>
-      getAllClosedTrips(int page);
+ 
 }
 
 @Singleton(as: EmployeeBaseRepository)
@@ -272,70 +211,7 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
     );
   }
 
-  @override
-  Future<
-      Either<
-          NetworkExceptions,
-          BasePaginationEntity<
-              PaginationEntity<GetAllBranchesPaginatedEntity>>>> getAllBranches(
-      int page) async {
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.getAllBranches(page),
-    );
-  }
-
-  @override
-  Future<
-      Either<
-          NetworkExceptions,
-          BasePaginationEntity<
-              PaginationEntity<ActiveTripsPaginatedEntity>>>> getAllActiveTrips(
-      int page) async {
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.getAllActiveTrips(page),
-    );
-  }
-
-  @override
-  Future<Either<NetworkExceptions, GetTripInformationEntity>> getTripInfo(
-      {required GetTripInformationParams getTripInformationParams}) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _employeeBaseWebServices
-            .getTripInfo(getTripInformationParams);
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
-
-  @override
-  Future<
-          Either<
-              NetworkExceptions,
-              BasePaginationEntity<
-                  PaginationEntity<ArchiveTripsPaginatedEntity>>>>
-      getAllArchiveTrips(int page) async {
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.getAllArchiveTrips(page),
-    );
-  }
-
-  @override
-  Future<
-          Either<
-              NetworkExceptions,
-              BasePaginationEntity<
-                  PaginationEntity<TruckRecordPaginatedEntity>>>>
-      getAllTruckRecordPaginated(int page) async {
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.getAllTruckRecordPaginated(page),
-    );
-  }
-
+ 
   @override
   Future<Either<NetworkExceptions, GetAllReceiptsEntity>> getAllReceipt(
       {required GetAllReceiptParams getAllReceiptParams}) async {
@@ -343,40 +219,6 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
       try {
         final response =
             await _employeeBaseWebServices.getAllReceipt(getAllReceiptParams);
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
-
-  @override
-  Future<Either<NetworkExceptions, GetManifestEntity>> getManifest(
-      {required GetManifestParams getManifestParams}) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response =
-            await _employeeBaseWebServices.getManifest(getManifestParams);
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
-
-  @override
-  Future<Either<NetworkExceptions, GetTruckInformationEntity>>
-      getTruckInformation(
-          {required GetTruckInformationParams
-              getTruckInformationParams}) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _employeeBaseWebServices
-            .getTruckInformation(getTruckInformationParams);
         return Right(response);
       } on Exception catch (ex) {
         return Left(NetworkExceptions.getDioException(ex));
@@ -585,21 +427,7 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
   //   }
   // }
   
-  @override
-  Future<Either<NetworkExceptions, BaseDriverEntity>> getAllDrivers() async{
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _employeeBaseWebServices
-            .getAllDrivers();
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
-  
+
   @override
   Future<Either<NetworkExceptions, BaseEntity>> archiveTrip(ArchiveTripParams archiveTripParams) async{
     if (await _networkInfo.isConnected) {
@@ -615,21 +443,7 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
     }
   }
   
-  @override
-  Future<Either<NetworkExceptions, GetBranchByIdEntity>> getBranchById(GetBranchByIdParams getBranchByIdParams)async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _employeeBaseWebServices
-            .getBranchById(getBranchByIdParams);
-        return Right(response);
-      } on Exception catch (ex) {
-        return Left(NetworkExceptions.getDioException(ex));
-      }
-    } else {
-      return const Left(NetworkExceptions.noInternetConnection());
-    }
-  }
-  
+
   @override
   Future<Either<NetworkExceptions, GetCustomersFilterEntity>> getCustomerFilter(GetCustomerFilterParams getCustomerFilterParams) async{
     if (await _networkInfo.isConnected) {
@@ -675,17 +489,4 @@ class EmployeeRepositoryImpl implements EmployeeBaseRepository {
     }
   }
   
-  @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<TypePaginatedEntity>>>> typePriceList(int page) async{
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.typePriceList(page),
-    );
-  }
-  
-  @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<ClosedTripsPaginatedEntity>>>> getAllClosedTrips(int page) async{
-    return await _getResultWithPagination(
-      () => _employeeBaseWebServices.getAllClosedTrips(page),
-    );
-  }
 }

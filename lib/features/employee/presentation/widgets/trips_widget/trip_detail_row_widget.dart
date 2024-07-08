@@ -15,21 +15,27 @@ class TripDetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding:  EdgeInsets.symmetric(horizontal: 20.0.w),
       child: Row(
         children: [
-          Text(label,
-              style: TextStyle(
-                  fontFamily: 'bahnschrift',
-                  color: AppColors.darkBlue,
-                  fontSize: 16.sp)),
+          SizedBox(
+            width: 85.w,
+            child: Text(label,
+                style: TextStyle(
+                    fontFamily: 'bahnschrift',
+                    color: AppColors.darkBlue,
+                    fontSize: 16.sp)),
+          ),
           SizedBox(width: screenWidth / 7),
           Expanded(
             child: GestureDetector(
               onTap: onTap,
               child: Container(
-                height: 40.h,
+                 decoration: BoxDecoration(
                 color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+                height: 40.h,
                 child: Center(
                   child: Text(value,
                       style: TextStyle(

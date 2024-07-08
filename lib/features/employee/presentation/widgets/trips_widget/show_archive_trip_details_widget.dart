@@ -4,10 +4,11 @@ import 'package:aloudeh_company/features/employee/presentation/screens/trip_brfo
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_details_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_detail_row_widget.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_trip_information_entity.dart';
 import 'package:flutter/material.dart';
 //!Note: this file is all the screen of show trip record 
 class ArchivedTripDetails extends StatelessWidget {
-  final GetTripInformationEntity getTripInformationEntity;
+  final GetTripInformationSharedEntity getTripInformationEntity;
   const ArchivedTripDetails(
       {super.key, required this.getTripInformationEntity});
 
@@ -29,8 +30,8 @@ class ArchivedTripDetails extends StatelessWidget {
             label: 'Truck',
             value: getTripInformationEntity.data.truckName,
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ViewTruckScreen()));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => ViewTruckScreen()));
             }),
         const Divider(),
         TripDetailRow(
@@ -70,7 +71,7 @@ class ArchivedTripDetails extends StatelessWidget {
 
 
 class ArchivedTripFinancialDetails extends StatelessWidget {
-  final GetTripInformationEntity getTripInformationEntity;
+  final GetTripInformationSharedEntity getTripInformationEntity;
   const ArchivedTripFinancialDetails(
       {super.key, required this.getTripInformationEntity});
 

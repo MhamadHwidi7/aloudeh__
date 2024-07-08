@@ -1,4 +1,6 @@
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_branch_details_entity.dart';
+import 'package:aloudeh_company/features/shared/data/params/get_branch_details_params.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_branch_details_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,10 +10,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_branch_by_id_entity.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_branch_by_id_params.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_branch_by_id_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 
 class ViewBranchInformationScreen extends StatefulWidget {
   final int branchId;
@@ -29,8 +27,8 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
   }
 
   void _fetchBranchInformation() {
-    context.read<GetBranchByIdEmployeeCubit>().emitGetBranchById(
-      getBranchByIdParams: GetBranchByIdParams(branchId: widget.branchId.toString()),
+    context.read<GetBranchDetailsSharedCubit>().emitGetBranchDetails(
+      getBranchDetailsSharedParams: GetBranchDetailsSharedParams(branchId: widget.branchId.toString()),
     );
   }
 
@@ -39,7 +37,7 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
     
     return Scaffold(
       appBar: _buildAppBar(),
-      body: BlocConsumer<GetBranchByIdEmployeeCubit, GetState<GetBranchByIdEntity>>(
+      body: BlocConsumer<GetBranchDetailsSharedCubit, GetState<GetBranchDetailSharedEntity>>(
         listener: (context, state) {
           state.whenOrNull(
             error: (networkExceptions) => _showErrorToast(networkExceptions),
@@ -86,7 +84,7 @@ class _ViewBranchInformationScreenState extends State<ViewBranchInformationScree
     );
   }
 
-  Widget _buildBranchInformationContent(GetBranchByIdEntity data) {
+  Widget _buildBranchInformationContent(GetBranchDetailSharedEntity data) {
         double screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
@@ -118,55 +116,69 @@ SizedBox(
       ),
     );
   }
-
-  Widget _buildHeaderCell(String text) {
+Widget _buildHeaderCell(String text) {
     return Expanded(
-      child: Text(
-        text,
-        style: TextStyle(
-          color: AppColors.yellow,
-          fontFamily: 'bahnschrift',
-          fontWeight: FontWeight.bold,
-          fontSize: 17.sp,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+        
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: AppColors.yellow,
+            fontFamily: 'bahnschrift',
+            fontWeight: FontWeight.bold,
+            fontSize: 17.sp,
+          ),
         ),
       ),
     );
   }
 
- Widget _buildTripsTable(GetBranchByIdEntity getBranchByIdEntity) {
-      double screenHeight = MediaQuery.of(context).size.height;
+  Widget _buildTripsTable(GetBranchDetailSharedEntity getBranchByIdEntity) {
+    double screenHeight = MediaQuery.of(context).size.height;
 
-  if (getBranchByIdEntity.data.trips.isEmpty) {
-    return const SizedBox();
+    if (getBranchByIdEntity.data.trips.isEmpty) {
+      return const SizedBox();
+    }
+
+    return ListView.separated(
+      padding: EdgeInsets.symmetric(vertical: 1.h),
+      itemBuilder: (context, index) {
+        final trip = getBranchByIdEntity.data.trips[index];
+        return _buildRowTableItem(trip);
+      },
+      separatorBuilder: (context, index) => SizedBox(
+        height: screenHeight / 50,
+      ),
+      itemCount: getBranchByIdEntity.data.trips.length,
+    );
   }
-
-  return ListView.separated(
-    itemBuilder: (context, index) {
-      final trip = getBranchByIdEntity.data.trips[index];
-      return _buildRowTableItem(trip);
-    },
-    separatorBuilder: (context, index) =>  SizedBox(
-      height: screenHeight / 50,
-    ),
-    itemCount: getBranchByIdEntity.data.trips.length,
-  );
-}
 
   Widget _buildRowTableItem(Trip trip) {
     return GestureDetector(
       onTap: () {},
       child: Container(
         height: 80.h,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        margin: EdgeInsets.symmetric(horizontal: 20.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        margin: EdgeInsets.symmetric(horizontal: 20.w),
         decoration: BoxDecoration(
           color: AppColors.darkBlue,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.r),
             topRight: Radius.circular(50.r),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 8.0,
+              spreadRadius: 1.0,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildRowCell(trip.number),
             _buildRowCell(trip.driverName),
@@ -186,13 +198,13 @@ SizedBox(
           fontFamily: 'bahnschrift',
           fontSize: 16.sp,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
 }
-
 class BranchInformationText extends StatelessWidget {
-  const BranchInformationText();
+  const BranchInformationText({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +242,7 @@ class BranchInformationText extends StatelessWidget {
 }
 
 class BranchInformationForEmployee extends StatelessWidget {
-  final GetBranchByIdEntity data;
+  final GetBranchDetailSharedEntity data;
 
   const BranchInformationForEmployee({super.key, required this.data});
 
@@ -257,78 +269,92 @@ SizedBox(
       ),
     );
   }
-
-  Widget _buildInfoRow(String label, String value, double spacing) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'bahnschrift',
-            color: AppColors.darkBlue,
-            fontSize: 16.sp,
+ Widget _buildInfoRow(String label, String value, double spacing) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
           ),
-        ),
-        SizedBox(width: spacing),
-        Expanded(
-          child: Container(
-            height: 40.h,
-            color: AppColors.mediumBlue,
-            child: Center(
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontFamily: 'bahnschrift',
-                  fontSize: 16.sp,
+          SizedBox(width: spacing),
+          Expanded(
+            child: Container(
+              height: 40.h,
+              decoration: BoxDecoration(
+                color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Center(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontFamily: 'bahnschrift',
+                    fontSize: 16.sp,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
-
-  Widget _buildDoubleTextRow(String label1, String label2, String value, double spacing) {
-    return Row(
-      children: [
-        Column(
-          children: [
-            Text(
-              label1,
-              style: TextStyle(
-                fontFamily: 'bahnschrift',
-                color: AppColors.darkBlue,
-                fontSize: 16.sp,
-              ),
-            ),
-            Text(
-              label2,
-              style: TextStyle(
-                fontFamily: 'bahnschrift',
-                color: AppColors.darkBlue,
-                fontSize: 16.sp,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(width: spacing),
-        Expanded(
-          child: Container(
-            height: 40.h,
-            color: AppColors.mediumBlue,
-            child: Center(
-              child: Text(
-                value,
+   Widget _buildDoubleTextRow(String label1, String label2, String value, double spacing) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label1,
                 style: TextStyle(
                   fontFamily: 'bahnschrift',
+                  color: AppColors.darkBlue,
                   fontSize: 16.sp,
+                ),
+              ),
+              Text(
+                label2,
+                style: TextStyle(
+                  fontFamily: 'bahnschrift',
+                  color: AppColors.darkBlue,
+                  fontSize: 16.sp,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(width: spacing),
+          Expanded(
+            child: Container(
+              height: 40.h,
+              decoration: BoxDecoration(
+                color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Center(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontFamily: 'bahnschrift',
+                    fontSize: 16.sp,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
 }

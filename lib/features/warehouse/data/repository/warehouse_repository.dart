@@ -8,6 +8,7 @@ import 'package:aloudeh_company/features/warehouse/data/data_source/remote_data_
 import 'package:aloudeh_company/features/warehouse/data/entity/get_all_good_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_archive_goods_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_good_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/get_manifest_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/log_in_warehouse_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/notification_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
@@ -15,9 +16,11 @@ import 'package:aloudeh_company/features/warehouse/data/entity/warehouse_profile
 import 'package:aloudeh_company/features/warehouse/data/params/add_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/delete_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/get_good_params.dart';
+import 'package:aloudeh_company/features/warehouse/data/params/get_manifest_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/inventory_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/log_in_warehouse_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/receiving_good_params.dart';
+import 'package:aloudeh_company/features/warehouse/data/params/send_trip_status_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -35,6 +38,9 @@ Future<Either<NetworkExceptions,BaseEntity>>inventoryGood({required InventoryGoo
       Future<Either<NetworkExceptions,RoleEntity>>getRole();
 Future<Either<NetworkExceptions,BaseNotificationEntity>>getNotifications();
 Future<Either<NetworkExceptions,WarehouseProfileEntity>>profile();
+Future<Either<NetworkExceptions,BaseEntity>>sendTripStatus({required SendTripStatusParams sendTripStatusParams});
+Future<Either<NetworkExceptions,GetManifestWarehouseEntity>>getManifest({required GetManifestParams getManifestParams});
+
 
 }
 
@@ -153,6 +159,22 @@ class WarehouseRepositoryImpl implements BaseWarehouseRepository{
   return await handleNetworkRequest<WarehouseProfileEntity>(
       isConnected: () => _networkInfo.isConnected,
       apiCall: () => _baseWarehouseRemoteDataSource.profile(),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BaseEntity>> sendTripStatus({required SendTripStatusParams sendTripStatusParams}) async{
+   return await handleNetworkRequest<BaseEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _baseWarehouseRemoteDataSource.sendTripStatus(sendTripStatusParams),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, GetManifestWarehouseEntity>> getManifest({required GetManifestParams getManifestParams}) async{
+   return await handleNetworkRequest<GetManifestWarehouseEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _baseWarehouseRemoteDataSource.getManifest(getManifestParams),
     );
   }
 }

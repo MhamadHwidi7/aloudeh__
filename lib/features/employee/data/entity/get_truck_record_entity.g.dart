@@ -25,15 +25,15 @@ Map<String, dynamic> _$GetTruckRecordEntityToJson(
     };
 
 TruckRecord _$TruckRecordFromJson(Map<String, dynamic> json) => TruckRecord(
-      id: json['id'] as int,
-      number: json['number'] as int,
+      id: (json['id'] as num).toInt(),
+      number: (json['number'] as num).toInt(),
       line: json['line'] as String,
       createdBy: json['created_by'] as String,
       addingData: json['adding_data'] as String,
       editingBy: json['editing_by'] as String?,
       editingDate: json['editing_date'] as String?,
       notes: json['notes'] as String?,
-      branchId: json['branch_id'] as int,
+      branchId: (json['branch_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$TruckRecordToJson(TruckRecord instance) =>

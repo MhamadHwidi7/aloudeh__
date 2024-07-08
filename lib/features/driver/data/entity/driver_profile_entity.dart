@@ -16,6 +16,9 @@ final List<DriverProfileEntity> driverProfileEntity;
 
 @JsonSerializable()
 class DriverProfileEntity {
+  // @JsonKey(name: 'id')
+  // final int driverId;
+
   @JsonKey(name: 'name')
   final String name;
 
@@ -28,14 +31,11 @@ class DriverProfileEntity {
   @JsonKey(name: 'employment_date')
   final String employmentDate;
 
-  DriverProfileEntity({
-    required this.name,
-    required this.phoneNumber,
-    required this.address,
-    required this.employmentDate,
-  });
+
 
   factory DriverProfileEntity.fromJson(Map<String, dynamic> json) => _$DriverProfileEntityFromJson(json);
+
+  DriverProfileEntity({ required this.name, required this.phoneNumber, required this.address, required this.employmentDate});
 
   Map<String, dynamic> toJson() => _$DriverProfileEntityToJson(this);
 }

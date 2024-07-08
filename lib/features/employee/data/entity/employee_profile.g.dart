@@ -28,7 +28,7 @@ ProfileDataEntity _$ProfileDataEntityFromJson(Map<String, dynamic> json) =>
       phoneNumber: json['phone_number'] as String,
       address: json['address'] as String,
       birthDate: json['birth_date'] as String,
-      rating: json['rating'] as int,
+      rating: (json['rating'] as num).toInt(),
       vacations: (json['vacations'] as List<dynamic>)
           .map((e) => VacationEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -47,8 +47,8 @@ Map<String, dynamic> _$ProfileDataEntityToJson(ProfileDataEntity instance) =>
 
 VacationEntity _$VacationEntityFromJson(Map<String, dynamic> json) =>
     VacationEntity(
-      id: json['id'] as int,
-      userId: json['user_id'] as int,
+      id: (json['id'] as num).toInt(),
+      userId: (json['user_id'] as num).toInt(),
       userType: json['user_type'] as String,
       start: json['start'] as String,
       end: json['end'] as String,

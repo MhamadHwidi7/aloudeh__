@@ -1,9 +1,12 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_truck_information_params.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_truck_information_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/truck_record_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/params/truck_information_params.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_truck_record_paginted_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_truck_information_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,11 +15,6 @@ import 'package:aloudeh_company/features/employee/presentation/widgets/trips_wid
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_truck_record_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_truck_information_entity.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_truck_information_cubit.dart';
-
 class TruckListScreen extends StatelessWidget {
   const TruckListScreen({super.key});
 
@@ -203,14 +201,14 @@ class TruckListView extends StatefulWidget {
 }
 
 class _TruckListViewState extends State<TruckListView> {
-  late GetAllTruckRecordPaginatedCubit cubit;
+  late GetAllTruckRecordPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllTruckRecordPaginatedCubit>();
-    cubit.emitGetAllTruckRecords();
+    cubit = context.read<GetAllTruckRecordPaginatedSharedCubit>();
+    cubit.emitGetAllTruckRecord();
   }
 
   @override
@@ -221,7 +219,7 @@ class _TruckListViewState extends State<TruckListView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetAllTruckRecordPaginatedCubit, PaginationStateTest<TruckRecordPaginatedEntity>>(
+    return BlocConsumer<GetAllTruckRecordPaginatedSharedCubit, PaginationSharedState<TruckRecordPaginatedSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -249,16 +247,16 @@ class _TruckListViewState extends State<TruckListView> {
     );
   }
 
-  Widget buildTruckList(List<TruckRecordPaginatedEntity> trucks, int canLoadMore) {
+  Widget buildTruckList(List<TruckRecordPaginatedSharedEntity> trucks, int canLoadMore) {
     return SmartRefresher(
       enablePullDown: true,
       controller: _refreshController,
-      onRefresh: () => cubit.emitGetAllTruckRecords(),
-      onLoading: () => cubit.emitGetAllTruckRecords(loadMore: true),
+      onRefresh: () => cubit.emitGetAllTruckRecord(),
+      onLoading: () => cubit.emitGetAllTruckRecord(loadMore: true),
       enablePullUp: canLoadMore != 0,
       child: ListView.separated(
         itemBuilder: (context, index) {
-          TruckRecordPaginatedEntity truck = trucks[index];
+          TruckRecordPaginatedSharedEntity truck = trucks[index];
           return TruckListItem(truckRecord: truck);
         },
         separatorBuilder: (context, index) =>  DividerItem(),
@@ -269,7 +267,7 @@ class _TruckListViewState extends State<TruckListView> {
 }
 
 class TruckListItem extends StatelessWidget {
-  final TruckRecordPaginatedEntity truckRecord;
+  final TruckRecordPaginatedSharedEntity truckRecord;
 
   const TruckListItem({super.key, required this.truckRecord});
 
@@ -336,8 +334,8 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<GetTruckInformationCubit>().emitGetTruckInformation(
-      getTruckInformationParams: GetTruckInformationParams(truckNumber: widget.truckNumber.toString()),
+    context.read<GetTruckInformationSharedCubit>().emitGetTruckInformation(
+      truckInformationSharedParams: TruckInformationSharedParams(truckNumber: widget.truckNumber.toString()),
     );
   }
 
@@ -372,7 +370,7 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
   }
 
   Widget buildBody() {
-    return BlocConsumer<GetTruckInformationCubit, GetState<GetTruckInformationEntity>>(
+    return BlocConsumer<GetTruckInformationSharedCubit, GetState<GetTruckInformationSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -393,7 +391,7 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
     );
   }
 
-  Widget buildTruckDetails(GetTruckInformationEntity data) {
+  Widget buildTruckDetails(GetTruckInformationSharedEntity data) {
     return Column(
       children: [
          SpaceItem(),
@@ -407,7 +405,7 @@ class _TruckDetailsScreenState extends State<TruckDetailsScreen> {
     );
   }
 
-  Widget buildTripsList(GetTruckInformationEntity data) {
+  Widget buildTripsList(GetTruckInformationSharedEntity data) {
     if (data.data.trips.isEmpty || data.data.drivers.isEmpty) {
       return const SizedBox();
     }
@@ -519,7 +517,7 @@ class TruckDetailsTitle extends StatelessWidget {
 }
 
 class TruckDetailsInfo extends StatelessWidget {
-  final GetTruckInformationEntity truckInformation;
+  final GetTruckInformationSharedEntity truckInformation;
 
   const TruckDetailsInfo({super.key, required this.truckInformation});
 
@@ -561,7 +559,9 @@ class TruckDetailsInfo extends StatelessWidget {
         Expanded(
           child: Container(
             height: 40.h,
-            color: AppColors.mediumBlue,
+            decoration: BoxDecoration(
+ color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),            ),
             child: Center(
               child: Text(
                 value,
@@ -595,17 +595,22 @@ class TripDetailsHeader extends StatelessWidget {
     );
   }
 
-  Widget buildHeaderCell(String text) {
+Widget buildHeaderCell(String text) {
     return Expanded(
-      child: Text(
-        text,
-        style: TextStyle(
-          color: AppColors.yellow,
-          fontFamily: 'bahnschrift',
-          fontWeight: FontWeight.bold,
-          fontSize: 17.sp,
+      child: Container(
+        padding: EdgeInsets.symmetric( horizontal: 10.w),
+        
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: AppColors.yellow,
+            fontFamily: 'bahnschrift',
+            fontWeight: FontWeight.bold,
+            fontSize: 17.sp,
+          ),
         ),
       ),
     );
-  }
-}
+  }}
+

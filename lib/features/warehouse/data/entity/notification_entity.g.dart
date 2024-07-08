@@ -22,13 +22,13 @@ Map<String, dynamic> _$BaseNotificationEntityToJson(
 
 NotificationEntity _$NotificationEntityFromJson(Map<String, dynamic> json) =>
     NotificationEntity(
-      id: json['id'] as int,
-      branchManagerId: json['branch_manager_id'] as int?,
-      warehouseManagerId: json['warehouse_manager_id'] as int?,
+      id: (json['id'] as num).toInt(),
+      branchManagerId: (json['branch_manager_id'] as num?)?.toInt(),
+      warehouseManagerId: (json['warehouse_manager_id'] as num?)?.toInt(),
       title: json['title'] as String,
       body: json['body'] as String,
       type: json['type'] as String,
-      isRead: json['is_read'] as int,
+      isRead: (json['is_read'] as num).toInt(),
       status: json['status'] as String,
     );
 

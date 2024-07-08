@@ -7,6 +7,7 @@ import 'package:aloudeh_company/features/employee/data/entity/log_in_employee_en
 import 'package:aloudeh_company/features/employee/data/params/log_in_employee_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/log_in_employee_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/category_screen.dart';
+import 'package:aloudeh_company/features/shared/presentation/screens/forget_password_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,9 @@ import 'package:get/get.dart';
 
 class LogInEmployeeScreen extends StatelessWidget {
   final LogInController controller = Get.put(LogInController());
+final String guard;
 
-  LogInEmployeeScreen({super.key});
+   LogInEmployeeScreen({super.key, required this.guard});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,8 @@ class LogInEmployeeScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {                              Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotPasswordScreen(guard:guard)));
+},
                             child: Text(
                               'Forget password?',
                               style: TextStyle(

@@ -35,7 +35,10 @@ class InfoRow extends StatelessWidget {
         Expanded(
           child: Container(
             height: 40.h,
-            color: backgroundColor,
+             decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(5.0),
+        ),
             child: Center(
               child: Text(
                 value,
@@ -160,11 +163,11 @@ class CostDetailRow extends StatelessWidget {
   final String collectionValue;
 
   const CostDetailRow({
-    Key? key,
+    super.key,
     required this.label,
     this.prepaidValue,
     required this.collectionValue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +208,7 @@ class CostContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 1.0,
+      // elevation: 1.0,
       child: Container(
         height: 35.0,
         decoration: BoxDecoration(

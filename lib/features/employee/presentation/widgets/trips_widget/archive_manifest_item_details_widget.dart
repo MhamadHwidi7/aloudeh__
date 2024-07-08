@@ -1,7 +1,7 @@
 
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_manifest_entity.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_trip_invoice_screen.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_manifest_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,7 @@ class ArchivedManifestItem extends StatelessWidget {
       child: Column(
         children: [
            ManifestItemDetail(value: data.id.toString()),
-          const ManifestItemDetail(value: '5478'),
+          // const ManifestItemDetail(value: '5478'),
            ManifestItemDetail(value: data.sourceName),
            ManifestItemDetail(value: data.content),
            ManifestItemDetail(value: data.numOfPackages.toString()),
@@ -52,7 +52,9 @@ class ArchivedManifestItem extends StatelessWidget {
                     shippingCost: data.shippingCost,
                     againstShipping: data.againstShipping ?? " - ",
                     adaptar: data.adapter ??  " - ",
-                    miscllaneous: data.miscellaneous ??  " - ",)));
+                    miscllaneous: data.miscellaneous ??  " - ",
+                    // quantity: data.quantity,
+                    )));
             },
             icon: const Icon(Icons.remove_red_eye, color: AppColors.darkBlue),
           ),

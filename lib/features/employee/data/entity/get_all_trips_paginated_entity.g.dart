@@ -9,19 +9,19 @@ part of 'get_all_trips_paginated_entity.dart';
 GetAllTripsPaginatedEntity _$GetAllTripsPaginatedEntityFromJson(
         Map<String, dynamic> json) =>
     GetAllTripsPaginatedEntity(
-      id: json['id'] as int,
-      truckId: json['truck_id'] as int,
-      driverId: json['driver_id'] as int,
-      branchId: json['branch_id'] as int,
-      manifestId: json['manifest_id'] as int,
+      id: (json['id'] as num).toInt(),
+      truckId: (json['truck_id'] as num).toInt(),
+      driverId: (json['driver_id'] as num).toInt(),
+      branchId: (json['branch_id'] as num).toInt(),
+      manifestId: (json['manifest_id'] as num).toInt(),
       number: json['number'] as String,
       date: json['date'] as String,
       status: json['status'] as String,
       arrivalDate: json['arrival_date'] as String,
       createdBy: json['created_by'] as String,
       editedBy: json['edited_by'] as String,
-      archived: json['archived'] as int,
-      destinationId: json['destination_id'] as int,
+      archived: (json['archived'] as num).toInt(),
+      destinationId: (json['destination_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$GetAllTripsPaginatedEntityToJson(

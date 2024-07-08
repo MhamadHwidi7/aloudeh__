@@ -8,20 +8,23 @@ import 'package:aloudeh_company/features/driver/data/entity/driver_profile_entit
 import 'package:aloudeh_company/features/driver/data/entity/get_branch_location_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/log_in_driver_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/driver/data/params/edit_profile_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/log_in_driver_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/shortest_path_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/update_location_driver_params.dart';
+import 'package:aloudeh_company/features/shared/data/params/paginated_params.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class DriverBaseWebServices{
     Future<LogInDriverEntity> logIn({required LogInDriverParams logInDriverParams});
                Future<BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>>
-      getAllMyTrips(int page);
+      getAllMyTrips(PaginatedParams paginatedParams);
           Future<GetBranchLocationEntity> getBranchLocation({required GetBranchLocationParams getBranchLocationParams});
           Future<BaseDriverProfileEntity> getDriverProfile();
           Future<BasePlaceDirectionsEntity> getShortestPath(ShortestPathParams shortestPathParams);
           Future<BaseEntity> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams);
+          Future<BaseEntity> editDriverProfile(EditDriverProfileParams editDriverProfileParams);
 
 }
 @Singleton(as:DriverBaseWebServices )
@@ -38,10 +41,10 @@ class DriverWebServicesImpl implements DriverBaseWebServices{
   }
   
   @override
-  Future<BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>> getAllMyTrips(int page) async{
+  Future<BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>> getAllMyTrips(PaginatedParams paginatedParams) async{
        return await _getResultWithPagination(
         () => _apiConsumer.get(EndPoints.getMyTripsDriver,
-        queryParameters: {"page":page}
+        queryParameters: paginatedParams.toJson(),
            ),
         (json) => MyTripsPaginatedEntity.fromJson(json));
   }
@@ -80,6 +83,13 @@ return BasePlaceDirectionsEntity.fromJson(response);
   Future<BaseEntity> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams) async{
     final response = await _apiConsumer.post(EndPoints.updateLocationDriver,
         body: updateLocationDriverParams.toJson());
+    return BaseEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BaseEntity> editDriverProfile(EditDriverProfileParams editDriverProfileParams) async{
+      final response = await _apiConsumer.post(EndPoints.editDriverProfile,
+        body: editDriverProfileParams.toJson());
     return BaseEntity.fromJson(response);
   }
 }

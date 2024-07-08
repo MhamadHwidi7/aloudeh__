@@ -11,11 +11,11 @@ PaginationEntity<T> _$PaginationEntityFromJson<T>(
   T Function(Object? json) fromJsonT,
 ) =>
     PaginationEntity<T>(
-      currentPage: json['current_page'] as int?,
+      currentPage: (json['current_page'] as num?)?.toInt(),
       data: (json['data'] as List<dynamic>)
           .map((e) => _$nullableGenericFromJson(e, fromJsonT))
           .toList(),
-      lastPage: json['last_page'] as int?,
+      lastPage: (json['last_page'] as num?)?.toInt(),
       perPage: json['per_page'],
     );
 

@@ -6,6 +6,7 @@ import 'package:aloudeh_company/features/driver/data/params/log_in_driver_params
 import 'package:aloudeh_company/features/driver/presentation/controllers/driver_log_in_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/getx/log_in_text_field_controllers.dart';
 import 'package:aloudeh_company/features/driver/presentation/screens/my_trips_screen.dart';
+import 'package:aloudeh_company/features/shared/presentation/screens/forget_password_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ import 'package:get/get.dart';
 
 class LogInDriverScreen extends StatelessWidget {
   final LogInController controller = Get.put(LogInController());
-
-  LogInDriverScreen({super.key});
+final String guard;
+  LogInDriverScreen({super.key,required this.guard});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,10 @@ class LogInDriverScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                                                            Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotPasswordScreen(guard:guard)));
+
+                            },
                             child: Text(
                               'Forget password?',
                               style: TextStyle(

@@ -1,28 +1,25 @@
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
-import 'package:aloudeh_company/features/employee/data/entity/archive_trips_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/active_trips_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/closed_trips_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/cancel_trip_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/cancel_trip_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_archive_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_closed_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/active_trip_record_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/add_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_trip_record_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trips_search_screen.dart';
+import 'package:aloudeh_company/features/shared/data/entity/active_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/archive_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/close_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_active_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_archive_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_closed_trips_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // Main screen with tabs for effective and archived trips
@@ -217,14 +214,14 @@ class ClosedTripsList extends StatefulWidget {
 }
 
 class _ClosedTripsListState extends State<ClosedTripsList> {
-  late GetAllClosedTripsPaginatedCubit cubit;
+  late GetAllClosedTripsPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllClosedTripsPaginatedCubit>();
+    cubit = context.read<GetAllClosedTripsPaginatedSharedCubit>();
     cubit.emitGetAllClosedTrips();
   }
 
@@ -237,8 +234,8 @@ class _ClosedTripsListState extends State<ClosedTripsList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetAllClosedTripsPaginatedCubit,
-        PaginationStateTest<ClosedTripsPaginatedEntity>>(
+    return BlocConsumer<GetAllClosedTripsPaginatedSharedCubit,
+        PaginationSharedState<ClosedTripsPaginatedSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -268,7 +265,7 @@ class _ClosedTripsListState extends State<ClosedTripsList> {
               enablePullUp: canLoadMore != 0,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  ClosedTripsPaginatedEntity trip = trips[index];
+                  ClosedTripsPaginatedSharedEntity trip = trips[index];
                   return ClosedTripItem(trip: trip, tripType: 'Closed');
                 },
                 separatorBuilder: (context, index) => DividerItem(),
@@ -291,14 +288,14 @@ class EffectiveTripsList extends StatefulWidget {
 }
 
 class _EffectiveTripsListState extends State<EffectiveTripsList> {
-  late GetAllActiveTripsPaginatedCubit cubit;
+  late GetAllActiveTripsPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllActiveTripsPaginatedCubit>();
+    cubit = context.read<GetAllActiveTripsPaginatedSharedCubit>();
     cubit.emitGetAllActiveTrips();
   }
 
@@ -311,8 +308,8 @@ class _EffectiveTripsListState extends State<EffectiveTripsList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetAllActiveTripsPaginatedCubit,
-        PaginationStateTest<ActiveTripsPaginatedEntity>>(
+    return BlocConsumer<GetAllActiveTripsPaginatedSharedCubit,
+        PaginationSharedState<ActiveTripsPaginatedSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -342,7 +339,7 @@ class _EffectiveTripsListState extends State<EffectiveTripsList> {
               enablePullUp: canLoadMore != 0,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  ActiveTripsPaginatedEntity trip = trips[index];
+                  ActiveTripsPaginatedSharedEntity trip = trips[index];
                   return ActiveTripItem(trip: trip, tripType: 'effective');
                 },
                 separatorBuilder: (context, index) => DividerItem(),
@@ -364,14 +361,14 @@ class ArchivedTripsList extends StatefulWidget {
 }
 
 class _ArchivedTripsListState extends State<ArchivedTripsList> {
-  late GetAllArchiveTripsPaginatedCubit cubit;
+  late GetAllArchiveTripsPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllArchiveTripsPaginatedCubit>();
+    cubit = context.read<GetAllArchiveTripsPaginatedSharedCubit>();
     cubit.emitGetAllArchiveTrips();
   }
 
@@ -384,8 +381,8 @@ class _ArchivedTripsListState extends State<ArchivedTripsList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetAllArchiveTripsPaginatedCubit,
-        PaginationStateTest<ArchiveTripsPaginatedEntity>>(
+    return BlocConsumer<GetAllArchiveTripsPaginatedSharedCubit,
+        PaginationSharedState<ArchiveTripsPaginatedSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -415,7 +412,7 @@ class _ArchivedTripsListState extends State<ArchivedTripsList> {
               enablePullUp: canLoadMore != 0,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  ArchiveTripsPaginatedEntity trip = trips[index];
+                  ArchiveTripsPaginatedSharedEntity trip = trips[index];
                   return TripItem(trip: trip, tripType: 'archived');
                 },
                 separatorBuilder: (context, index) => DividerItem(),
@@ -430,7 +427,7 @@ class _ArchivedTripsListState extends State<ArchivedTripsList> {
   }
 }
 class ClosedTripItem extends StatelessWidget {
-  final ClosedTripsPaginatedEntity trip;
+  final ClosedTripsPaginatedSharedEntity trip;
   final String tripType;
 
   const ClosedTripItem({required this.trip, required this.tripType});
@@ -446,7 +443,7 @@ class ClosedTripItem extends StatelessWidget {
                 Navigator.pop(context);
 
                 context
-                    .read<GetAllActiveTripsPaginatedCubit>()
+                    .read<GetAllActiveTripsPaginatedSharedCubit>()
                     .emitGetAllActiveTrips();
               },
               error: (NetworkExceptions error) {
@@ -557,7 +554,7 @@ class ClosedTripItem extends StatelessWidget {
 
 // Trip item widget with conditional buttons
 class ActiveTripItem extends StatelessWidget {
-  final ActiveTripsPaginatedEntity trip;
+  final ActiveTripsPaginatedSharedEntity trip;
   final String tripType;
 
   const ActiveTripItem({required this.trip, required this.tripType});
@@ -573,7 +570,7 @@ class ActiveTripItem extends StatelessWidget {
                 Navigator.pop(context);
 
                 context
-                    .read<GetAllActiveTripsPaginatedCubit>()
+                    .read<GetAllActiveTripsPaginatedSharedCubit>()
                     .emitGetAllActiveTrips();
               },
               error: (NetworkExceptions error) {
@@ -684,7 +681,7 @@ class ActiveTripItem extends StatelessWidget {
 
 // Trip item widget with conditional buttons
 class TripItem extends StatelessWidget {
-  final ArchiveTripsPaginatedEntity trip;
+  final ArchiveTripsPaginatedSharedEntity trip;
   final String tripType;
 
   const TripItem({required this.trip, required this.tripType});
@@ -824,6 +821,8 @@ class ActionButton extends StatelessWidget {
 
 // Button to add a new trip
 class AddTripButton extends StatelessWidget {
+  const AddTripButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

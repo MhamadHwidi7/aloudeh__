@@ -1,14 +1,14 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/type_paginated_entity.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_invoice_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_invoice_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_customer_filter_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_type_pricelist_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/add_customer_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_all_branches_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/shipping_type_entity.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_branches_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_shipping_prices_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +21,6 @@ import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/features/employee/data/entity/get_customer_filter_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/get_customer_filter_params.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
-
 class AddInvoiceScreen extends StatefulWidget {
   final String manifestNumber;
 
@@ -34,9 +33,8 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
   final TextEditingController sourceController = TextEditingController();
   final TextEditingController destinationController = TextEditingController();
   final TextEditingController senderController = TextEditingController();
-    final TextEditingController senderPhoneNumber = TextEditingController();
+  final TextEditingController senderPhoneNumber = TextEditingController();
   final TextEditingController recipientPhoneNumberController = TextEditingController();
-
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
   final TextEditingController numOfPackagesController = TextEditingController();
@@ -46,24 +44,20 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
   final TextEditingController contentController = TextEditingController();
   final TextEditingController marksController = TextEditingController();
   final TextEditingController prepaidCostController = TextEditingController();
-  final TextEditingController collectionCostController =
-      TextEditingController();
-  final TextEditingController prepaidAgainstShippingController =
-      TextEditingController();
-  final TextEditingController collectionAgainstShippingController =
-      TextEditingController();
-  final TextEditingController collectionAdapterController =
-      TextEditingController();
-  final TextEditingController collectionDiscountController =
-      TextEditingController();
+  final TextEditingController collectionCostController = TextEditingController();
+  final TextEditingController prepaidAgainstShippingController = TextEditingController();
+  final TextEditingController collectionAgainstShippingController = TextEditingController();
+  final TextEditingController collectionAdapterController = TextEditingController();
+  final TextEditingController collectionDiscountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  GetAllBranchesPaginatedEntity? selectedDestination;
-  GetAllBranchesPaginatedEntity? selectedSource;
-    TypePaginatedEntity? selectedType;
+  GetAllBranchesPaginatedSharedEntity? selectedDestination;
+  GetAllBranchesPaginatedSharedEntity? selectedSource;
+  TypePaginatedSharedEntity? selectedType;
 
   bool showList = false;
   List<CustomerData> searchResults = [];
+  
   @override
   void initState() {
     super.initState();
@@ -151,27 +145,28 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              _buildSourceDestinationSection(),
-              Divider(),
-              _buildSenderRecipientNotesSection(),
-              const SizedBox(height: 10),
-              _buildRecipientRow(),
-              const SizedBox(height: 10),
-              _buildRecipientNumberRow(),
-                          const SizedBox(height: 10),
-          
-              _buildNotesRow(),
-              const SizedBox(height: 10),
-              Divider(),
-              _buildPackageInfoSection(),
-              Divider(),
-              _buildCostsSection(),
-              const SizedBox(height: 10),
-              _buildAddInvoiceButton(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                _buildSourceDestinationSection(),
+                Divider(),
+                _buildSenderRecipientNotesSection(),
+                const SizedBox(height: 10),
+                _buildRecipientRow(),
+                const SizedBox(height: 10),
+                _buildRecipientNumberRow(),
+                const SizedBox(height: 10),
+                _buildNotesRow(),
+                const SizedBox(height: 10),
+                Divider(),
+                _buildPackageInfoSection(),
+                Divider(),
+                _buildCostsSection(),
+                const SizedBox(height: 10),
+                _buildAddInvoiceButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -179,115 +174,116 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
   }
 
   Widget _buildSourceDestinationSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                _buildTextLabel('Source'),
-                BranchDropdown(
-                  onChanged: (source) {
-                    setState(() {
-                      sourceController.text = source.branchDesk;
-                      selectedSource = source;
-                    });
-                  },
-                  selectedValue: selectedSource,
-                ),
-                SizedBox(height: 20.h),
-              ],
-            ),
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              _buildTextLabel('Source'),
+              BranchDropdown(
+                onChanged: (source) {
+                  setState(() {
+                    sourceController.text = source.branchDesk;
+                    selectedSource = source;
+                  });
+                },
+                selectedValue: selectedSource,
+              ),
+              SizedBox(height: 20.h),
+            ],
           ),
-          SizedBox(width: 10.w),
-          Expanded(
-            child: Column(
-              children: [
-                _buildTextLabel('Destination'),
-                DestinationDropdown(
-                  onChanged: (destination) {
-                    setState(() {
-                      destinationController.text = destination.branchDesk;
-                      selectedDestination = destination;
-                    });
-                  },
-                  selectedValue: selectedDestination,
-                ),
-                SizedBox(height: 20.h),
-              ],
-            ),
+        ),
+        SizedBox(width: 10.w),
+        Expanded(
+          child: Column(
+            children: [
+              _buildTextLabel('Destination'),
+              DestinationDropdown(
+                onChanged: (destination) {
+                  setState(() {
+                    destinationController.text = destination.branchDesk;
+                    selectedDestination = destination;
+                  });
+                },
+                selectedValue: selectedDestination,
+              ),
+              SizedBox(height: 20.h),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildSenderRecipientNotesSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTextLabel('Sender'),
-          TextField(
-            
-            controller: senderController,
-            decoration: InputDecoration(
-              hintText: 'Enter sender name...',
-              suffixIcon: IconButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>AddCustomerScreen()));
-              }, icon: Icon(Icons.add)),
-              hintStyle:
-                  TextStyle(fontSize: 16, color: CupertinoColors.activeGreen),
-              border: OutlineInputBorder(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTextLabel('Sender'),
+        TextField(
+          controller: senderController,
+          decoration: InputDecoration(
+            hintText: 'Enter sender name...',
+            suffixIcon: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => AddCustomerScreen()));
+              },
+              icon: Icon(Icons.add),
             ),
+            hintStyle: TextStyle(fontSize: 16, color: CupertinoColors.activeGreen),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(color: AppColors.mediumBlue),
+            ),
+            filled: true,
+            fillColor: Colors.white,
           ),
-          if (showList)
-            BlocConsumer<GetCustomerFilterCubit,
-                PostState<GetCustomersFilterEntity>>(
-              listener: (context, state) {
-                state.whenOrNull(
-                  error: (error) {
-                    Fluttertoast.showToast(
-                      msg: NetworkExceptions.getErrorMessage(error),
-                      toastLength: Toast.LENGTH_SHORT,
-                    );
-                  },
-                );
-              },
-              builder: (context, state) {
-                return state.maybeWhen(
-                  success: (data) {
-                    searchResults = data.data;
-                    return SizedBox(
-                      height: 200,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: searchResults.length,
-                        itemBuilder: (context, index) {
-                          final customer = searchResults[index];
-                          return ListTile(
-                            title: Text(customer.name),
-                            onTap: () {
-                              setState(() {
-                                senderController.text = customer.name;
-                                                                senderPhoneNumber.text = customer.phoneNumber.toString();
-
-                                showList = false;
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  orElse: () => Container(),
-                );
-              },
-            ),
-        ],
-      ),
+        ),
+        if (showList)
+          BlocConsumer<GetCustomerFilterCubit, PostState<GetCustomersFilterEntity>>(
+            listener: (context, state) {
+              state.whenOrNull(
+                error: (error) {
+                  Fluttertoast.showToast(
+                    msg: NetworkExceptions.getErrorMessage(error),
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                },
+              );
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                success: (data) {
+                  searchResults = data.data;
+                  return SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: searchResults.length,
+                      itemBuilder: (context, index) {
+                        final customer = searchResults[index];
+                        return ListTile(
+                          title: Text(customer.name),
+                          onTap: () {
+                            setState(() {
+                              senderController.text = customer.name;
+                              senderPhoneNumber.text = customer.phoneNumber.toString();
+                              showList = false;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+                orElse: () => Container(),
+              );
+            },
+          ),
+      ],
     );
   }
 
@@ -301,18 +297,14 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
             controller: recipientController,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: AppColors.pureWhite),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.mediumBlue,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.mediumBlue),
           ),
         ),
       ],
     );
   }
- Widget _buildRecipientNumberRow() {
+
+  Widget _buildRecipientNumberRow() {
     return Row(
       children: [
         _buildTextLabel('Rec. Number'),
@@ -322,17 +314,13 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
             controller: recipientPhoneNumberController,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: AppColors.pureWhite),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.mediumBlue,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.mediumBlue),
           ),
         ),
       ],
     );
   }
+
   Widget _buildNotesRow() {
     return Row(
       children: [
@@ -343,12 +331,7 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
             controller: notesController,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: AppColors.pureWhite),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.mediumBlue,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.mediumBlue),
           ),
         ),
       ],
@@ -356,47 +339,36 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
   }
 
   Widget _buildPackageInfoSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 20.h),
-          _buildSectionTitle('Package Information'),
-          const SizedBox(height: 10),
-          _buildPackageInfoRow('Num Of Packages', numOfPackagesController,
-              AppColors.darkBlue, AppColors.pureWhite),
-          const SizedBox(height: 10),
-           TypePriceListDropdown(
-                  onChanged: (ss) {
-                    setState(() {
-                    packageTypeController  .text = ss.type;
-                      selectedType = ss;
-                    });
-                  },
-                  selectedValue: selectedType,
-                ),
-          // _buildPackageInfoRow('Package Type', packageTypeController,
-          //     AppColors.yellow, AppColors.pureBlack),
-          const SizedBox(height: 10),
-          _buildPackageInfoRow('Content', contentController, AppColors.darkBlue,
-              AppColors.pureWhite),
-          const SizedBox(height: 10),
-          _buildPackageInfoRow('Weight', weightController, AppColors.yellow,
-              AppColors.pureBlack),
-          const SizedBox(height: 10),
-          _buildPackageInfoRow('Marks', marksController, AppColors.darkBlue,
-              AppColors.pureWhite),
-          const SizedBox(height: 10),
-                    _buildSizeDropdown(),
-
-          // _buildPackageInfoRow(
-          //     'Size', sizeController, AppColors.yellow, AppColors.pureBlack),
-          SizedBox(height: 20.h),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.h),
+        _buildSectionTitle('Package Information'),
+        const SizedBox(height: 10),
+        _buildPackageInfoRow('Num Of Packages', numOfPackagesController, AppColors.darkBlue, AppColors.pureWhite),
+        const SizedBox(height: 10),
+        TypePriceListDropdown(
+          onChanged: (ss) {
+            setState(() {
+              packageTypeController.text = ss.id.toString();
+              selectedType = ss;
+            });
+          },
+          selectedValue: selectedType,
+        ),
+        const SizedBox(height: 10),
+        _buildPackageInfoRow('Content', contentController, AppColors.darkBlue, AppColors.pureWhite),
+        const SizedBox(height: 10),
+        _buildPackageInfoRow('Weight', weightController, AppColors.yellow, AppColors.pureBlack),
+        const SizedBox(height: 10),
+        _buildPackageInfoRow('Marks', marksController, AppColors.darkBlue, AppColors.pureWhite),
+        const SizedBox(height: 10),
+        _buildSizeDropdown(),
+        SizedBox(height: 20.h),
+      ],
     );
   }
+
   Widget _buildSizeDropdown() {
     return Row(
       children: [
@@ -411,12 +383,7 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
         SizedBox(width: 20.w),
         Expanded(
           child: DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.yellow,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.yellow),
             value: sizeController.text.isEmpty ? null : sizeController.text,
             items: ['Ultra Small', 'Small', 'Medium', 'Large', 'Ultra Large']
                 .map((size) => DropdownMenuItem(
@@ -434,117 +401,127 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
       ],
     );
   }
+
   Widget _buildCostsSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 20.h),
-          _buildSectionTitle('Costs'),
-          SizedBox(height: 5.h),
-          _buildCostsHeaderRow(),
-          const SizedBox(height: 10),
-          _buildCostsDetailRow('Shipping Costs', prepaidCostController,
-              collectionCostController),
-          const SizedBox(height: 10),
-          _buildCostsDetailRow(
-              'Against Shipping',
-              prepaidAgainstShippingController,
-              collectionAgainstShippingController),
-          const SizedBox(height: 10),
-          _buildMiscellaneousRow(
-              collectionAdapterController, collectionDiscountController),
-          SizedBox(height: 20.h),
-        ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.h),
+        _buildSectionTitle('Costs'),
+        SizedBox(height: 5.h),
+        _buildCostsHeaderRow(),
+        const SizedBox(height: 10),
+        _buildCostsDetailRow('Shipping Costs', prepaidCostController, collectionCostController),
+        const SizedBox(height: 10),
+        SizedBox(height: 20.h),
+      ],
+    );
+  }
+
+  Widget _buildAddInvoiceButton() {
+    return BlocConsumer<AddInvoiceCubit, PostState<BaseEntity>>(
+      listener: (context, state) {
+        state.whenOrNull(
+          error: (NetworkExceptions exception) {
+            Fluttertoast.showToast(
+              msg: NetworkExceptions.getErrorMessage(exception),
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+          success: (data) => Navigator.pop(context),
+        );
+      },
+      builder: (context, state) {
+        return state.maybeWhen(
+          idle: () => _buildAddButton(context),
+          orElse: () => _buildAddButton(context),
+          loading: () => const CupertinoActivityIndicator(),
+        );
+      },
+    );
+  }
+
+  Widget _buildAddButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(37.r),
+        color: AppColors.darkBlue,
+      ),
+      child: FloatingActionButton(
+        onPressed: () {
+          if (_formKey.currentState?.validate() ?? false) {
+            if (selectedSource != null && selectedDestination != null && selectedType != null) {
+              context.read<AddInvoiceCubit>().emitAddInvoice(
+                addInvoiceParams: AddInvoiceParams(
+                  sourceId: selectedSource!.branchId,
+                  destinationId: selectedDestination!.branchId,
+                  manifestNumber: widget.manifestNumber,
+                  sender: senderController.text,
+                  receiver: recipientController.text,
+                  senderNumber: senderPhoneNumber.text,
+                  receiverNumber: recipientPhoneNumberController.text,
+                  numOfPackages: numOfPackagesController.text,
+                  typeId: selectedType!.id.toString(),
+                  weight: weightController.text,
+                  size: sizeController.text,
+                  content: contentController.text,
+                  marks: marksController.text,
+                  shippingCost: double.tryParse(prepaidCostController.text),
+                  againstShipping: double.tryParse(collectionAgainstShippingController.text),
+                  adapter: double.tryParse(collectionAdapterController.text),
+                  advance: double.tryParse(collectionAgainstShippingController.text),
+                  miscellaneous: double.tryParse(contentController.text),
+                  prepaid: double.tryParse(prepaidCostController.text),
+                  discount: double.tryParse(collectionDiscountController.text),
+                  collection: double.tryParse(collectionCostController.text),
+                  quantity: numOfPackagesController.text,
+                ),
+              );
+            } else {
+              Fluttertoast.showToast(
+                msg: "Please select both source and destination",
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            }
+          } else {
+            Fluttertoast.showToast(
+              msg: "Please fill out all required fields",
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          }
+        },
+        backgroundColor: AppColors.darkBlue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(37.r),
+            topLeft: Radius.circular(37.r),
+          ),
+        ),
+        child: Text(
+          'Add',
+          style: TextStyle(
+            fontFamily: 'bahnschrift',
+            fontWeight: FontWeight.bold,
+            fontSize: 17.0.sp,
+            color: AppColors.mediumBlue,
+          ),
+        ),
       ),
     );
   }
 
-Widget _buildAddInvoiceButton() {
-  return BlocConsumer<AddInvoiceCubit, PostState<BaseEntity>>(
-    listener: (context, state) {
-      // TODO: implement listener
-    },
-    builder: (context, state) {
-      return state.maybeWhen(
-        idle: () => _buildAddButton(context),
-        orElse: () => _buildAddButton(context),
-        loading: () => const CupertinoActivityIndicator(),
-      );
-    },
-  );
-}
-Widget _buildAddButton(BuildContext context) {
-  return Container(
-    width: double.infinity,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(37.r),
-      color: AppColors.darkBlue,
-    ),
-    child: FloatingActionButton(
-      onPressed: () {
-        if (_formKey.currentState?.validate() ?? false) {
-          if (selectedSource != null && selectedDestination != null) {
-            context.read<AddInvoiceCubit>().emitAddInvoice(
-              addInvoiceParams: AddInvoiceParams(
-                sourceId: selectedSource!.branchId,
-                destinationId: selectedDestination!.branchId,
-                manifestNumber: widget.manifestNumber,
-                sender: senderController.text,
-                receiver: recipientController.text,
-                senderNumber: senderPhoneNumber.text,
-                receiverNumber: recipientPhoneNumberController.text,
-                numOfPackages: numOfPackagesController.text,
-                typeId: packageTypeController.text,
-                weight: weightController.text,
-                size: sizeController.text,
-                content: contentController.text,
-                marks: marksController.text,
-                shippingCost: double.tryParse(prepaidCostController.text),
-                againstShipping: double.tryParse(collectionAgainstShippingController.text),
-                adapter: double.tryParse(collectionAdapterController.text),
-                advance: double.tryParse(collectionAgainstShippingController.text),
-                miscellaneous: double.tryParse(contentController.text),
-                prepaid: double.tryParse(prepaidCostController.text),
-                discount: double.tryParse(collectionDiscountController.text),
-                collection: double.tryParse(collectionCostController.text),
-             //!seba
-                quantity: numOfPackagesController.text
-              ),
-            );
-          } else {
-            Fluttertoast.showToast(
-              msg: "Please select both source and destination",
-              toastLength: Toast.LENGTH_SHORT,
-            );
-          }
-        } else {
-          Fluttertoast.showToast(
-            msg: "Please fill out all required fields",
-            toastLength: Toast.LENGTH_SHORT,
-          );
-        }
-      },
-      backgroundColor: AppColors.darkBlue,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(37.r),
-          topLeft: Radius.circular(37.r),
-        ),
+  InputDecoration _inputDecoration(Color fillColor) {
+    return InputDecoration(
+      isDense: true,
+      filled: true,
+      fillColor: fillColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide.none,
       ),
-      child: Text(
-        'Add',
-        style: TextStyle(
-          fontFamily: 'bahnschrift',
-          fontWeight: FontWeight.bold,
-          fontSize: 17.0.sp,
-          color: AppColors.mediumBlue,
-        ),
-      ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildTextLabel(String text) {
     return Text(
@@ -568,8 +545,7 @@ Widget _buildAddButton(BuildContext context) {
     );
   }
 
-  Widget _buildPackageInfoRow(String label, TextEditingController controller,
-      Color fillColor, Color textColor) {
+  Widget _buildPackageInfoRow(String label, TextEditingController controller, Color fillColor, Color textColor) {
     return Row(
       children: [
         Text(
@@ -586,12 +562,7 @@ Widget _buildAddButton(BuildContext context) {
             controller: controller,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: textColor),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: fillColor,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(fillColor),
           ),
         ),
       ],
@@ -609,10 +580,7 @@ Widget _buildAddButton(BuildContext context) {
     );
   }
 
-  Widget _buildCostsDetailRow(
-      String label,
-      TextEditingController prepaidController,
-      TextEditingController collectionController) {
+  Widget _buildCostsDetailRow(String label, TextEditingController prepaidController, TextEditingController collectionController) {
     return Row(
       children: [
         Column(
@@ -633,12 +601,7 @@ Widget _buildAddButton(BuildContext context) {
             controller: prepaidController,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: AppColors.pureWhite),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.mediumBlue,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.mediumBlue),
           ),
         ),
         SizedBox(width: 10.w),
@@ -647,100 +610,18 @@ Widget _buildAddButton(BuildContext context) {
             controller: collectionController,
             cursorColor: AppColors.darkBlue,
             style: TextStyle(color: AppColors.pureWhite),
-            decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: AppColors.mediumBlue,
-              border: InputBorder.none,
-            ),
+            decoration: _inputDecoration(AppColors.mediumBlue),
           ),
         ),
       ],
     );
   }
-
-  Widget _buildMiscellaneousRow(TextEditingController adapterController,
-      TextEditingController discountController) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              'Miscellaneous/Adapter',
-              style: TextStyle(
-                fontFamily: 'bahnschrift',
-                color: AppColors.pureBlack,
-                fontSize: 16.sp,
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Expanded(
-              child: TextFormField(
-                controller: adapterController,
-                cursorColor: AppColors.darkBlue,
-                style: TextStyle(color: AppColors.pureWhite),
-                decoration: InputDecoration(
-                  isDense: true,
-                  filled: true,
-                  fillColor: AppColors.mediumBlue,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Text(
-              'Discount',
-              style: TextStyle(
-                fontFamily: 'bahnschrift',
-                color: AppColors.pureBlack,
-                fontSize: 16.sp,
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Expanded(
-              child: TextFormField(
-                controller: discountController,
-                cursorColor: AppColors.darkBlue,
-                style: TextStyle(color: AppColors.pureWhite),
-                decoration: InputDecoration(
-                  isDense: true,
-                  filled: true,
-                  fillColor: AppColors.mediumBlue,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-//   void _onSearchChanged() {
-//     final query = senderController.text;
-//     if (query.isNotEmpty) {
-//       setState(() {
-//         showList = true;
-//       });
-//       context.read<GetCustomerFilterCubit>().emitGetCustomerFilter(
-//             getCustomerFilterParams: GetCustomerFilterParams(name: query),
-//           );
-//     } else {
-//       setState(() {
-//         showList = false;
-//       });
-//     }
-//   }
 }
 
 // Dropdowns (Branch and Destination)
 class BranchDropdown extends StatefulWidget {
-  final ValueChanged<GetAllBranchesPaginatedEntity> onChanged;
-  final GetAllBranchesPaginatedEntity? selectedValue;
+  final ValueChanged<GetAllBranchesPaginatedSharedEntity> onChanged;
+  final GetAllBranchesPaginatedSharedEntity? selectedValue;
 
   BranchDropdown({
     required this.onChanged,
@@ -752,14 +633,14 @@ class BranchDropdown extends StatefulWidget {
 }
 
 class _BranchDropdownState extends State<BranchDropdown> {
-  late GetAllBranchesPaginatedCubit cubit;
+  late GetAllBranchsPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit = context.read<GetAllBranchsPaginatedSharedCubit>();
     cubit.emitGetAllBranches();
   }
 
@@ -775,8 +656,8 @@ class _BranchDropdownState extends State<BranchDropdown> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllBranchesPaginatedCubit,
-              PaginationStateTest<GetAllBranchesPaginatedEntity>>(
+          child: BlocConsumer<GetAllBranchsPaginatedSharedCubit,
+              PaginationSharedState<GetAllBranchesPaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -808,7 +689,7 @@ class _BranchDropdownState extends State<BranchDropdown> {
                     child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        GetAllBranchesPaginatedEntity branch = data[index];
+                        GetAllBranchesPaginatedSharedEntity branch = data[index];
                         return ListTile(
                           title: Text(branch.branchDesk.toString()),
                           onTap: () {
@@ -857,8 +738,8 @@ class _BranchDropdownState extends State<BranchDropdown> {
   }
 }
 class DestinationDropdown extends StatefulWidget {
-  final ValueChanged<GetAllBranchesPaginatedEntity> onChanged;
-  final GetAllBranchesPaginatedEntity? selectedValue;
+  final ValueChanged<GetAllBranchesPaginatedSharedEntity> onChanged;
+  final GetAllBranchesPaginatedSharedEntity? selectedValue;
 
   DestinationDropdown({
     required this.onChanged,
@@ -870,13 +751,13 @@ class DestinationDropdown extends StatefulWidget {
 }
 
 class _DestinationDropdownState extends State<DestinationDropdown> {
-  late GetAllBranchesPaginatedCubit cubit;
+  late GetAllBranchsPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit = context.read<GetAllBranchsPaginatedSharedCubit>();
     cubit.emitGetAllBranches();
   }
 
@@ -892,7 +773,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllBranchesPaginatedCubit, PaginationStateTest<GetAllBranchesPaginatedEntity>>(
+          child: BlocConsumer<GetAllBranchsPaginatedSharedCubit, PaginationSharedState<GetAllBranchesPaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -924,7 +805,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                     child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        GetAllBranchesPaginatedEntity branch = data[index];
+                        GetAllBranchesPaginatedSharedEntity branch = data[index];
                         return ListTile(
                           title: Text(branch.branchDesk.toString()),
                           onTap: () {
@@ -976,8 +857,8 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 
 
  class TypePriceListDropdown extends StatefulWidget {
-  final ValueChanged<TypePaginatedEntity> onChanged;
-  final TypePaginatedEntity? selectedValue;
+  final ValueChanged<TypePaginatedSharedEntity> onChanged;
+  final TypePaginatedSharedEntity? selectedValue;
 
   TypePriceListDropdown({
     required this.onChanged,
@@ -989,15 +870,15 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 }
 
 class _TypePriceListDropdownState extends State<TypePriceListDropdown> {
-  late GetTypePriceListPaginatedCubit cubit;
+  late GetShippingPricesPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetTypePriceListPaginatedCubit>();
-    cubit.emitGetTypesPriceList();
+    cubit = context.read<GetShippingPricesPaginatedSharedCubit>();
+    cubit.emitGetAllShippingPrices();
   }
 
   @override
@@ -1007,13 +888,13 @@ class _TypePriceListDropdownState extends State<TypePriceListDropdown> {
   }
 
   void _showDropdown(BuildContext context) {
-    cubit.emitGetTypesPriceList();
+    cubit.emitGetAllShippingPrices();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetTypePriceListPaginatedCubit,
-              PaginationStateTest<TypePaginatedEntity>>(
+          child: BlocConsumer<GetShippingPricesPaginatedSharedCubit,
+              PaginationSharedState<TypePaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -1040,12 +921,12 @@ class _TypePriceListDropdownState extends State<TypePriceListDropdown> {
                     enablePullDown: true,
                     enablePullUp: canLoadMore != 0,
                     controller: _refreshController,
-                    onRefresh: () => cubit.emitGetTypesPriceList(),
-                    onLoading: () => cubit.emitGetTypesPriceList(loadMore: true),
+                    onRefresh: () => cubit.emitGetAllShippingPrices(),
+                    onLoading: () => cubit.emitGetAllShippingPrices(loadMore: true),
                     child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        TypePaginatedEntity type = data[index];
+                        TypePaginatedSharedEntity type = data[index];
                         return ListTile(
                           title: Text(type.type),
                           onTap: () {

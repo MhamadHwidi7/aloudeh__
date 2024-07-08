@@ -137,7 +137,8 @@ class EndPoints {
       'AIzaSyAT9wA45sR_sIsLAdWUhw-wLGH_othLH7M';
                   static const String updateLocationDriver =
       '$baseUrl/driver/update-location';
-
+  static const String editDriverProfile =
+      '$baseUrl/driver/updateprofile';
 
 
       //! / /////////////warehouse
@@ -162,4 +163,8 @@ class EndPoints {
       '$baseUrl/warehousemanager/notifications';
            static const String getWHProfile =
       '$baseUrl/warehousemanager/myprofile';
+        static const String sendWHTripStatus =
+      '$baseUrl/warehousemanager/trip/status';
+        static const String getManifestWarehouse = '$baseUrl/warehousemanager/getManifest';
+
 }

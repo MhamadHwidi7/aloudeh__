@@ -5,6 +5,7 @@ import 'package:aloudeh_company/features/employee/presentation/widgets/trips_wid
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_invoice_all_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArchiveTripInvoiceScreen extends StatelessWidget {
   final String destinationId;
@@ -24,6 +25,7 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
   final String miscllaneous;
   final String prePaid;
   final String size;
+  // final String quantity;
 
   const ArchiveTripInvoiceScreen({
     Key? key,
@@ -44,6 +46,7 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
     required this.miscllaneous,
     required this.size,
     required this.prePaid,
+    // required this.quantity
   }) : super(key: key);
 
   @override
@@ -60,29 +63,46 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
           const SizedBox(height: 10.0),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: InfoColumn(
-                    label: 'Source',
-                    value: sourceName,
-                    backgroundColor: AppColors.darkBlue,
-                    textColor: AppColors.pureWhite,
-                  ),
-                ),
-                SizedBox(width: 10.0),
-                Expanded(
-                  child: InfoColumn(
-                    label: 'Destination',
-                    value: destionationName,
-                    backgroundColor: AppColors.yellow,
-                    textColor: AppColors.darkBlue,
-                  ),
+              
+                Row(
+                  children: [
+                    Expanded(
+                      child: InfoColumn(
+                        label: 'Source',
+                        value: sourceName,
+                        backgroundColor: AppColors.darkBlue,
+                        textColor: AppColors.pureWhite,
+                      ),
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: InfoColumn(
+                        label: 'Destination',
+                        value: destionationName,
+                        backgroundColor: AppColors.yellow,
+                        textColor: AppColors.darkBlue,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           const Divider(),
+            Padding(
+              padding:  EdgeInsets.only(left:20.w,right:20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildActionButton(context, icon: Icons.delete, onPressed: (){}, heroTag: 'Delete'),
+                                        _buildActionButton(context, icon: Icons.edit, onPressed: (){}, heroTag: 'Edit'),
+              
+                    ],
+                  ),
+            ),
+                Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
@@ -157,6 +177,14 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
                   backgroundColor: AppColors.yellow,
                   textColor: AppColors.pureBlack,
                 ),
+                 const SizedBox(height: 10.0),
+                // InfoRow(
+                //   label: 'Quantity',
+                //   value: quantity,
+                //   widthFactor: screenWidth / 3.23,
+                //   backgroundColor: AppColors.darkBlue,
+                //   textColor: AppColors.lightBlue,
+                // ),
               ],
             ),
           ),
@@ -177,21 +205,21 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
                   collectionValue: shippingCost,
                 ),
                 const SizedBox(height: 10.0),
-                CostDetailRow(
-                  label: 'Against Shipping',
-                  prepaidValue: againstShipping.isNotEmpty ? againstShipping : null,
-                  collectionValue: againstShipping,
-                ),
-                const SizedBox(height: 10.0),
-                CostDetailRow(
-                  label: 'Miscellaneous \\ Adapter',
-                  collectionValue: miscllaneous,
-                ),
-                const SizedBox(height: 10.0),
-                CostDetailRow(
-                  label: 'Discount',
-                  collectionValue: discount,
-                ),
+                // CostDetailRow(
+                //   label: 'Against Shipping',
+                //   prepaidValue: againstShipping.isNotEmpty ? againstShipping : null,
+                //   collectionValue: againstShipping,
+                // ),
+                // const SizedBox(height: 10.0),
+                // CostDetailRow(
+                //   label: 'Miscellaneous \\ Adapter',
+                //   collectionValue: miscllaneous,
+                // ),
+                // const SizedBox(height: 10.0),
+                // CostDetailRow(
+                //   label: 'Discount',
+                //   collectionValue: discount,
+                // ),
               ],
             ),
           ),
@@ -200,4 +228,22 @@ class ArchiveTripInvoiceScreen extends StatelessWidget {
       ),
     );
   }
+   Widget _buildActionButton(BuildContext context, {required IconData icon, required VoidCallback onPressed, required String heroTag}) {
+    return Container(
+      height: 50.0,
+      width: 50.0,
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        child: Icon(
+          icon,
+          color: AppColors.yellow,
+        ),
+        elevation: 2.0,
+        backgroundColor: AppColors.darkBlue,
+        heroTag: heroTag,
+      ),
+    );
+  }
+
 }

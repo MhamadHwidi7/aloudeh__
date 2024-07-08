@@ -120,42 +120,48 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
       ),
     );
   }
-
-  Widget _buildEditableRow(String label, TextEditingController controller, double spacing) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'bahnschrift',
-              color: AppColors.darkBlue,
-              fontSize: 16.sp,
-            ),
+Widget _buildEditableRow(String label, TextEditingController controller, double spacing) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+    child: Row(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'bahnschrift',
+            color: AppColors.darkBlue,
+            fontSize: 16.sp,
           ),
-          SizedBox(width: spacing),
-          Expanded(
-            child: Container(
-              height: 40.h,
+        ),
+        SizedBox(width: spacing),
+        Expanded(
+          child: Container(
+            height: 40.h,
+            decoration: BoxDecoration(
               color: AppColors.mediumBlue,
-              child: Center(
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: controller,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Center(
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide.none,
                   ),
-                  style: TextStyle(
-                    fontFamily: 'bahnschrift',
-                    fontSize: 16.sp,
-                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                ),
+                style: TextStyle(
+                  fontFamily: 'bahnschrift',
+                  fontSize: 16.sp,
+                  color: Colors.black,
                 ),
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
+        ),
+      ],
+    ),
+  );
+}}

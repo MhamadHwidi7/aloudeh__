@@ -27,7 +27,7 @@ ProfileDataEntity _$ProfileDataEntityFromJson(Map<String, dynamic> json) =>
     ProfileDataEntity(
       rank: json['rank'] as String,
       email: json['email'] as String,
-      phoneNumber: json['phone_number'] as int,
+      phoneNumber: (json['phone_number'] as num).toInt(),
       address: json['manager_address'] as String,
       birthDate: json['date_of_birth'] as String,
     );

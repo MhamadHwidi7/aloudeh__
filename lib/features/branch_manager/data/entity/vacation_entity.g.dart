@@ -22,8 +22,8 @@ Map<String, dynamic> _$BaseBMVacationEntityToJson(
 
 VacationEntity _$VacationEntityFromJson(Map<String, dynamic> json) =>
     VacationEntity(
-      id: json['id'] as int,
-      userId: json['user_id'] as int,
+      id: (json['id'] as num).toInt(),
+      userId: (json['user_id'] as num).toInt(),
       userType: json['user_type'] as String,
       createdBy: json['created_by'] as String,
       end: json['end'] as String,

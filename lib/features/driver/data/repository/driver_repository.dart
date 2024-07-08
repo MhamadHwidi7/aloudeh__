@@ -10,10 +10,12 @@ import 'package:aloudeh_company/features/driver/data/entity/driver_profile_entit
 import 'package:aloudeh_company/features/driver/data/entity/get_branch_location_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/log_in_driver_entity.dart';
 import 'package:aloudeh_company/features/driver/data/entity/my_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/driver/data/params/edit_profile_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/get_branch_location_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/log_in_driver_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/shortest_path_params.dart';
 import 'package:aloudeh_company/features/driver/data/params/update_location_driver_params.dart';
+import 'package:aloudeh_company/features/shared/data/params/paginated_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -25,13 +27,14 @@ abstract class DriverBaseRepository{
               NetworkExceptions,
               BasePaginationEntity<
                   PaginationEntity<MyTripsPaginatedEntity>>>>
-      getAllMyTrips(int page);
+      getAllMyTrips(PaginatedParams paginatedParams);
           Future<Either<NetworkExceptions, GetBranchLocationEntity>> getBranchLocation(
       {required GetBranchLocationParams getBranchLocationParams});
  Future<Either<NetworkExceptions, BaseDriverProfileEntity>> getDriverProfile(
       );
  Future<Either<NetworkExceptions, BasePlaceDirectionsEntity>> getShortestPath(ShortestPathParams shortestPathParams);
  Future<Either<NetworkExceptions, BaseEntity>> updateeLocationDriver(UpdateLocationDriverParams updateLocationDriverParams);
+ Future<Either<NetworkExceptions, BaseEntity>> editDriverProfile(EditDriverProfileParams editDriverProfileParams);
 
 
 }
@@ -68,9 +71,9 @@ final DriverBaseWebServices _driverBaseWebServices;
   }
   
   @override
-  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>>> getAllMyTrips(int page) async{
+  Future<Either<NetworkExceptions, BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity>>>> getAllMyTrips(PaginatedParams paginatedParams) async{
  return await _getResultWithPagination(
-      () => _driverBaseWebServices.getAllMyTrips(page),
+      () => _driverBaseWebServices.getAllMyTrips(paginatedParams),
     );
   }
   
@@ -104,6 +107,14 @@ final DriverBaseWebServices _driverBaseWebServices;
     return await handleNetworkRequest<BaseEntity>(
       isConnected: () => _networkInfo.isConnected,
       apiCall: () => _driverBaseWebServices.updateeLocationDriver(updateLocationDriverParams),
+    );
+  }
+  
+  @override
+  Future<Either<NetworkExceptions, BaseEntity>> editDriverProfile(EditDriverProfileParams editDriverProfileParams) async{
+   return await handleNetworkRequest<BaseEntity>(
+      isConnected: () => _networkInfo.isConnected,
+      apiCall: () => _driverBaseWebServices.editDriverProfile(editDriverProfileParams),
     );
   }
 

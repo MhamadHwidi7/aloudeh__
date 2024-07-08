@@ -6,6 +6,7 @@ import 'package:aloudeh_company/core/global/pagination_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_all_good_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_archive_goods_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_good_entity.dart';
+import 'package:aloudeh_company/features/warehouse/data/entity/get_manifest_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/log_in_warehouse_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/notification_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
@@ -13,9 +14,11 @@ import 'package:aloudeh_company/features/warehouse/data/entity/warehouse_profile
 import 'package:aloudeh_company/features/warehouse/data/params/add_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/delete_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/get_good_params.dart';
+import 'package:aloudeh_company/features/warehouse/data/params/get_manifest_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/inventory_good_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/log_in_warehouse_params.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/receiving_good_params.dart';
+import 'package:aloudeh_company/features/warehouse/data/params/send_trip_status_params.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class BaseWarehouseRemoteDataSource{
@@ -33,6 +36,9 @@ Future<BaseEntity>inventoryGood(InventoryGoodsParams inventoryGoodsParams);
       Future<RoleEntity>getRole();
       Future<BaseNotificationEntity>getNotifications();
       Future<WarehouseProfileEntity>profile();
+Future<BaseEntity>sendTripStatus(SendTripStatusParams sendTripStatusParams);
+Future<GetManifestWarehouseEntity>getManifest(GetManifestParams getManifestParams);
+
 
 }
 @Singleton(as: BaseWarehouseRemoteDataSource)
@@ -96,7 +102,7 @@ class WarehouseRemoteDataSourceImpl implements BaseWarehouseRemoteDataSource{
     var response = await api();
 
     return BasePaginationEntity.fromJson(
-      response,
+      response, 
       (paginated) => PaginationEntity.fromJson(
         paginated,
         (data) => fromJson(data),
@@ -128,5 +134,19 @@ class WarehouseRemoteDataSourceImpl implements BaseWarehouseRemoteDataSource{
   Future<WarehouseProfileEntity> profile() async{
     final response = await _apiConsumer.get(EndPoints.getWHProfile);
     return WarehouseProfileEntity.fromJson(response);
+  }
+  
+  @override
+  Future<BaseEntity> sendTripStatus(SendTripStatusParams sendTripStatusParams)async{
+      final response = await _apiConsumer.post(EndPoints.sendWHTripStatus,
+        body: sendTripStatusParams.toJson());
+    return BaseEntity.fromJson(response);
+  }
+  
+  @override
+  Future<GetManifestWarehouseEntity> getManifest(GetManifestParams getManifestParams) async{
+    final response = await _apiConsumer.get(
+        "${EndPoints.getManifestWarehouse}/${getManifestParams.tripNumber}");
+    return GetManifestWarehouseEntity.fromJson(response);
   }
 }

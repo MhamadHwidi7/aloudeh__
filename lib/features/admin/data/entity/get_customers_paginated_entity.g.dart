@@ -9,12 +9,12 @@ part of 'get_customers_paginated_entity.dart';
 GetCustomerAdminPaginatedEntity _$GetCustomerAdminPaginatedEntityFromJson(
         Map<String, dynamic> json) =>
     GetCustomerAdminPaginatedEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       nationalId: json['national_id'] as String,
       name: json['name'] as String,
-      phoneNumber: json['phone_number'] as int,
+      phoneNumber: (json['phone_number'] as num).toInt(),
       gender: json['gender'] as String,
-      mobile: json['mobile'] as int,
+      mobile: (json['mobile'] as num).toInt(),
       address: json['address'] as String,
       addressDetail: json['address_detail'] as String,
       notes: json['notes'] as String,

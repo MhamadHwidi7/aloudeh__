@@ -31,13 +31,13 @@ class _ShowAllBranchesScreenState extends State<ShowAllBranchesScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BranchesListHeader(),
-                  const Expanded(child: BranchesListViewPaginatedWidget()),
+                  Expanded(child: BranchesListViewPaginatedWidget()),
                 ],
               ),
             ),

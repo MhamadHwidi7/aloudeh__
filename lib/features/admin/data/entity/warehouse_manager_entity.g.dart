@@ -26,18 +26,18 @@ Map<String, dynamic> _$BaseWarehouseManagerAdminEntityToJson(
 WarehouseManagerEntity _$WarehouseManagerEntityFromJson(
         Map<String, dynamic> json) =>
     WarehouseManagerEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       nationalId: json['national_id'] as String,
       name: json['name'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
-      phoneNumber: json['phone_number'] as int,
+      phoneNumber: (json['phone_number'] as num).toInt(),
       gender: json['gender'] as String,
-      warehouseId: json['warehouse_id'] as int,
+      warehouseId: (json['warehouse_id'] as num).toInt(),
       motherName: json['mother_name'] as String,
       dateOfBirth: json['date_of_birth'] as String,
       managerAddress: json['manager_address'] as String,
-      salary: json['salary'] as int,
+      salary: (json['salary'] as num).toInt(),
       rank: json['rank'] as String,
       employmentDate: json['employment_date'] as String,
     );

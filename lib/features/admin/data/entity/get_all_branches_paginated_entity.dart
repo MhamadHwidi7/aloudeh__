@@ -7,7 +7,6 @@ class GetAllBranchesPaginatedEntity{
   @JsonKey(name: "id")
   final int branchId;
     @JsonKey(name: "address")
-
   final String branchAddress;
     @JsonKey(name: "desk")
 

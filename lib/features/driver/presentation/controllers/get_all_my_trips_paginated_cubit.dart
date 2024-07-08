@@ -5,54 +5,72 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 
-const initialPage = 1;
+
+import 'package:aloudeh_company/core/global/base_pagination_entity.dart';
+import 'package:aloudeh_company/core/global/pagination_entity.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
+import 'package:aloudeh_company/features/shared/data/entity/archive_trips_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/params/paginated_params.dart';
+import 'package:aloudeh_company/features/shared/data/repository/shared_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:flutter/foundation.dart';
 
 @injectable
-class GetAllMyTripsPaginatedCubit extends Cubit<PaginationState<MyTripsPaginatedEntity>> {
+class GetAllMyTripsPaginatedCubit extends Cubit<PaginationSharedState<MyTripsPaginatedEntity>> {
   final DriverBaseRepository _driverBaseRepository;
-  int currentPage = initialPage;
+  int currentPage = 1;
+  int? lastPage;
+  List<MyTripsPaginatedEntity?> _trips = [];
   bool canLoadMoreData = true;
 
-  GetAllMyTripsPaginatedCubit(
-    this._driverBaseRepository,
-  ) : super(const PaginationState.loading());
+  GetAllMyTripsPaginatedCubit(this._driverBaseRepository)
+      : super(const PaginationSharedState.loading());
 
-  Future<void> emitGetAllMyTrips({
+  Future<void> emitGetAllTrips({
     bool loadMore = false,
   }) async {
     if (!canLoadMoreData) {
       return;
     }
 
-    var response = await _driverBaseRepository.getAllMyTrips(currentPage);
+
+
+    if (loadMore) {
+      if (lastPage != null && currentPage >= lastPage!) return;
+      currentPage++;
+    } else {
+      currentPage = 1;
+      emit(const PaginationSharedState.loading());
+    }
+   final params = PaginatedParams(page: currentPage);
+    var response = await _driverBaseRepository.getAllMyTrips(params);
     response.fold(
       (l) {
-            if (kDebugMode) {
+        if (kDebugMode) {
           print(l);
         }
-        emit(PaginationState.error(l));
-
-
-
+        emit(PaginationSharedState.error(l));
       },
-       (r) {
+      (r) {
         if (r.data != null) {
-          var dataList = r.data!.data.where((element) => element != null).cast<MyTripsPaginatedEntity>().toList();
-          canLoadMoreData = r.data!.lastPage != null &&
-              r.data!.currentPage! < r.data!.lastPage!;
-
-          currentPage++;
-          print(currentPage);
-          emit(
-            PaginationState.success(
-              canLoadMore: canLoadMoreData,
-              data: state.maybeWhen(
-                orElse: () => [...dataList],
-                success: (sys, canLoadMore) => [...sys, ...dataList],
-              ),
-            ),
-          );
-        }},
+          lastPage = r.data!.lastPage;
+          _addIncomingDataToClassMemberData(loadMore, r);
+          emit(PaginationSharedState.success(
+            data: _trips.where((element) => element != null).cast<MyTripsPaginatedEntity>().toList(),
+            canLoadMore: currentPage,
+          ));
+        }
+      },
     );
+  }
+
+  void _addIncomingDataToClassMemberData(
+      bool loadMore, BasePaginationEntity<PaginationEntity<MyTripsPaginatedEntity?>> model) {
+    if (loadMore) {
+      _trips.addAll(model.data!.data);
+    } else {
+      _trips = model.data!.data;
+    }
   }
 }

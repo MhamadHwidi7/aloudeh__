@@ -19,7 +19,7 @@ Map<String, dynamic> _$BaseReportEntityToJson(BaseReportEntity instance) =>
     };
 
 ReportEntity _$ReportEntityFromJson(Map<String, dynamic> json) => ReportEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       filePath: json['file_path'] as String,
       startDate: json['start_date'] as String,
       endDate: json['end_date'] as String,

@@ -20,7 +20,9 @@ class CustomersListScreenContent extends StatelessWidget {
           child: CustomersListTitle(),
         ),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.chevron_left,
             color: AppColors.darkBlue,

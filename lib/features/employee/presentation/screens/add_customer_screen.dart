@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 class AddCustomerScreen extends StatelessWidget {
-  final AddCustomerTextEditingController controller =
-      Get.put(AddCustomerTextEditingController());
+  final AddCustomerTextEditingController controller = Get.put(AddCustomerTextEditingController());
+
+   AddCustomerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,41 +32,19 @@ class AddCustomerScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  _buildTextFieldRow('ID', controller.customerIdController,
-                      screenWidth / 7, controller.validateCustomerNationalId),
+                  _buildTextFieldRow('ID', controller.customerIdController, screenWidth / 7, controller.validateCustomerNationalId),
                   Divider(),
-                  _buildTextFieldRow('Name', controller.customerNameController,
-                      screenWidth / 14.3, controller.validateCustomerName),
+                  _buildTextFieldRow('Name', controller.customerNameController, screenWidth / 14.3, controller.validateCustomerName),
                   Divider(),
-                  _buildTextFieldRow(
-                      'Phone',
-                      controller.customerPhoneController,
-                      screenWidth / 17,
-                      controller.validateCustomerPhone),
+                  _buildTextFieldRow('Phone', controller.customerPhoneController, screenWidth / 17, controller.validateCustomerPhone),
                   Divider(),
-                  _buildTextFieldRow(
-                      'Mobile',
-                      controller.customerMobileController,
-                      screenWidth / 19,
-                      controller.validateCustomerMobile),
+                  _buildTextFieldRow('Mobile', controller.customerMobileController, screenWidth / 19, controller.validateCustomerMobile),
                   Divider(),
-                  _buildTextFieldRow(
-                      'Address',
-                      controller.customerAddressController,
-                      screenWidth / 60,
-                      controller.validateCustomerAddress),
+                  _buildTextFieldRow('Address', controller.customerAddressController, screenWidth / 60, controller.validateCustomerAddress),
                   Divider(),
-                  _buildTextFieldRow(
-                      'Address Details',
-                      controller.customerAddressDetailsController,
-                      screenWidth / 60,
-                      controller.validateCustomerAddressDetails),
+                  _buildTextFieldRow('Address Details', controller.customerAddressDetailsController, screenWidth / 60, controller.validateCustomerAddressDetails),
                   Divider(),
-                   _buildTextFieldRow(
-                      'Gender',
-                      controller.customerGenderController,
-                      screenWidth / 60,
-                      controller.validateCustomerGender),
+                  _buildGenderDropdown(),
                   Divider(),
                   _buildNotesField(screenHeight),
                   SizedBox(height: screenHeight / 75),
@@ -138,8 +116,7 @@ class AddCustomerScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextFieldRow(String label, TextEditingController controller,
-      double spacing, String? Function(String?)? validator) {
+  Widget _buildTextFieldRow(String label, TextEditingController controller, double spacing, String? Function(String?)? validator) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -156,18 +133,71 @@ class AddCustomerScreen extends StatelessWidget {
           Expanded(
             child: Container(
               height: 40.h,
-              color: AppColors.mediumBlue,
+              decoration: BoxDecoration(
+                color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: TextFormField(
                 controller: controller,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                 ),
                 style: TextStyle(
                   fontFamily: 'bahnschrift',
                   fontSize: 16.sp,
                 ),
                 validator: validator,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGenderDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        children: [
+          Text(
+            'Gender',
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
+          ),
+          SizedBox(width: 20.w),
+          Expanded(
+            child: Container(
+              height: 40.h,
+              decoration: BoxDecoration(
+                color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: DropdownButtonFormField<String>(
+                value: controller.customerGenderController.text.isEmpty ? null : controller.customerGenderController.text,
+                items: ['male', 'female'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  controller.customerGenderController.text = newValue!;
+                },
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                ),
+                style: TextStyle(
+                  fontFamily: 'bahnschrift',
+                  fontSize: 16.sp,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -193,13 +223,17 @@ class AddCustomerScreen extends StatelessWidget {
           SizedBox(height: screenHeight / 110),
           Container(
             height: 100.h,
-            color: AppColors.mediumBlue,
+            decoration: BoxDecoration(
+              color: AppColors.mediumBlue,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
             child: TextFormField(
               controller: controller.customerNotesController,
               textAlign: TextAlign.center,
               maxLines: 5,
               decoration: InputDecoration(
                 border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
               ),
               style: TextStyle(
                 fontFamily: 'bahnschrift',
@@ -225,100 +259,52 @@ class AddCustomerScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return state.maybeWhen(
-          orElse: () => Container(
-            width: double.infinity,
-            child: FloatingActionButton(
-              onPressed: () {
-                if (controller.validateForm()) {
-                  final notes = controller.customerNotesController.text.isEmpty ? null : controller.customerNotesController.text;
-                  context.read<AddCustomerCubit>().emitAddCustomer(
-                    addCustomerParams: AddCustomerParams(
-                      nationalId: controller.customerIdController.text,
-                      name: controller.customerNameController.text,
-                      phoneNumber: controller.customerPhoneController.text,
-                      gender: controller.customerGenderController.text,
-                      mobile: controller.customerMobileController.text,
-                      address: controller.customerAddressController.text,
-                      addressDetail: controller.customerAddressDetailsController.text,
-                      notes: notes,
-                    ),
-                  );
-                }
-              },
-              child: Text(
-                'Add Customer',
-                style: TextStyle(
-                  fontFamily: 'bahnschrift',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0.sp,
-                  color: AppColors.mediumBlue,
-                ),
-              ),
-              backgroundColor: AppColors.darkBlue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(37.r),
-                  topLeft: Radius.circular(37.r),
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(37.r),
-              color: AppColors.darkBlue,
-            ),
-          ),
+          orElse: () => _buildAddButton(context),
           loading: () => const CupertinoActivityIndicator(),
-          idle: () => Container(
-            width: double.infinity,
-            child: FloatingActionButton(
-              onPressed: () {
-                if (controller.validateForm()) {
-                  final notes = controller.customerNotesController.text.isEmpty ? null : controller.customerNotesController.text;
-                  context.read<AddCustomerCubit>().emitAddCustomer(
-                    addCustomerParams: AddCustomerParams(
-                      nationalId: controller.customerIdController.text,
-                      name: controller.customerNameController.text,
-                      phoneNumber: controller.customerPhoneController.text,
-                      gender: controller.customerGenderController.text,
-                      mobile: controller.customerMobileController.text,
-                      address: controller.customerAddressController.text,
-                      addressDetail: controller.customerAddressDetailsController.text,
-                      notes: notes,
-                    ),
-                  );
-                }
-              },
-              child: Text(
-                'Add Customer',
-                style: TextStyle(
-                  fontFamily: 'bahnschrift',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0.sp,
-                  color: AppColors.mediumBlue,
-                ),
-              ),
-              backgroundColor: AppColors.darkBlue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(37.r),
-                  topLeft: Radius.circular(37.r),
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(37.r),
-              color: AppColors.darkBlue,
-            ),
-          ),
         );
       },
     );
   }
-}
 
-// class DividerItem extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Divider();
-//   }
-// }
+  Widget _buildAddButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: FloatingActionButton(
+        onPressed: () {
+          if (controller.validateForm()) {
+            final notes = controller.customerNotesController.text.isEmpty ? null : controller.customerNotesController.text;
+            context.read<AddCustomerCubit>().emitAddCustomer(
+              addCustomerParams: AddCustomerParams(
+                nationalId: controller.customerIdController.text,
+                name: controller.customerNameController.text,
+                phoneNumber: controller.customerPhoneController.text,
+                gender: controller.customerGenderController.text,
+                mobile: controller.customerMobileController.text,
+                address: controller.customerAddressController.text,
+                addressDetail: controller.customerAddressDetailsController.text,
+                notes: notes,
+              ),
+            );
+          }
+        },
+        child: Text(
+          'Add Customer',
+          style: TextStyle(
+            fontFamily: 'bahnschrift',
+            fontWeight: FontWeight.bold,
+            fontSize: 17.0.sp,
+            color: AppColors.mediumBlue,
+          ),
+        ),
+        backgroundColor: AppColors.darkBlue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(37.r),
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(37.r),
+        color: AppColors.darkBlue,
+      ),
+    );
+  }
+}

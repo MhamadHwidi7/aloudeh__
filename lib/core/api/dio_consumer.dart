@@ -149,6 +149,7 @@ import 'package:aloudeh_company/core/api/api_consumer.dart';
 import 'package:aloudeh_company/core/api/end_points.dart';
 import 'package:aloudeh_company/core/api/logging_interceptor.dart';
 import 'package:aloudeh_company/core/constants/strings_constants.dart';
+import 'package:aloudeh_company/core/utils/shared_preference_utils.dart';
 import 'package:aloudeh_company/injection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -176,7 +177,9 @@ class DioConsumer implements ApiConsumer {
   final Map<String, String> _headers = {
     StringsConstants.accept: StringsConstants.applicationJson,
     StringsConstants.contentType: StringsConstants.applicationJson,
-    StringsConstants.authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzE5NTc0MjYxLCJleHAiOjE3MTk1Nzc4NjEsIm5iZiI6MTcxOTU3NDI2MSwianRpIjoiOEIyNHNHbGRBRDY4MEx3USIsInN1YiI6IjEiLCJwcnYiOiI5MTljMzI2ZDQzYWIxNTE5YThiYTNiODU4NmI2ODc1MmU4YzgzODA3In0.Y9YEr7_HTxKlNo3MBfjWP6MjinHkuf6foJNafXoknD4",
+    StringsConstants.authorization: "Bearer ${SharedPreferencesUtils().getToken()}",
+        // StringsConstants.authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzIwNDMyNDY4LCJleHAiOjE3MjA1MTg4NjgsIm5iZiI6MTcyMDQzMjQ2OCwianRpIjoiaG95Q01nUjdySDY2UjFJYyIsInN1YiI6IjEiLCJwcnYiOiI5MTljMzI2ZDQzYWIxNTE5YThiYTNiODU4NmI2ODc1MmU4YzgzODA3In0.8abxluZ5y4W7qyl8bw3ZEOeJqZ--GYF9hIXWHa6Js44",
+
   };
 
   Options get _defaultOptions => Options(headers: _headers);

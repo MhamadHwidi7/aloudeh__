@@ -3,6 +3,7 @@ import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/getx/log_in_text_field_controllers.dart';
+import 'package:aloudeh_company/features/shared/presentation/screens/forget_password_screen.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/log_in_warehouse_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/log_in_warehouse_params.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/login_warehouse_cubit.dart';
@@ -17,8 +18,9 @@ import 'package:get/get.dart';
 
 class LogInWarehouseScreen extends StatelessWidget {
   final LogInController controller = Get.put(LogInController());
+final String guard;
 
-  LogInWarehouseScreen({super.key});
+  LogInWarehouseScreen({super.key ,required this.guard});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,9 @@ class LogInWarehouseScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotPasswordScreen(guard:guard)));
+                            },
                             child: Text(
                               'Forget password?',
                               style: TextStyle(

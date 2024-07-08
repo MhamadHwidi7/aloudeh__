@@ -30,6 +30,7 @@ class BranchItemTileWidget extends StatelessWidget {
               fontSize: 18.sp,
             ),
           ),
+          SizedBox(width: 20.w,),
           IconButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder:(context)=>ViewBranchInformationScreen(branchId:branchId)));

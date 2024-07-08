@@ -1,19 +1,25 @@
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
+import 'package:aloudeh_company/core/utils/shared_preference_utils.dart';
 import 'package:aloudeh_company/features/employee/data/entity/employee_profile.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_profile_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/show_all_branches_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/show_customers_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/truck_screen.dart';
+import 'package:aloudeh_company/splash_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class EmployeeMainScreen extends StatefulWidget {
+  const EmployeeMainScreen({super.key});
+
   @override
   State<EmployeeMainScreen> createState() => _EmployeeMainScreenState();
 }
@@ -24,33 +30,77 @@ class _EmployeeMainScreenState extends State<EmployeeMainScreen> {
   final List<Widget> _pages = [
     AboutUsScreen(),
     const ProfileScreen(),
-    CategoriesScreen(),
+    const CategoriesScreen(),
   ];
 
-  void _showOptions(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildOptionTile(context, Icons.settings_outlined, 'Settings', () {}),
-              _buildOptionTile(context, Icons.logout_outlined, 'Log Out', () {}),
-            ],
-          ),
+
+void _showOptions(BuildContext context) {
+  showCupertinoDialog(
+    context: context,
+    builder: (context) => CupertinoAlertDialog(
+      title: Text(
+        'Options',
+        style: TextStyle(
+          fontFamily: 'Bauhaus',
+          color: AppColors.darkBlue,
+          fontSize: 18.sp,
         ),
       ),
-    );
-  }
+      content: Column(
+        children: [
+          _buildOptionTile(context, CupertinoIcons.settings, 'Settings', () {
+            // Navigator.of(context).pop(); // Close the dialog
+            // Navigate to settings
+          }),
+          _buildOptionTile(context, CupertinoIcons.power, 'Log Out', () {
+SharedPreferencesUtils().removeToken();
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const RoleSelectionScreen()));
 
-  ListTile _buildOptionTile(BuildContext context, IconData icon, String title, VoidCallback onTap) {
-    return ListTile(
-      leading: Icon(icon, color: AppColors.darkBlue),
-      title: Text(title),
-      onTap: onTap,
-    );
-  }
+          }),
+        ],
+      ),
+      actions: [
+        CupertinoDialogAction(
+          child: Text(
+            'Cancel',
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.yellow,
+              fontSize: 16.sp,
+            ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    ),
+  );
+}
 
+Widget _buildOptionTile(BuildContext context, IconData icon, String title, VoidCallback onTap) {
+  return CupertinoButton(
+    padding: EdgeInsets.zero,
+    onPressed: onTap,
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.darkBlue),
+          const SizedBox(width: 10),
+          Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -59,9 +109,13 @@ class _EmployeeMainScreenState extends State<EmployeeMainScreen> {
         title: MainScreenTitle(),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.chevron_left, color: AppColors.darkBlue),
+          onPressed: () {},
+          icon: const Icon(Icons.notifications_active, color: AppColors.darkBlue),
         ),
+        // leading: IconButton(
+        //   onPressed: () => Navigator.pop(context),
+        //   icon: const Icon(Icons.chevron_left, color: AppColors.darkBlue),
+        // ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
           child: Container(color: AppColors.darkBlue, height: 1.0),
@@ -166,6 +220,7 @@ class AboutUsScreen extends StatelessWidget {
   }
 }
 
+
 class AboutUsSection extends StatelessWidget {
   final String bio = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.';
 
@@ -178,28 +233,36 @@ class AboutUsSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20.h),
-            Text(
-              'Who Are We?',
-              style: TextStyle(
-                fontFamily: 'Bauhaus',
-                color: AppColors.yellow,
-                fontSize: 18.sp,
-              ),
-            ),
+            _buildTitle('Who Are We?'),
             SizedBox(height: 20.h),
-            Text(
-              bio,
-              style: TextStyle(
-                fontFamily: 'bahnschrift',
-                color: AppColors.darkBlue,
-                fontSize: 16.sp,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 10,
-            ),
+            _buildBioText(bio),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontFamily: 'Bauhaus',
+        color: AppColors.yellow,
+        fontSize: 18.sp,
+      ),
+    );
+  }
+
+  Widget _buildBioText(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'bahnschrift',
+        color: AppColors.darkBlue,
+        fontSize: 16.sp,
+      ),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 10,
     );
   }
 }
@@ -232,37 +295,44 @@ class BranchInfoSection extends StatelessWidget {
     );
   }
 
-  Row _buildInfoRow(BuildContext context, String label, String value, double spacing, {VoidCallback? onTap}) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'bahnschrift',
-            color: AppColors.darkBlue,
-            fontSize: 16.sp,
+  Widget _buildInfoRow(BuildContext context, String label, String value, double spacing, {VoidCallback? onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
           ),
-        ),
-        SizedBox(width: spacing),
-        Expanded(
-          child: GestureDetector(
-            onTap: onTap,
-            child: Container(
-              height: 40.h,
-              color: AppColors.mediumBlue,
-              child: Center(
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    fontFamily: 'bahnschrift',
-                    fontSize: 16.sp,
+          SizedBox(width: spacing),
+          Expanded(
+            child: GestureDetector(
+              onTap: onTap,
+              child: Container(
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: AppColors.mediumBlue,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Center(
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      fontFamily: 'bahnschrift',
+                      fontSize: 16.sp,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -279,45 +349,52 @@ class CompanyInfoSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          _buildInfoRow(context, 'Location', companyLocation, screenWidth / 25),
-          _buildInfoRow(context, 'Manager', companyManager, screenWidth / 25),
-          _buildInfoRow(context, 'Contact', companyContact, screenWidth / 16),
+          _buildInfoRow('Location', companyLocation, screenWidth / 25),
+          _buildInfoRow('Manager', companyManager, screenWidth / 25),
+          _buildInfoRow('Contact', companyContact, screenWidth / 16),
         ],
       ),
     );
   }
 
-  Row _buildInfoRow(BuildContext context, String label, String value, double spacing, {VoidCallback? onTap}) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'bahnschrift',
-            color: AppColors.darkBlue,
-            fontSize: 16.sp,
+  Widget _buildInfoRow(String label, String value, double spacing, {VoidCallback? onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'bahnschrift',
+              color: AppColors.darkBlue,
+              fontSize: 16.sp,
+            ),
           ),
-        ),
-        SizedBox(width: spacing),
-        Expanded(
-          child: GestureDetector(
-            onTap: onTap,
-            child: Container(
-              height: 40.h,
-              color: AppColors.mediumBlue,
-              child: Center(
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    fontFamily: 'bahnschrift',
-                    fontSize: 16.sp,
+          SizedBox(width: spacing),
+          Expanded(
+            child: GestureDetector(
+              onTap: onTap,
+              child: Container(
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: AppColors.mediumBlue,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Center(
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      fontFamily: 'bahnschrift',
+                      fontSize: 16.sp,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -352,9 +429,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
       builder: (context, state) {
         return Scaffold(
-          // appBar: AppBar(
-          //   title: Text('Main Screen'),
-          // ),
           body: state.maybeWhen(
             loading: () => const Center(child: CircularProgressIndicator()),
             success: (profile) => _buildProfileContent(profile),
@@ -367,9 +441,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileContent(EmployeeProfile profile) {
     final data = profile.profileData;
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const CircleAvatar(
             radius: 40,
@@ -382,77 +457,95 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _buildInfoRow(Icons.phone_outlined, data.phoneNumber),
           _buildInfoRow(Icons.home_outlined, data.address),
           _buildInfoRow(Icons.cake_outlined, data.birthDate),
-const SizedBox(height: 16),
-          RatingBarIndicator(
-            rating: data.rating.toDouble(),
-            itemBuilder: (context, index) => Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            itemCount: 5,
-            itemSize: 24.0,
-            direction: Axis.horizontal,
-          ),
-          const SizedBox(height: 16),          ElevatedButton(
-            onPressed: () {
-              // Handle edit information
-            },
-            child: const Text('Edit Information'),
-          ),
           const SizedBox(height: 16),
-          Text(
-            'Vacations',
-            style: TextStyle(
-              color: Colors.amber,
-              fontFamily: 'bahnschrift',
-              fontSize: 17.0,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          _buildRatingBar(data.rating.toDouble()),
           const SizedBox(height: 16),
-          Expanded(child: _buildVacations(data.vacations)),
+          _buildEditButton(),
+          const SizedBox(height: 16),
+          _buildSectionTitle('Vacations'),
+          const SizedBox(height: 16),
+          _buildVacationsList(data.vacations),
         ],
       ),
     );
   }
 
   Widget _buildInfoRow(IconData icon, String info) {
-    return Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.blue,
-          radius: 23,
-          child: Icon(icon, color: Colors.white),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(left: 5),
-            width: double.infinity,
-            height: 42,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(31),
-              color: Colors.lightBlue[50],
-            ),
-            child: Center(
-              child: Text(
-                info,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'bahnschrift',
-                  fontSize: 17.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.blue,
+            radius: 23,
+            child: Icon(icon, color: Colors.white),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(left: 5),
+              padding: const EdgeInsets.all(8.0),
+              height: 42,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(31),
+                color: Colors.lightBlue[50],
+              ),
+              child: Center(
+                child: Text(
+                  info,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'bahnschrift',
+                    fontSize: 17.0,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildVacations(List<VacationEntity> vacations) {
+  Widget _buildRatingBar(double rating) {
+    return RatingBarIndicator(
+      rating: rating,
+      itemBuilder: (context, index) => const Icon(
+        Icons.star,
+        color: Colors.amber,
+      ),
+      itemCount: 5,
+      itemSize: 24.0,
+      direction: Axis.horizontal,
+    );
+  }
+
+  Widget _buildEditButton() {
+    return ElevatedButton(
+      onPressed: () {
+        // Handle edit information
+      },
+      child: const Text('Edit Information'),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        color: Colors.amber,
+        fontFamily: 'bahnschrift',
+        fontSize: 17.0,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildVacationsList(List<VacationEntity> vacations) {
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: vacations.length,
       itemBuilder: (context, index) {
         final vacation = vacations[index];
@@ -484,7 +577,7 @@ const SizedBox(height: 16),
         children: [
           Text(
             '$label ',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blue,
               fontFamily: 'Bauhaus',
               fontSize: 17.0,
@@ -492,7 +585,7 @@ const SizedBox(height: 16),
           ),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'bahnschrift',
               fontSize: 16.0,
@@ -504,11 +597,19 @@ const SizedBox(height: 16),
   }
 
   String _calculateDuration(String start, String end) {
-    return '6 days'; 
+    final DateFormat formatter = DateFormat('yyyy-MM-dd'); 
+    final DateTime startDate = formatter.parse(start);
+    final DateTime endDate = formatter.parse(end);
+    final Duration duration = endDate.difference(startDate);
+    final int days = duration.inDays;
+
+    return '$days days';
   }
 }
 
 class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -517,10 +618,10 @@ class CategoriesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
-            NotificationAndReportSection(),
-            SizedBox(height: screenHeight / 30),
-            SearchSection(),
-            SizedBox(height: screenHeight / 30),
+            // NotificationAndReportSection(),
+            // SizedBox(height: screenHeight / 30),
+            // SearchSection(),
+            SizedBox(height: screenHeight / 50),
             TellUsSection(),
             CategoryItem(
               imagePath: 'assets/images/Trips-List.png',
@@ -562,38 +663,38 @@ class CategoriesScreen extends StatelessWidget {
   }
 }
 
-class NotificationAndReportSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildFloatingActionButton(context, Icons.notifications, 'noti'),
-          _buildFloatingActionButton(context, Icons.report_problem, 'repo'),
-          _buildFloatingActionButton(context, Icons.language, 'lang', text: 'EN'),
-        ],
-      ),
-    );
-  }
+// class NotificationAndReportSection extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 40.h,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           _buildFloatingActionButton(context, Icons.notifications, 'noti'),
+//           _buildFloatingActionButton(context, Icons.report_problem, 'repo'),
+//           _buildFloatingActionButton(context, Icons.language, 'lang', text: 'EN'),
+//         ],
+//       ),
+//     );
+//   }
 
-  FloatingActionButton _buildFloatingActionButton(BuildContext context, IconData icon, String heroTag, {String? text}) {
-    return FloatingActionButton(
-      onPressed: () {},
-      shape: const CircleBorder(side: BorderSide(color: AppColors.darkBlue)),
-      backgroundColor: AppColors.pureWhite,
-      elevation: 0.0,
-      heroTag: heroTag,
-      child: text != null
-          ? Text(
-              text,
-              style: const TextStyle(color: AppColors.darkBlue, fontWeight: FontWeight.bold),
-            )
-          : Icon(icon, color: AppColors.darkBlue),
-    );
-  }
-}
+//   FloatingActionButton _buildFloatingActionButton(BuildContext context, IconData icon, String heroTag, {String? text}) {
+//     return FloatingActionButton(
+//       onPressed: () {},
+//       shape: const CircleBorder(side: BorderSide(color: AppColors.darkBlue)),
+//       backgroundColor: AppColors.pureWhite,
+//       elevation: 0.0,
+//       heroTag: heroTag,
+//       child: text != null
+//           ? Text(
+//               text,
+//               style: const TextStyle(color: AppColors.darkBlue, fontWeight: FontWeight.bold),
+//             )
+//           : Icon(icon, color: AppColors.darkBlue),
+//     );
+//   }
+// }
 
 class TellUsSection extends StatelessWidget {
   @override
@@ -624,34 +725,34 @@ class TellUsSection extends StatelessWidget {
   }
 }
 
-class SearchSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40.h,
-      child: TextFormField(
-        cursorColor: AppColors.darkBlue,
-        decoration: InputDecoration(
-          isDense: true,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.darkBlue),
-            borderRadius: BorderRadius.all(Radius.circular(50.r)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.darkBlue),
-            borderRadius: BorderRadius.all(Radius.circular(50.r)),
-          ),
-          hintText: 'Search',
-          hintStyle: const TextStyle(
-            color: AppColors.darkBlue,
-            fontFamily: 'Bahnschrift',
-          ),
-          prefixIcon: const Icon(Icons.search, color: AppColors.darkBlue),
-        ),
-      ),
-    );
-  }
-}
+// class SearchSection extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 40.h,
+//       child: TextFormField(
+//         cursorColor: AppColors.darkBlue,
+//         decoration: InputDecoration(
+//           isDense: true,
+//           focusedBorder: OutlineInputBorder(
+//             borderSide: const BorderSide(color: AppColors.darkBlue),
+//             borderRadius: BorderRadius.all(Radius.circular(50.r)),
+//           ),
+//           enabledBorder: OutlineInputBorder(
+//             borderSide: const BorderSide(color: AppColors.darkBlue),
+//             borderRadius: BorderRadius.all(Radius.circular(50.r)),
+//           ),
+//           hintText: 'Search',
+//           hintStyle: const TextStyle(
+//             color: AppColors.darkBlue,
+//             fontFamily: 'Bahnschrift',
+//           ),
+//           prefixIcon: const Icon(Icons.search, color: AppColors.darkBlue),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class CategoryItem extends StatelessWidget {
   final String imagePath;

@@ -20,19 +20,19 @@ Map<String, dynamic> _$BaseEmployeeEntityToJson(BaseEmployeeEntity instance) =>
 
 EmployeeEntity _$EmployeeEntityFromJson(Map<String, dynamic> json) =>
     EmployeeEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       nationalId: json['national_id'] as String,
       name: json['name'] as String,
       email: json['email'] as String,
       phoneNumber: json['phone_number'] as String,
-      branchId: json['branch_id'] as int,
+      branchId: (json['branch_id'] as num).toInt(),
       motherName: json['mother_name'] as String,
       gender: json['gender'] as String,
       birthDate: json['birth_date'] as String,
       birthPlace: json['birth_place'] as String,
       mobile: json['mobile'] as String,
       address: json['address'] as String,
-      salary: json['salary'] as int,
+      salary: (json['salary'] as num).toInt(),
       rank: json['rank'] as String,
       employmentDate: json['employment_date'] as String,
       resignationDate: json['resignation_date'] as String?,

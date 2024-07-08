@@ -23,15 +23,15 @@ Map<String, dynamic> _$GetTruckInformationEntityToJson(
     };
 
 TruckData _$TruckDataFromJson(Map<String, dynamic> json) => TruckData(
-      id: json['id'] as int,
-      number: json['number'] as int,
+      id: (json['id'] as num).toInt(),
+      number: (json['number'] as num).toInt(),
       line: json['line'] as String,
       createdBy: json['created_by'] as String,
       addingData: json['adding_data'] as String,
       editingBy: json['editing_by'] as String?,
       editingDate: json['editing_date'] as String?,
       notes: json['notes'] as String?,
-      branchId: json['branch_id'] as int,
+      branchId: (json['branch_id'] as num).toInt(),
       trips: (json['trips'] as List<dynamic>)
           .map((e) => Trip.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -57,7 +57,7 @@ Map<String, dynamic> _$TruckDataToJson(TruckData instance) => <String, dynamic>{
 Trip _$TripFromJson(Map<String, dynamic> json) => Trip(
       number: json['number'] as String,
       date: json['date'] as String,
-      driverId: json['driver_id'] as int,
+      driverId: (json['driver_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$TripToJson(Trip instance) => <String, dynamic>{
@@ -67,7 +67,7 @@ Map<String, dynamic> _$TripToJson(Trip instance) => <String, dynamic>{
     };
 
 Driver _$DriverFromJson(Map<String, dynamic> json) => Driver(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
     );
 

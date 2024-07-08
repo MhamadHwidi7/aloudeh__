@@ -5,6 +5,7 @@ import 'package:aloudeh_company/core/utils/notification_viewer.dart';
 import 'package:aloudeh_company/core/utils/shared_preference_utils.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/driver_log_in_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/driver_profile_cubit.dart';
+import 'package:aloudeh_company/features/driver/presentation/controllers/edit_driver_profile_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_all_my_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_branch_location_cubit.dart';
 import 'package:aloudeh_company/features/driver/presentation/controllers/get_shortest_path_cubit.dart';
@@ -16,38 +17,44 @@ import 'package:aloudeh_company/features/employee/presentation/controller/archiv
 import 'package:aloudeh_company/features/employee/presentation/controller/cancel_trip_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/delete_customer_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/edit_trip_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_archive_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_closed_trips_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_customers_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_drivers_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_truck_record_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_branch_by_id_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_branch_location_employee_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_customer_by_id_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_customer_filter_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_manifest_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_profile_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_truck_information_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_type_pricelist_paginated_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/log_in_employee_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/tracking_driver_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/update_customer_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/forget_password_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_active_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_archive_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_branches_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_closed_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_drivers_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_paginated_goods_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_truck_record_paginted_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_branch_details_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_manifest_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_roles_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_shipping_prices_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_trip_information_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_truck_information_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/add_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/delete_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_all_good_paginated_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_archive_goods_paginated_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_good_cubit.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_manifest_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_notification_cubit.dart';
-import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_role_cubit.dart';
+// import 'package:aloudeh_company/features/shared/presentation/controllers/get_role_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/getx/cubit/barcode_scanner_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/getx/cubit/cubit/barcode_scanner_list_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/inventory_good_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/login_warehouse_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/receiving_good_cubit.dart';
+import 'package:aloudeh_company/features/warehouse/presentation/controllers/send_trip_status_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/controllers/warehouse_profile_cubit.dart';
 import 'package:aloudeh_company/injection.dart';
 import 'package:aloudeh_company/splash_screen.dart';
@@ -156,31 +163,31 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt<UpdateCustomerCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetAllBranchesPaginatedCubit>(),
+          create: (context) => getIt<GetAllBranchsPaginatedSharedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetAllArchiveTripsPaginatedCubit>(),
+          create: (context) => getIt<GetAllArchiveTripsPaginatedSharedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetAllActiveTripsPaginatedCubit>(),
+          create: (context) => getIt<GetAllActiveTripsPaginatedSharedCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<CancelTripCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetAllDriversCubit>(),
+          create: (context) => getIt<GetAllDriversSharedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetAllTruckRecordPaginatedCubit>(),
+          create: (context) => getIt<GetAllTruckRecordPaginatedSharedCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<AddTripCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetTripsInfoCubit>(),
+          create: (context) => getIt<GetTripInformationSharedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetManifestCubit>(),
+          create: (context) => getIt<GetManifestSharedCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<ArchiveTripCubit>(),
@@ -189,10 +196,10 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt<GetAllTripsPaginatedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetBranchByIdEmployeeCubit>(),
+          create: (context) => getIt<GetBranchDetailsSharedCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<GetTruckInformationCubit>(),
+          create: (context) => getIt<GetTruckInformationSharedCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<GetCustomerFilterCubit>(),
@@ -243,16 +250,31 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt<LogInEmployeeCubit>(),
         ),
            BlocProvider(
-          create: (context) => getIt<GetTypePriceListPaginatedCubit>(),
+          create: (context) => getIt<GetShippingPricesPaginatedSharedCubit>(),
         ),
            BlocProvider(
-          create: (context) => getIt<GetAllClosedTripsPaginatedCubit>(),
+          create: (context) => getIt<GetAllClosedTripsPaginatedSharedCubit>(),
+        ),///!Heereeeee
+            BlocProvider(
+          create: (context) => getIt<GetAllGoodsPaginatedSharedCubit>(),
         ),
               BlocProvider(
           create: (context) => getIt<GetNotificationCubit>(),
         ),
                BlocProvider(
           create: (context) => getIt<GetProfileWarehouseCubit>(),
+        ),
+             BlocProvider(
+          create: (context) => getIt<SendTripStatusCubit>(),
+        ),
+            BlocProvider(
+          create: (context) => getIt<GetManifestWarehouseCubit>(),
+        ),
+            BlocProvider(
+          create: (context) => getIt<EditDriverProfileCubit>(),
+        ),
+            BlocProvider(
+          create: (context) => getIt<ForgetPasswordSharedCubit>(),
         ),
       ],
       child: ScreenUtilInit(

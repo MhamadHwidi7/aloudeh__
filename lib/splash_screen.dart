@@ -6,8 +6,10 @@ import 'package:aloudeh_company/features/driver/presentation/screens/my_trips_sc
 import 'package:aloudeh_company/features/employee/presentation/screens/category_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/log_in_employee_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
-import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
-import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_role_cubit.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_role_entity.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_roles_cubit.dart';
+// import 'package:aloudeh_company/features/warehouse/data/entity/role_entity.dart';
+// import 'package:aloudeh_company/features/warehouse/presentation/controllers/get_role_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/screens/good_list.dart';
 import 'package:aloudeh_company/features/warehouse/presentation/screens/log_in_warehouse_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             } else if (role == 'warehouse_manager') {
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) =>  GoodsApp())
+                MaterialPageRoute(builder: (_) =>  const GoodsApp())
               );
             }else if (role == 'driver') {
               Navigator.of(context).pushReplacement(
@@ -108,15 +110,15 @@ class RoleSelectionScreen extends StatelessWidget {
             buildRoleCard(context, 'Branch Manager', Icons.business_center, Colors.orange,(){}),
             buildRoleCard(context, 'Admin', Icons.admin_panel_settings, Colors.blue,(){}),
             buildRoleCard(context, 'Employee', Icons.work, Colors.green,(){
-              Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInEmployeeScreen()));
+              Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInEmployeeScreen(guard:"employee" ,)));
             }),
             buildRoleCard(context, 'WH.Manager', Icons.warehouse, Colors.purple,(){
-                            Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInWarehouseScreen()));
+                            Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInWarehouseScreen(guard: "warehouse_manager",)));
 
             }),
             buildRoleCard(context, 'Customer', Icons.person, Colors.red,(){}),
             buildRoleCard(context, 'Driver', Icons.drive_eta, Colors.teal,(){
-                            Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInDriverScreen()));
+                            Navigator.push(context,MaterialPageRoute(builder: (_)=>LogInDriverScreen(guard: "driver",)));
 
             }),
           ],

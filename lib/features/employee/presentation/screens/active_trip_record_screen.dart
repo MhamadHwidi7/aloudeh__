@@ -6,23 +6,21 @@ import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/archive_trip_params.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/archive_trip_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/get_all_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/add_invoice_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_eye_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/archive_manifest_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/edit_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/tracking_trip_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/trip_list_screen.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_details_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/custom_appbar_widget.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_detail_row_widget.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_info_header_widget.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_trip_information_entity.dart';
+import 'package:aloudeh_company/features/shared/data/params/trip_information_params.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_trip_information_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,9 +40,9 @@ class ActiveTripRecordScreen extends StatefulWidget {
 class _ActiveTripRecordScreenState extends State<ActiveTripRecordScreen> {
   @override
   void initState() {
-    context.read<GetTripsInfoCubit>().emitGetTripsInfo(
-        getTripInformationParams:
-            GetTripInformationParams(tripNumber: widget.tripNumber));
+    context.read<GetTripInformationSharedCubit>().emitGetTripInformation(
+        tripInformationSharedParams:
+            TripInformationSharedParams(tripNumber: widget.tripNumber));
     // TODO: implement initState
     super.initState();
   }
@@ -56,7 +54,7 @@ class _ActiveTripRecordScreenState extends State<ActiveTripRecordScreen> {
         title: 'Trip Record',
         onBackPress: () => Navigator.pop(context),
       ),
-      body: BlocConsumer<GetTripsInfoCubit, GetState<GetTripInformationEntity>>(
+      body: BlocConsumer<GetTripInformationSharedCubit, GetState<GetTripInformationSharedEntity>>(
         listener: (context, state) {
           state.whenOrNull(
             error: (networkExceptions) => Fluttertoast.showToast(
@@ -109,25 +107,28 @@ class _ActiveTripRecordScreenState extends State<ActiveTripRecordScreen> {
   }
 }
 
-
+//!Check the archive trip api 
 
 class TripActionButtons extends StatelessWidget {
-  final GetTripInformationEntity data;
+  final GetTripInformationSharedEntity data;
   const TripActionButtons({super.key, required this.data});
 
   void _archiveTrip(BuildContext context) {
     showCupertinoDialog(
       context: context,
-      builder: (ctx) {
+      builder: (context) {
         return BlocConsumer<ArchiveTripCubit, PostState<BaseEntity>>(
-          listener: (ctx, state) {
+          listener: (context, state) {
             state.whenOrNull(
               success: (dataApi) {
-                context.read<GetTripsInfoCubit>().emitGetTripsInfo(
-                    getTripInformationParams: GetTripInformationParams(
+                context.read<GetTripInformationSharedCubit>().emitGetTripInformation(
+                    tripInformationSharedParams: TripInformationSharedParams(
                         tripNumber: data.data.number));
-                context.read<GetAllTripsPaginatedCubit>().emitGetAllTrips();
+                // context.read<GetAllTripsPaginatedCubit>().emitGetAllTrips();
+               //!Check this 
                 Navigator.pop(context);
+                                Navigator.pop(context);
+
               },
               error: (error) {
                 Fluttertoast.showToast(
@@ -318,7 +319,7 @@ class TripActionButtons extends StatelessWidget {
   }
 }
 class ActiveTripDetails extends StatelessWidget {
-  final GetTripInformationEntity getTripInformationEntity;
+  final GetTripInformationSharedEntity getTripInformationEntity;
   const ActiveTripDetails(
       {super.key, required this.getTripInformationEntity});
 
@@ -381,7 +382,7 @@ class ActiveTripDetails extends StatelessWidget {
 
 
 class ActiveTripFinancialDetails extends StatelessWidget {
-  final GetTripInformationEntity getTripInformationEntity;
+  final GetTripInformationSharedEntity getTripInformationEntity;
   const ActiveTripFinancialDetails(
       {super.key, required this.getTripInformationEntity});
 

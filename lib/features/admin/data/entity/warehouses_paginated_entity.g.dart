@@ -9,11 +9,11 @@ part of 'warehouses_paginated_entity.dart';
 WarehousesPaginatedEntity _$WarehousesPaginatedEntityFromJson(
         Map<String, dynamic> json) =>
     WarehousesPaginatedEntity(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       address: json['address'] as String,
       area: json['area'] as String,
       notes: json['notes'] as String?,
-      branchId: json['branch_id'] as int,
+      branchId: (json['branch_id'] as num).toInt(),
       warehouseName: json['warehouse_name'] as String,
     );
 

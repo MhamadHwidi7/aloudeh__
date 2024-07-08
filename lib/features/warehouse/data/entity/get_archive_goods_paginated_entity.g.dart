@@ -9,11 +9,11 @@ part of 'get_archive_goods_paginated_entity.dart';
 GetArchiveGoodsPaginatedEntity _$GetArchiveGoodsPaginatedEntityFromJson(
         Map<String, dynamic> json) =>
     GetArchiveGoodsPaginatedEntity(
-      id: json['id'] as int,
-      warehouseId: json['warehouse_id'] as int,
+      id: (json['id'] as num).toInt(),
+      warehouseId: (json['warehouse_id'] as num).toInt(),
       type: json['type'] as String,
-      quantity: json['quantity'] as int,
-      weight: json['weight'] as int,
+      quantity: (json['quantity'] as num).toInt(),
+      weight: (json['weight'] as num).toInt(),
       size: json['size'] as String,
       content: json['content'] as String,
       marks: json['marks'] as String,

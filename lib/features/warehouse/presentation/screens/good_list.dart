@@ -3,6 +3,7 @@ import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
 import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_paginated_goods_cubit.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_all_good_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/entity/get_archive_goods_paginated_entity.dart';
 import 'package:aloudeh_company/features/warehouse/data/params/delete_good_params.dart';
@@ -90,14 +91,14 @@ class GoodsListScreen extends StatefulWidget {
 }
 
 class _GoodsListScreenState extends State<GoodsListScreen> {
-  late GetAllGoodsPaginatedCubit cubit;
+  late GetAllGoodsPaginatedSharedCubit cubit;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllGoodsPaginatedCubit>();
+    cubit = context.read<GetAllGoodsPaginatedSharedCubit>();
     cubit.emitGetAllGoods();
   }
 
@@ -138,7 +139,7 @@ class _GoodsListScreenState extends State<GoodsListScreen> {
           }, icon: const Icon(Icons.read_more)),
         ],
       ),
-      body: BlocConsumer<GetAllGoodsPaginatedCubit,
+      body: BlocConsumer<GetAllGoodsPaginatedSharedCubit,
           PaginationStateTest<GetAllGoodPaginatedEntity>>(
         listener: (context, state) {
           state.whenOrNull(

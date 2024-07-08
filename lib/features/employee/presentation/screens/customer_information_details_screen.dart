@@ -26,8 +26,8 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
   @override
   void initState() {
     context.read<GetCustomerByIdCubit>().emitGetCustomerById(
-        getCustomerByIdParams:
-            GetCustomerByIdParams(customerId: widget.customerId));
+      getCustomerByIdParams: GetCustomerByIdParams(customerId: widget.customerId),
+    );
     super.initState();
   }
 
@@ -40,41 +40,39 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
       appBar: _buildAppBar(context),
       body: BlocBuilder<GetCustomerByIdCubit, PostState<CustomerEmployeeEntity>>(
         builder: (context, state) {
-          return state.maybeWhen(orElse: () => Text("Somethink went wrong"),loading: () => const CupertinoActivityIndicator(),success: (data) => Column(
-            children: [
-              SizedBox(height: screenHeight / 75),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: _buildTopRow(data),
-              ),
-              const CustomDivider(),
-              Expanded(
-                child: ListView(
-                  children: [
-                    _buildCustomerDetailRow(
-                        context, 'ID', data.data.nationalId, screenWidth / 7),
-                    const CustomDivider(),
-                    _buildCustomerDetailRow(
-                        context, 'Name', data.data.name, screenWidth / 14.3),
-                    const CustomDivider(),
-                    _buildCustomerDetailRow(context, 'Phone',
-                        data.data.phoneNumber.toString(), screenWidth / 17),
-                    const CustomDivider(),
-                    _buildCustomerDetailRow(context, 'Mobile',
-                        data.data.mobile.toString(), screenWidth / 19),
-                    const CustomDivider(),
-                    _buildCustomerDetailRow(context, 'Address',
-                        data.data.address, screenWidth / 60),
-                    const CustomDivider(),
-                    _buildCustomerDetailRow(context, 'Address Details',
-                        data.data.addressDetail, screenWidth / 60),
-                    const CustomDivider(),
-                    _buildNotesSection(context, screenHeight, data),
-                  ],
+          return state.maybeWhen(
+            orElse: () => Text("Something went wrong"),
+            loading: () => const CupertinoActivityIndicator(),
+            success: (data) => Column(
+              children: [
+                SizedBox(height: screenHeight / 75),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: _buildTopRow(data),
                 ),
-              ),
-            ],
-          ),);
+                const CustomDivider(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      _buildCustomerDetailRow(context, 'ID', data.data.nationalId, screenWidth / 7),
+                      const CustomDivider(),
+                      _buildCustomerDetailRow(context, 'Name', data.data.name, screenWidth / 14.3),
+                      const CustomDivider(),
+                      _buildCustomerDetailRow(context, 'Phone', data.data.phoneNumber.toString(), screenWidth / 17),
+                      const CustomDivider(),
+                      _buildCustomerDetailRow(context, 'Mobile', data.data.mobile.toString(), screenWidth / 19),
+                      const CustomDivider(),
+                      _buildCustomerDetailRow(context, 'Address', data.data.address, screenWidth / 60),
+                      const CustomDivider(),
+                      _buildCustomerDetailRow(context, 'Address Details', data.data.addressDetail, screenWidth / 60),
+                      const CustomDivider(),
+                      _buildNotesSection(context, screenHeight, data),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
@@ -103,20 +101,19 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
   }
 
   Row _buildTopRow(CustomerEmployeeEntity data) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        DeleteCustomerButton(customerId: data.data.id,customerName: data.data.name,),
+        DeleteCustomerButton(customerId: data.data.id, customerName: data.data.name),
         const LogoWidget(),
-        EditCustomerButton(customerData: data,),
+        EditCustomerButton(customerData: data),
       ],
     );
   }
 
-  Widget _buildCustomerDetailRow(
-      BuildContext context, String label, String value, double spacing) {
+  Widget _buildCustomerDetailRow(BuildContext context, String label, String value, double spacing) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
       child: Row(
         children: [
           Text(
@@ -131,13 +128,17 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
           Expanded(
             child: Container(
               height: 40.h,
-              color: AppColors.mediumBlue,
+              decoration: BoxDecoration(
+                color: AppColors.mediumBlue,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: Center(
                 child: Text(
                   value,
                   style: TextStyle(
                     fontFamily: 'bahnschrift',
                     fontSize: 16.sp,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -148,10 +149,9 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
     );
   }
 
-  Widget _buildNotesSection(
-      BuildContext context, double screenHeight, CustomerEmployeeEntity data) {
+  Widget _buildNotesSection(BuildContext context, double screenHeight, CustomerEmployeeEntity data) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,13 +166,17 @@ class _CustomerInformationDetailsScreenState extends State<CustomerInformationDe
           SizedBox(height: screenHeight / 110),
           Container(
             height: 100.h,
-            color: AppColors.mediumBlue,
+            decoration: BoxDecoration(
+              color: AppColors.mediumBlue,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
             child: Center(
               child: Text(
                 data.data.notes ?? "",
                 style: TextStyle(
                   fontFamily: 'bahnschrift',
                   fontSize: 16.sp,
+                  color: Colors.black,
                 ),
               ),
             ),

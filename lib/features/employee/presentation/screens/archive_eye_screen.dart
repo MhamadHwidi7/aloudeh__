@@ -1,63 +1,11 @@
 import 'package:aloudeh_company/core/constants/colors_constants.dart';
-import 'package:aloudeh_company/core/error/network_exceptions.dart';
-import 'package:aloudeh_company/core/global_states/get_state.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_manifest_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_trip_information_entity.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_manifest_params.dart';
-import 'package:aloudeh_company/features/employee/data/params/get_trip_information.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_manifest_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_trips_info_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/archive_manifest_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/archive_trip_invoice_screen.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/logo_widget.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/archive_table_mainfest_list_view_widget.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/custom_appbar_widget.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/show_archive_trip_details_widget.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/sizing_widgets.dart';
-import 'package:aloudeh_company/features/employee/presentation/widgets/trips_widget/trip_info_header_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
-class ViewTruckScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Truck Information',
-        onBackPress: () => Navigator.pop(context),
-      ),
-      body: const TruckDetails(),
-    );
-  }
-}
 
-class TruckDetails extends StatelessWidget {
-  const TruckDetails({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        children: const [
-          TruckDetailRow(label: 'Truck ID', value: 'TRK-00123'),
-          DividerBetweenListElements(),
-          TruckDetailRow(label: 'Truck Model', value: 'Model XYZ'),
-          DividerBetweenListElements(),
-          TruckDetailRow(label: 'License Plate', value: 'ALE-825737'),
-          DividerBetweenListElements(),
-          TruckDetailRow(label: 'Driver', value: 'Mohammed Hwaidi'),
-          DividerBetweenListElements(),
-          TruckDetailRow(label: 'Status', value: 'Active'),
-        ],
-      ),
-    );
-  }
-}
 
 class TruckDetailRow extends StatelessWidget {
   final String label;
@@ -182,7 +130,7 @@ class FinancialDetailRow extends StatelessWidget {
       children: [
         Expanded(
           child: Material(
-            elevation: 1.0,
+            elevation: 2.0,
             child: Column(
               children: [
                 Text(label,

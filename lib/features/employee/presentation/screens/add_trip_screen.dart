@@ -1,17 +1,17 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
 import 'package:aloudeh_company/core/global/base_entity.dart';
 import 'package:aloudeh_company/core/global_states/get_state.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
 import 'package:aloudeh_company/core/global_states/post_state.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/get_all_drivers_entity.dart';
-import 'package:aloudeh_company/features/employee/data/entity/truck_record_paginated_entity.dart';
 import 'package:aloudeh_company/features/employee/data/params/add_trip_params.dart';
 import 'package:aloudeh_company/features/employee/presentation/controller/add_trip_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_active_trips_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_drivers_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_truck_record_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/features/shared/data/entity/driver_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_all_branches_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/data/entity/truck_record_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_active_trips_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_branches_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_drivers_cubit.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_truck_record_paginted_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +20,13 @@ import 'package:aloudeh_company/core/constants/colors_constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class BranchDropdown extends StatefulWidget {
-  final ValueChanged<GetAllBranchesPaginatedEntity> onChanged;
-  final GetAllBranchesPaginatedEntity? selectedValue;
 
-  const BranchDropdown({super.key, 
+class BranchDropdown extends StatefulWidget {
+  final ValueChanged<GetAllBranchesPaginatedSharedEntity> onChanged;
+  final GetAllBranchesPaginatedSharedEntity? selectedValue;
+
+  const BranchDropdown({
+    super.key, 
     required this.onChanged,
     required this.selectedValue,
   });
@@ -34,13 +36,13 @@ class BranchDropdown extends StatefulWidget {
 }
 
 class _BranchDropdownState extends State<BranchDropdown> {
-  late GetAllBranchesPaginatedCubit cubit;
+  late GetAllBranchsPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit = context.read<GetAllBranchsPaginatedSharedCubit>();
     cubit.emitGetAllBranches();
   }
 
@@ -56,7 +58,10 @@ class _BranchDropdownState extends State<BranchDropdown> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllBranchesPaginatedCubit, PaginationStateTest<GetAllBranchesPaginatedEntity>>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: BlocConsumer<GetAllBranchsPaginatedSharedCubit, PaginationSharedState<GetAllBranchesPaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -79,24 +84,37 @@ class _BranchDropdownState extends State<BranchDropdown> {
                 orElse: () => const Center(child: Text("No data available")),
                 loading: () => const Center(child: CupertinoActivityIndicator()),
                 success: (data, canLoadMore) {
-                  return SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: canLoadMore != 0,
-                    controller: _refreshController,
-                    onRefresh: () => cubit.emitGetAllBranches(),
-                    onLoading: () => cubit.emitGetAllBranches(loadMore: true),
-                    child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        GetAllBranchesPaginatedEntity branch = data[index];
-                        return ListTile(
-                          title: Text(branch.branchDesk.toString()),
-                          onTap: () {
-                            widget.onChanged(branch);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                    ),
+                    child: SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: canLoadMore != 0,
+                      controller: _refreshController,
+                      onRefresh: () => cubit.emitGetAllBranches(),
+                      onLoading: () => cubit.emitGetAllBranches(loadMore: true),
+                      child: ListView.separated(
+                        itemCount: data.length,
+                        separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey[300]),
+                        itemBuilder: (context, index) {
+                          GetAllBranchesPaginatedSharedEntity branch = data[index];
+                          return ListTile(
+                            title: Text(
+                              branch.branchDesk.toString(),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontFamily: 'bahnschrift',
+                              ),
+                            ),
+                            onTap: () {
+                              widget.onChanged(branch);
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -115,10 +133,18 @@ class _BranchDropdownState extends State<BranchDropdown> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.mediumBlue),
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -127,6 +153,7 @@ class _BranchDropdownState extends State<BranchDropdown> {
               style: const TextStyle(
                 color: AppColors.darkBlue,
                 fontSize: 16,
+                fontFamily: 'bahnschrift',
               ),
             ),
             const Icon(Icons.arrow_drop_down, color: AppColors.darkBlue),
@@ -136,10 +163,9 @@ class _BranchDropdownState extends State<BranchDropdown> {
     );
   }
 }
-
 class DestinationDropdown extends StatefulWidget {
-  final ValueChanged<GetAllBranchesPaginatedEntity> onChanged;
-  final GetAllBranchesPaginatedEntity? selectedValue;
+  final ValueChanged<GetAllBranchesPaginatedSharedEntity> onChanged;
+  final GetAllBranchesPaginatedSharedEntity? selectedValue;
 
   DestinationDropdown({
     required this.onChanged,
@@ -151,13 +177,13 @@ class DestinationDropdown extends StatefulWidget {
 }
 
 class _DestinationDropdownState extends State<DestinationDropdown> {
-  late GetAllBranchesPaginatedCubit cubit;
+  late GetAllBranchsPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit = context.read<GetAllBranchsPaginatedSharedCubit>();
     cubit.emitGetAllBranches();
   }
 
@@ -173,7 +199,10 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllBranchesPaginatedCubit, PaginationStateTest<GetAllBranchesPaginatedEntity>>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: BlocConsumer<GetAllBranchsPaginatedSharedCubit, PaginationSharedState<GetAllBranchesPaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -196,24 +225,37 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                 orElse: () => const Center(child: Text("No data available")),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 success: (data, canLoadMore) {
-                  return SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: canLoadMore != 0,
-                    controller: _refreshController,
-                    onRefresh: () => cubit.emitGetAllBranches(),
-                    onLoading: () => cubit.emitGetAllBranches(loadMore: true),
-                    child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        GetAllBranchesPaginatedEntity branch = data[index];
-                        return ListTile(
-                          title: Text(branch.branchDesk.toString()),
-                          onTap: () {
-                            widget.onChanged(branch);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                    ),
+                    child: SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: canLoadMore != 0,
+                      controller: _refreshController,
+                      onRefresh: () => cubit.emitGetAllBranches(),
+                      onLoading: () => cubit.emitGetAllBranches(loadMore: true),
+                      child: ListView.separated(
+                        itemCount: data.length,
+                        separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey[300]),
+                        itemBuilder: (context, index) {
+                          GetAllBranchesPaginatedSharedEntity branch = data[index];
+                          return ListTile(
+                            title: Text(
+                              branch.branchDesk.toString(),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontFamily: 'bahnschrift',
+                              ),
+                            ),
+                            onTap: () {
+                              widget.onChanged(branch);
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -232,10 +274,18 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.mediumBlue),
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -244,6 +294,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
               style: const TextStyle(
                 color: AppColors.darkBlue,
                 fontSize: 16,
+                fontFamily: 'bahnschrift',
               ),
             ),
             const Icon(Icons.arrow_drop_down, color: AppColors.darkBlue),
@@ -253,11 +304,9 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
     );
   }
 }
-
-
 class TruckDropdown extends StatefulWidget {
-  final ValueChanged<TruckRecordPaginatedEntity> onChanged;
-  final TruckRecordPaginatedEntity? selectedValue;
+  final ValueChanged<TruckRecordPaginatedSharedEntity> onChanged;
+  final TruckRecordPaginatedSharedEntity? selectedValue;
 
   TruckDropdown({
     required this.onChanged,
@@ -269,14 +318,14 @@ class TruckDropdown extends StatefulWidget {
 }
 
 class _TruckDropdownState extends State<TruckDropdown> {
-  late GetAllTruckRecordPaginatedCubit cubit;
+  late GetAllTruckRecordPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllTruckRecordPaginatedCubit>();
-    cubit.emitGetAllTruckRecords();
+    cubit = context.read<GetAllTruckRecordPaginatedSharedCubit>();
+    cubit.emitGetAllTruckRecord();
   }
 
   @override
@@ -286,12 +335,15 @@ class _TruckDropdownState extends State<TruckDropdown> {
   }
 
   void _showDropdown(BuildContext context) {
-    cubit.emitGetAllTruckRecords();
+    cubit.emitGetAllTruckRecord();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllTruckRecordPaginatedCubit, PaginationStateTest<TruckRecordPaginatedEntity>>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: BlocConsumer<GetAllTruckRecordPaginatedSharedCubit, PaginationSharedState<TruckRecordPaginatedSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (exception) {
@@ -314,24 +366,37 @@ class _TruckDropdownState extends State<TruckDropdown> {
                 orElse: () => const Center(child: Text("No data available")),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 success: (data, canLoadMore) {
-                  return SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: canLoadMore != 0,
-                    controller: _refreshController,
-                    onRefresh: () => cubit.emitGetAllTruckRecords(),
-                    onLoading: () => cubit.emitGetAllTruckRecords(loadMore: true),
-                    child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        TruckRecordPaginatedEntity truckRecord = data[index];
-                        return ListTile(
-                          title: Text(truckRecord.number.toString()),
-                          onTap: () {
-                            widget.onChanged(truckRecord);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                    ),
+                    child: SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: canLoadMore != 0,
+                      controller: _refreshController,
+                      onRefresh: () => cubit.emitGetAllTruckRecord(),
+                      onLoading: () => cubit.emitGetAllTruckRecord(loadMore: true),
+                      child: ListView.separated(
+                        itemCount: data.length,
+                        separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey[300]),
+                        itemBuilder: (context, index) {
+                          TruckRecordPaginatedSharedEntity truckRecord = data[index];
+                          return ListTile(
+                            title: Text(
+                              truckRecord.number.toString(),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontFamily: 'bahnschrift',
+                              ),
+                            ),
+                            onTap: () {
+                              widget.onChanged(truckRecord);
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -350,10 +415,18 @@ class _TruckDropdownState extends State<TruckDropdown> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.mediumBlue),
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -362,6 +435,7 @@ class _TruckDropdownState extends State<TruckDropdown> {
               style: const TextStyle(
                 color: AppColors.darkBlue,
                 fontSize: 16,
+                fontFamily: 'bahnschrift',
               ),
             ),
             const Icon(Icons.arrow_drop_down, color: AppColors.darkBlue),
@@ -389,7 +463,7 @@ class _DriverDropdownState extends State<DriverDropdown> {
   @override
   void initState() {
     super.initState();
-    context.read<GetAllDriversCubit>().emitGetAllDriver();
+    context.read<GetAllDriversSharedCubit>().emitGetAllDrivers();
   }
 
   void _showDropdown(BuildContext context) {
@@ -397,7 +471,10 @@ class _DriverDropdownState extends State<DriverDropdown> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: BlocConsumer<GetAllDriversCubit, GetState<BaseDriverEntity>>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: BlocConsumer<GetAllDriversSharedCubit, GetState<BaseDriverSharedEntity>>(
             listener: (context, state) {
               state.whenOrNull(
                 error: (networkExceptions) => Fluttertoast.showToast(
@@ -411,18 +488,31 @@ class _DriverDropdownState extends State<DriverDropdown> {
                 orElse: () => const Center(child: Text("No data available")),
                 loading: () => const Center(child: CircularProgressIndicator()),
                 success: (data) {
-                  return ListView.builder(
-                    itemCount: data.data.length,
-                    itemBuilder: (context, index) {
-                      DriverEntity driver = data.data[index];
-                      return ListTile(
-                        title: Text(driver.name),
-                        onTap: () {
-                          widget.onChanged(driver);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                    ),
+                    child: ListView.separated(
+                      itemCount: data.data.length,
+                      separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey[300]),
+                      itemBuilder: (context, index) {
+                        DriverEntity driver = data.data[index];
+                        return ListTile(
+                          title: Text(
+                            driver.name,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontFamily: 'bahnschrift',
+                            ),
+                          ),
+                          onTap: () {
+                            widget.onChanged(driver);
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      },
+                    ),
                   );
                 },
               );
@@ -440,10 +530,18 @@ class _DriverDropdownState extends State<DriverDropdown> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.mediumBlue),
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -452,6 +550,7 @@ class _DriverDropdownState extends State<DriverDropdown> {
               style: const TextStyle(
                 color: AppColors.darkBlue,
                 fontSize: 16,
+                fontFamily: 'bahnschrift',
               ),
             ),
             const Icon(Icons.arrow_drop_down, color: AppColors.darkBlue),
@@ -461,16 +560,17 @@ class _DriverDropdownState extends State<DriverDropdown> {
     );
   }
 }
-
 class AddTripScreen extends StatefulWidget {
+  const AddTripScreen({super.key});
+
   @override
   _AddTripScreenState createState() => _AddTripScreenState();
 }
 
 class _AddTripScreenState extends State<AddTripScreen> {
-  GetAllBranchesPaginatedEntity? selectedBranch;
-  GetAllBranchesPaginatedEntity? selectedDestination;
-  TruckRecordPaginatedEntity? selectedTruck;
+  GetAllBranchesPaginatedSharedEntity? selectedBranch;
+  GetAllBranchesPaginatedSharedEntity? selectedDestination;
+  TruckRecordPaginatedSharedEntity? selectedTruck;
   DriverEntity? selectedDriver;
 
   void _validateAndSubmit() {
@@ -506,80 +606,83 @@ class _AddTripScreenState extends State<AddTripScreen> {
           );
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: buildRichTextTitle(),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.chevron_left,
-            color: AppColors.darkBlue,
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: buildRichTextTitle(),
+      leading: IconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(
+          Icons.chevron_left,
+          color: AppColors.darkBlue,
+        ),
+      ),
+      bottom: const PreferredSize(
+        preferredSize: Size.fromHeight(1.0),
+        child: Divider(height: 1, color: AppColors.darkBlue),
+      ),
+    ),
+    body: Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                BranchDropdown(
+                  selectedValue: selectedBranch,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedBranch = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20.h),
+                DestinationDropdown(
+                  selectedValue: selectedDestination,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedDestination = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20.h),
+                TruckDropdown(
+                  selectedValue: selectedTruck,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedTruck = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20.h),
+                DriverDropdown(
+                  selectedValue: selectedDriver,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedDriver = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 90.h,
+                ), // Space to prevent overlap with button
+              ],
+            ),
           ),
         ),
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(1.0),
-          child: Divider(height: 1, color: AppColors.darkBlue),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: buildAddTripButton(),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  BranchDropdown(
-                    selectedValue: selectedBranch,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedBranch = value;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20.h),
-                  DestinationDropdown(
-                    selectedValue: selectedDestination,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedDestination = value;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20.h),
-                  TruckDropdown(
-                    selectedValue: selectedTruck,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTruck = value;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20.h),
-                  DriverDropdown(
-                    selectedValue: selectedDriver,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedDriver = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                      height: 90.h), // Space to prevent overlap with button
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: buildAddTripButton(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
+}
 
   Widget buildRichTextTitle() {
     return Align(
@@ -621,7 +724,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
     return BlocConsumer<AddTripCubit, PostState<BaseEntity>>(
       listener: (context, state) {
 state.whenOrNull(success: (data) {
-    context.read<GetAllActiveTripsPaginatedCubit>().emitGetAllActiveTrips();
+    context.read<GetAllActiveTripsPaginatedSharedCubit>().emitGetAllActiveTrips();
 
   Navigator.pop(context);
 },

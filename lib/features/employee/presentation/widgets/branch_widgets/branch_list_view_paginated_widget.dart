@@ -1,8 +1,8 @@
 import 'package:aloudeh_company/core/error/network_exceptions.dart';
-import 'package:aloudeh_company/features/admin/data/entity/get_all_branches_paginated_entity.dart';
-import 'package:aloudeh_company/features/employee/presentation/controller/get_all_branches_paginated_cubit.dart';
-import 'package:aloudeh_company/features/employee/presentation/screens/pagination_state_test.dart';
+import 'package:aloudeh_company/core/global_states/pagination_shared_state.dart';
 import 'package:aloudeh_company/features/employee/presentation/widgets/branch_widgets/branch_item_tile_widget.dart';
+import 'package:aloudeh_company/features/shared/data/entity/get_all_branches_paginated_entity.dart';
+import 'package:aloudeh_company/features/shared/presentation/controllers/get_all_branches_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,13 +17,13 @@ class BranchesListViewPaginatedWidget extends StatefulWidget {
 }
 
 class _BranchesListViewPaginatedWidgetState extends State<BranchesListViewPaginatedWidget> {
-  late GetAllBranchesPaginatedCubit cubit;
+  late GetAllBranchsPaginatedSharedCubit cubit;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<GetAllBranchesPaginatedCubit>();
+    cubit = context.read<GetAllBranchsPaginatedSharedCubit>();
     cubit.emitGetAllBranches();
   }
 
@@ -36,7 +36,7 @@ class _BranchesListViewPaginatedWidgetState extends State<BranchesListViewPagina
 
   @override
   Widget build(BuildContext context) {
-     return BlocConsumer<GetAllBranchesPaginatedCubit, PaginationStateTest<GetAllBranchesPaginatedEntity>>(
+     return BlocConsumer<GetAllBranchsPaginatedSharedCubit, PaginationSharedState<GetAllBranchesPaginatedSharedEntity>>(
       listener: (context, state) {
         state.whenOrNull(
           error: (NetworkExceptions exception) {
@@ -65,7 +65,7 @@ class _BranchesListViewPaginatedWidgetState extends State<BranchesListViewPagina
               enablePullUp: canLoadMore != 0,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  GetAllBranchesPaginatedEntity branchesPaginatedEntity = customers[index];
+                  GetAllBranchesPaginatedSharedEntity branchesPaginatedEntity = customers[index];
                   return BranchItemTileWidget(branchName: branchesPaginatedEntity.branchAddress, branchId: branchesPaginatedEntity.branchId,);
                 },
                 separatorBuilder: (context, index) =>  SizedBox(height: 10.h,),
